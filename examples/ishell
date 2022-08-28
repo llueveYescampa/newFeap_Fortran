@@ -1,0 +1,25 @@
+FEAP  * *  Spherical Cap Model 
+15,14,1,2,3,2
+
+COOR
+1,1,90.0,55.0
+15,0,90.0,90.0
+
+POLAR
+1,15,1
+
+ELEM
+1,1,1,2,1
+
+BOUN
+1,,1,1,1
+15,,1,0,1
+
+MATE
+1,5
+SHELL
+100,0.166667,3.0,1.0,0.,1.
+
+END
+INTEractive
+STOP

@@ -1,0 +1,46 @@
+feap * * 2-d truss problem
+4,6,1,2,2,2
+
+coordinates
+1, 0,      0.0,  0.0
+2, 0,     10.0,  0.0
+3, 0,      0.0, 10.0
+4, 0,     10.0, 10.0
+
+elements
+1,1,1,2,1
+2,1,1,3,1
+3,1,1,4,1
+4,1,2,3,1
+5,1,2,4,1
+6,1,3,4,1
+
+boundary restrains
+1,0,1,1
+2,0,1,1
+
+
+force
+4,0,10.0,0.0
+
+
+
+material
+1,7
+1000.0,10.0
+
+end
+
+
+
+macr
+loop,,10
+tang,,1
+next
+disp,all
+stre,all
+reac,all
+end
+
+
+stop
