@@ -14,15 +14,14 @@ add_subdirectory(pcelm4)
 add_subdirectory(pcelm5)
 add_subdirectory(pcelm6)
 add_subdirectory(pcelm7)
-add_subdirectory(pcfor5)
 add_subdirectory(pcmac1)
 add_subdirectory(pcmac2)
 add_subdirectory(pcmac3)
 add_subdirectory(pcmsh1)
 add_subdirectory(pcplt1)
 add_subdirectory(pctekt)
-add_subdirectory(pfsolv)
-
+#add_subdirectory(pfsolv)
+#add_subdirectory(pcfor5)
 
 set(newFeap_Src 
     ${pcfeap_Src}

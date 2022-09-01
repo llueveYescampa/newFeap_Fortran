@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 
 ## set appropriately the following line to create a Double Precision version
 #set(DOUBLE_PRECISION ON)
@@ -18,16 +18,16 @@ set(CMAKE_BUILD_TYPE Release)
 ## adding the following lines while cleaning the code
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
     MESSAGE( STATUS "Fortran_COMPILER_NAME: "            ${CMAKE_Fortran_COMPILER_ID} )
-    set(CMAKE_Fortran_FLAGS  "${CMAKE_C_FLAGS} -Wall -ffree-form  -fimplicit-none  -Wextra -Wno-unused-parameter -ftree-vectorize -fopt-info-vec-optimized -ffast-math -mavx2 ")
-    #set(CMAKE_Fortran_FLAGS  "${CMAKE_C_FLAGS} -Wall -Wextra -Wno-unused-result -Wno-unused-parameter -ftree-vectorize -fopt-info-vec-optimized -ffast-math ")
+    set(CMAKE_Fortran_FLAGS  " -Wall -ffree-form  -fimplicit-none  -Wextra -Wno-unused-parameter -ftree-vectorize -fopt-info-vec-optimized -ffast-math -mavx2 ")
+    #set(CMAKE_Fortran_FLAGS  " -Wall -Wextra -Wno-unused-result -Wno-unused-parameter -ftree-vectorize -fopt-info-vec-optimized -ffast-math ")
 elseif ( CMAKE_Fortran_COMPILER_ID STREQUAL "Intel" )
     MESSAGE( STATUS "Fortran_COMPILER_NAME: "            ${CMAKE_Fortran_COMPILER_ID} )
-    set(CMAKE_Fortran_FLAGS  "${CMAKE_C_FLAGS}   -qopt-report=3 -qopt-report-phase=vec -xCORE-AVX2")
-    #set(CMAKE_Fortran_FLAGS  "${CMAKE_C_FLAGS} -Wall -qopt-report=3 -qopt-report-phase=vec ")
+    set(CMAKE_Fortran_FLAGS  " -qopt-report=3 -qopt-report-phase=vec -xCORE-AVX2")
+    #set(CMAKE_Fortran_FLAGS  " -Wall -qopt-report=3 -qopt-report-phase=vec ")
 elseif ( CMAKE_Fortran_COMPILER_ID STREQUAL "PGI" )
     MESSAGE( STATUS "Fortran_COMPILER_NAME: "            ${CMAKE_Fortran_COMPILER_ID} )
-    set(CMAKE_Fortran_FLAGS  "${CMAKE_C_FLAGS} -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd ")
-    #set(CMAKE_Fortran_FLAGS  "${CMAKE_C_FLAGS} -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd -tp=px ")
+    set(CMAKE_Fortran_FLAGS  " -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd ")
+    #set(CMAKE_Fortran_FLAGS  " -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd -tp=px ")
 endif ( )
 ## end of adding the following lines while cleaning the code
 
