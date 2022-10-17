@@ -11,9 +11,8 @@ enable_language(Fortran)
 set(myPROJECT_SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
 
-#set(CMAKE_CXX_STANDARD 11)
-#set(CMAKE_CXX_STANDARD ON)
 set(CMAKE_BUILD_TYPE Release)
+#set(CMAKE_BUILD_TYPE Debug)
 
 ## adding the following lines while cleaning the code
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
@@ -24,10 +23,11 @@ elseif ( CMAKE_Fortran_COMPILER_ID STREQUAL "Intel" )
     MESSAGE( STATUS "Fortran_COMPILER_NAME: "            ${CMAKE_Fortran_COMPILER_ID} )
     set(CMAKE_Fortran_FLAGS  " -qopt-report=3 -qopt-report-phase=vec -xCORE-AVX2")
     #set(CMAKE_Fortran_FLAGS  " -Wall -qopt-report=3 -qopt-report-phase=vec ")
-elseif ( CMAKE_Fortran_COMPILER_ID STREQUAL "PGI" )
+elseif ( CMAKE_Fortran_COMPILER_ID STREQUAL "NVHPC" )
     MESSAGE( STATUS "Fortran_COMPILER_NAME: "            ${CMAKE_Fortran_COMPILER_ID} )
-    set(CMAKE_Fortran_FLAGS  " -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd ")
-    #set(CMAKE_Fortran_FLAGS  " -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd -tp=px ")
+    set(CMAKE_Fortran_FLAGS  " -Minform=inform  -Minfo=all -Mvect=simd ")
+    #set(CMAKE_Fortran_FLAGS  " -Minform=inform  -Minfo=all -Mvect=simd -tp=px ")
+    # DO NOT USE THE "-Mnodepchk" flag
 endif ( )
 ## end of adding the following lines while cleaning the code
 

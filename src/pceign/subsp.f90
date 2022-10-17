@@ -18,7 +18,7 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
 !     nf       - Number of eigenvalues to converge
 !     nev      - Size of subspace problem
 !     neq      - Size of finite element equations
-!     myShift    - Value of myShift 
+!     myShift  - Value of myShift 
 !     tol      - Solution tolerance on eigenvalues
 !     prt      - Flag, output each iteration result
 !     its      - Maximum number of subspace iterations to perform
@@ -32,12 +32,10 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
    integer  i,it,itt,itlim, j, k, n,nmas
    double precision   dm,tolmx,told
 
-   integer         iodr,iodw,ipd,ipr,ipi
-   common /iofild/ iodr,iodw,ipd,ipr,ipi
+   include 'iofild.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
-
+   include 'iofile.h'
+   
 !  Compute initial iteration vectors
 
    call pconsd(v,nev*neq,0.0d0)
@@ -76,13 +74,13 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
    told  = tol
    conv  = .false.
    itlim = its
+   itt = 0
    if(nev.eq.nf) then
      itlim = 1
    end if  
    
-!   do it = 1,itlim
-   it = 1
-   do while(it .le. itlim .and. (.not. conv))
+   do it = 1,itlim
+     if (conv) exit
      itt = it
 
 !    Project 'b' matrix to form 'h' and compute 'z' vectors
@@ -162,8 +160,6 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
          end do  
        end do  
      end do  
-     
-     it=it+1
    end do  
 
 !  Scale vectors to have maximum element of 1.0

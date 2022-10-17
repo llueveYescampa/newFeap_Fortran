@@ -30,29 +30,22 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
    integer iocheck
    logical test
   
-   integer maxa
-include 'maxa.h'     
-   double precision  aa
-   common /adata/    aa(maxa)
+   include 'maxa.h'     
+   
+   include 'adata.h'
 
-   character*4     head
-   common /bdata/  head(20)
+   include 'bdata.h'
 
-   integer         numnp,numel,nummat,nen,neq
-   common /cdata/  numnp,numel,nummat,nen,neq
+   include 'cdata.h'
 
-   double precision dm
-   integer             n,ma,mct,iel,nel
-   common /eldata/  dm,n,ma,mct,iel,nel
+   include 'eldata.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
-   character       yyy*80
-   common /ydata / yyy
+   include 'ydata.h'
 
    data wlab/'  p l a n e ','axisymmetric'/
-
+   kat=0
 !  Compute the quadrature points
 
    if(isw .gt. 2) then
@@ -90,21 +83,21 @@ include 'maxa.h'
      end do
    else if(mod(isw,3).eq.0) then
 !    Compute conductivity matrix and residual
-     nn  = d(7)
-     kat = d(8)
+     nn  = int(d(7))
+     kat = int(d(8))
      do l=1,lint
        call shapeFunc(sg(l),tg(l),xl,shp,xsj,ndm,nel,ix,.false.)
        xsj = xsj*wg(l)
        if(kat.eq.2) xsj = xsj*coord(xl,shp,ndm,nel)
        call flo06(1.0d0,shp,ul,q1,q2,qm,uu,ndf,nel)
        if(nn.eq.0) then
-         qq = dm*d(4)
+         qq = mydm*d(4)
          dq = 0.0
        else if(nn.eq.1) then
-         qq = dm*d(4)*exp(d(5)*uu)
+         qq = mydm*d(4)*exp(d(5)*uu)
          dq = d(5)
        else if(uu.ne.0.0d0) then
-         qq = dm*d(4)*exp(d(5)-d(5)*d(6)/uu)
+         qq = mydm*d(4)*exp(d(5)-d(5)*d(6)/uu)
          dq = d(5)*d(6)/uu**2
        else
          write(*,*) ' ** ELMT06 ERROR ** T = 0.0: stop'

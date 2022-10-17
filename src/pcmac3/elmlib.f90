@@ -21,8 +21,7 @@ double precision d(*),u(*),x(*),t(*),s(*),p(*)
 !     s(k,*)    - Element array
 !     p(*)      - Element vector
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
    if(isw.ge.3.and.isw.le.6) then
      call pconsd(p,k,0.0d0)

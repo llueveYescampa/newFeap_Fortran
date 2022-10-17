@@ -21,10 +21,10 @@ double precision  ct(3,*)
    logical    pcomp
    integer    i, j, l
    integer iocheck, test
-   character  clab1*4,clab2*4,tary*10,yyy*80
+   character  clab1*4,clab2*4,tary*10 ! ,yyy*80
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
+   include 'ydata.h'
 
 !  initiate the read of macro statements
 
@@ -48,25 +48,25 @@ double precision  ct(3,*)
        call pintio(yyy,15)
        read(yyy,'(2(a4,11x),3f15.0)',IOSTAT=iocheck)clab1,clab2,(ct(i,ll),i=1,3)
        if (iocheck .ne. 0) then
-         call pperror('PMACIO',yyy)
+         call pperror('pmacio',yyy)
          cycle
        end if
-       if(ioRead.lt.0.and.pcomp(clab1,'help')) then
+       if(ioRead.lt.0 .and. pcomp(clab1,'help')) then
          call phelp(wd,nwd,'MACRO',1)
          ll = ll - 1
          cycle
        end if
-       if(ioRead.gt.0.and.pcomp(clab1,'end ')) then
+       if(ioRead.gt.0 .and. pcomp(clab1,'end ')) then
          exit
        end if
        if(ioRead.lt.0) then
          if(pcomp(clab1,'exit')) then
            ll = -1
          end if
-         if(pcomp(clab1,'q   ').or.pcomp(clab1,'quit')) then
+         if(pcomp(clab1,'q   ') .or. pcomp(clab1,'quit')) then
            ll = -2
          end if
-         if(ll.lt.0) then
+         if(ll .lt. 0) then
            return
          end if
        end if
@@ -93,12 +93,12 @@ double precision  ct(3,*)
        else if(test .eq. 150) then
          exit
        else
-         call pperror('PMACIO',yyy)
+         call pperror('pmacio',yyy)
          ll = ll - 1
          cycle
        end if
      
-     exit
+       exit
      end do
      jct(ll)= nlp+1
      
@@ -202,7 +202,7 @@ double precision  ct(3,*)
        cycle
      end if
 
-   exit
+     exit
    end do
 
    return
@@ -212,8 +212,8 @@ double precision  ct(3,*)
 2001  format('  M a c r o   I n s t r u c t i o n s'//         &
       '  Macro Statement  Variable 1  Variable 2  Variable 3')
      
-2002  format(' Input MACRO: !exit! = stop with restart',        &
-         '; !quit! = quit.'/3x,'Time = ',a10,' Macro',i3,'> ',$)
+2002  format(' Input MACRO: "exit" = stop with restart',        &
+         '; "quit" = quit.'/3x,'Time = ',a10,' Macro',i3,'> ',$)
      
 3000  format(' **ERROR**  Wrong loop/next order, or > 8 loops')
 end

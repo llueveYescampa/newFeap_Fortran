@@ -24,22 +24,19 @@ double precision  d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
 
       integer         i,i1,ii,j,j1,jj
       double precision  db(3),dx(3),xx(3),xl,eps,sig,ad,sm
-      character       yyy*80
+      !character       yyy*80
       integer iocheck
       logical test
 
-      integer         numnp,numel,nummat,nen,neq
-      common /cdata/  numnp,numel,nummat,nen,neq
+      include 'cdata.h'
 
-      double precision dm
-      integer             n,ma,mct,iel,nel
-      common /eldata/  dm,n,ma,mct,iel,nel
+      include 'ydata.h'
 
-      integer         nh1,nh2
-      common /hdata/  nh1,nh2
+      include 'eldata.h'
+      
+      include 'hdata.h'
 
-      integer         ioRead,ioWrite
-      common /iofile/ ioRead,ioWrite
+      include 'iofile.h'
 
       select case (isw)
       case (1)

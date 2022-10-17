@@ -24,12 +24,10 @@ double precision d(*),eps(4),epln(4),alph(4),ep,sig(5),ul(ndf,*)
                     radius,psitr,psi(4),en(4)
 
 
-   double precision dm
-   integer             n,ma,mct,iel,nel
-   common /eldata/  dm,n,ma,mct,iel,nel
+   include 'eldata.h'
 
-   double precision g     ,ad
-   common /elcom2/  g(2,4),ad(4,4)
+   include 'elcom2.h'
+
 
 !  Set parameters
 

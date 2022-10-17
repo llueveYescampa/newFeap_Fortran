@@ -1,6 +1,6 @@
-logical function pcomp(a,b)
+pure logical function pcomp(a,b)
 implicit  none
-character a(4)*1,b(4)*1
+character, intent(in) :: a(4),b(4)
 
 ! Edgar note: For C++ version use a string comparation functions.
 
@@ -18,7 +18,7 @@ character a(4)*1,b(4)*1
 
    integer   i,ia,ib,inc
 
-   data inc /32/
+   inc = ichar('a') - ichar('A')
    pcomp = .false.
 
    do i = 1,4

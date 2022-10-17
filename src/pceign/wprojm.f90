@@ -6,8 +6,7 @@ integer   i,ia, j, k, n,nn
 character ah(2)*1
 double precision    a(*)
 
-integer         ioRead,ioWrite
-common /iofile/ ioRead,ioWrite
+include 'iofile.h'
 
 data ah(1),ah(2) /'g','h'/
 

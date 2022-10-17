@@ -5,17 +5,14 @@ integer  ioRead
 !  Purpose: Compute integration constants 'c1' to 'c5' for current 'dt'
 
 !  Inputs:
-!     ioRead      - Data input logical unit number
+!     ioRead   - Data input logical unit number
 
 !  Outputs:
 !     none     - Output through common block
 
-   double precision beta,gamm,theta
-   integer                          nop,nt
-   common /tbeta/   beta,gamm,theta,nop,nt
+   include 'tbeta.h'
 
-   double precision ttim,dt,c1,c2,c3,c4,c5,c6
-   common /tdata/   ttim,dt,c1,c2,c3,c4,c5,c6
+   include 'tdata.h'
 
    if(dt.le.0.0) then
      write(*,'(a)') ' **ERROR** Input DT as nonzero number.'

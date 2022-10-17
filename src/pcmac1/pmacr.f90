@@ -35,54 +35,36 @@ logical   prt
    integer   i, j, k, ll, nm1,nm2,nlp,nneq
    double precision  ct(3,100)
    character wd(24)*4,tary*10,lwd*3
+   character*4    lct(100)
 
-   integer         maxa
-include 'maxa.h'      
-   double precision dm
-   integer            im
-   common dm(maxa),im(maxa)
+   include 'maxa.h'      
 
-   integer        numnp,numel,nummat,nen,neq
-   common /cdata/ numnp,numel,nummat,nen,neq
+   include 'cdata.h'
 
-   logical        fl    ,pfr
-   common /fdata/ fl(11),pfr
+   include 'ddata.h'
 
-   integer        nhi,nhf,ihbuff,irec,jrec,nrec
-   logical                                      hfl,hout
-   common /hdatb/ nhi,nhf,ihbuff,irec,jrec,nrec,hfl,hout
+   include 'fdata.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'hdatb.h'
+   
+   include 'iofile.h'
 
-   integer        l,lv,lvs   ,lve   ,jct
-   common /ldata/ l,lv,lvs(9),lve(9),jct(100)
+   include 'ldata.h'
 
-   character*4    lct
-   common /ldatb/ lct(100)
+   include 'ndata.h'
 
-   integer        nv,nw,nl
-   common /ndata/ nv,nw,nl
+   include 'rdata.h'
+   
+   include 'tbeta.h'
+   
+   include 'tdata.h'
 
-   double precision engy,rnmax,tol,myShift
-   common /rdata/   engy,rnmax,tol,myShift
+   include 'temfl1.h'
 
-   double precision beta,gamm,theta
-   integer                        nop,nt
-   common /tbeta/   beta,gamm,theta,nop,nt
+   include 'temfl2.h'
 
-   double precision ttim,dt,c1,c2,c3,c4,c5,c6
-   common /tdata/   ttim,dt,c1,c2,c3,c4,c5,c6
+   include 'prlod.h'
 
-   character*12    tfile
-   common /temfl1/ tfile(6)
-
-   integer         itrec   ,nw1,nw2
-   common /temfl2/ itrec(4),nw1,nw2
-
-   double precision prop,a
-   integer                       iexp    ,ik    ,npld
-   common /prlod/   prop,a(6,10),iexp(10),ik(10),npld
 
 
    data wd/'stre','utan','tang','form','mass','reac','chec','disp',&

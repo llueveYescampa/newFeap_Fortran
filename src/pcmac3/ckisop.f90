@@ -18,12 +18,9 @@ double precision    xl(ndm,*),shp(3,*)
    integer   xn(9),yn(9),ic(18)
    double precision  ss,tt,xsj
 
-   double precision dm
-   integer             n,ma,mct,iel,nel
-   common /eldata/  dm,n,ma,mct,iel,nel
+   include 'eldata.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
    data xn/-1,1,1,-1,0,1,0,1,0/
    data yn/-1,-1,1,1,-1,0,1,0,0/

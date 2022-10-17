@@ -28,21 +28,15 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
    double precision  shp(2),dd(5,5),btd(5,3)
    double precision  bm(5,3),sig(5),vl(3,2),dot
 
-   character*4     head
-   common /bdata/  head(20)
+   include 'bdata.h'
 
-   integer         numnp,numel,nummat,nen,neq
-   common /cdata/  numnp,numel,nummat,nen,neq
+   include 'cdata.h'
 
-   double precision dm
-   integer             n,ma,mct,iel,nel
-   common /eldata/  dm,n,ma,mct,iel,nel
+   include 'eldata.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
-   character       yyy*80
-   common /ydata/  yyy
+   ! include 'ydata.h'
 
 !  Input material properties
 
@@ -112,7 +106,7 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
 
 !      Derivative w,s
 
-       lin = d(5)
+       lin = int(d(5))
        if(lin.eq.0) then
          wks = 0.0d0
        else
@@ -127,7 +121,7 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
 !        Load vector in local coordinates (reference system)
 
          i = ndf + 2
-         f = d(4)*sl/8.0d0*dm
+         f = d(4)*sl/8.0d0*mydm
          if(bs) then
            p(2) = f*4.0d0
            p(i) = p(2)

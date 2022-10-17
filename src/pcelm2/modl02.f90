@@ -20,21 +20,18 @@ double precision     d(*),ul(ndf,*),eps(4),sig(5),xsj
    integer i,j
    double precision temp
 
-   double precision g     ,ad
-   common /elcom2/  g(2,4),ad(4,4)
+   include 'elcom2.h'
 
-   integer         nh1,nh2
-   common /hdata/  nh1,nh2
+   include 'hdata.h'
 
-   integer         maxa
-include 'maxa.h'      
-   double precision h
-   common          h(maxa)
+   include 'maxa.h'
+       
+   include 'ddata.h'
 
 !  Compute material moduli and stresses
 
    call pconsd(ad,16,0.0d0)
-   call elpl02(d,eps,h(nh2),h(nh2+4),h(nh2+8),sig,ul,ndf,ib)
+   call elpl02(d,eps,dm(nh2),dm(nh2+4),dm(nh2+8),sig,ul,ndf,ib)
    nh2 = nh2 + 9
 
 !  Multiply by jacobian

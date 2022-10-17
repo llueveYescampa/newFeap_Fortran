@@ -15,8 +15,8 @@ double precision dt(numnp),ds(numnp,7)
 
    integer   i, kount, n
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
+   
    kount = 0
    do n = n1,n2,n3
      kount = kount - 1

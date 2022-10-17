@@ -18,9 +18,7 @@ double precision    r(*),z(*),w(*)
    integer   lr(9),lz(9),lw(9),i
    double precision    g,h
 
-   double precision dm
-   integer             n,ma,mct,iel,nel
-   common /eldata/  dm,n,ma,mct,iel,nel
+   include 'eldata.h'
 
    data lr/-1,1,1,-1,0,1,0,-1,0/
    data lz/-1,-1,1,1,-1,0,1,0,0/

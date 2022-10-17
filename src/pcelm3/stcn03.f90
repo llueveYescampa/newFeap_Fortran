@@ -1,6 +1,6 @@
 subroutine stcn03(ix,d,ssa,tta,dt,st,nnp)
 implicit none
-integer    ix(1),              nnp
+integer    ix(*),              nnp
 double precision d(*),ssa,tta,dt(nnp),st(nnp,*)
 
    integer   jj,ll
@@ -8,8 +8,7 @@ double precision d(*),ssa,tta,dt(nnp),st(nnp,*)
    
    double precision    ss(4),tt(4)
    
-   double precision xs,xt,xh,ys,yt,yh,xj0,xj1,xj2,a1   ,a2   ,beta
-   common /elcom3/  xs,xt,xh,ys,yt,yh,xj0,xj1,xj2,a1(3),a2(3),beta(5)
+   include 'elcom3.h'
    
    data ss/-1.0,1.0,1.0,-1.0/
    data tt/-1.0,-1.0,1.0,1.0/

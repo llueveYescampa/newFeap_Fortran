@@ -18,12 +18,9 @@ double precision    fn(nn,2),b(*),xm(*),ac(*)
 
    integer   j, n
 
-   logical        fl    ,pfr
-   common /fdata/ fl(11),pfr
+   include 'fdata.h'
 
-   double precision beta,gamm,theta
-   integer                         nop,nt
-   common /tbeta/  beta,gamm,theta,nop,nt
+   include 'tbeta.h'
 
    fl(11) = .false.
    call pconsd(b,nn,0.0d0)

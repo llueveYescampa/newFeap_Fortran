@@ -14,8 +14,7 @@ integer  neq,mq
 
    integer  n,nn
    
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
    nn = 0
    do n = 1,neq

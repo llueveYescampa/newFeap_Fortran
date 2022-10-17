@@ -7,14 +7,12 @@ double precision fn(nneq,2),g0,rsd(*),u(*),d(*),stol,t(*)
 !  linear line search for nonlinear problems
 
    integer j, linmax
-   double precision s,step,gamma,g,ga,gb,sa,sb
+   double precision s,step,g,ga,gb,sa,sb
    double precision gama
    
-   integer         numnp,numel,nummat,nen,neq
-   common /cdata/  numnp,numel,nummat,nen,neq
+   include 'cdata.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
 !  compute step size for line search in direction d
 

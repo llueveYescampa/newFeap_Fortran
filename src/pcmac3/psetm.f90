@@ -1,8 +1,7 @@
-subroutine psetm(na,nl,typ,afl)
+subroutine psetm(na,nl,typ)
 implicit  none
 integer   na,nl
 character typ*1
-logical   afl
 
 !  Purpose:  Allocate array storage pointer from blank common
 
@@ -12,19 +11,15 @@ logical   afl
 
 !  Outputs:
 !     na        - Pointer to first word in array
-!     afl       - Flag, error if true
 
    integer   np,ns
    double precision    amx
+  
+   include 'iofild.h'
 
-   integer         iodr,iodw,ipd,ipr,ipi
-   common /iofild/ iodr,iodw,ipd,ipr,ipi
+   include 'iofile.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
-
-   integer         maxm,ne
-   common /psize/  maxm,ne
+   include 'psize.h'
 
 !  Set data management pointers for arrays
 
@@ -39,33 +34,40 @@ logical   afl
    else if( typ .eq. 'r' ) then
      np = ipr
      ns = ipd/ipr
-   else if( typ .eq. 'i' ) then
+!   else if( typ .eq. 'i' ) then
+   else  ! assuming typ .eq. 'i'
      np = ipi
      ns = (ipd+ipr)/ipi
    end if
    na = ne
    ne = na + nl*np + mod(ipd - mod(nl*np,ipd),ipd)
    na   = (na + np - 1)/np - ns
-   afl = .false.
    amx = maxm
    amx = ne/amx
    if(amx.gt.0.90) then
      write(*,'(a,i6,a,i6,a,f6.3)') &
      '  **Memory warning** Used =', ne,' Avail =',  maxm, ' % =', amx
    end if  
-   if(ne.le.maxm) then
-     return
-   end if  
-   write(ioWrite,'(2x,a,/10x,a,i6/10x,a,i6/)')             &
-   '**ERROR** Insufficient storage in blank common',   &
-   'Required  =', ne,                                  &
-   'Available =', maxm
    
-   if(ioRead.lt.0) then
-     write(*,'(2x,a,/10x,a,i6/10x,a,i6/)')               &
+   
+!   if(ne.le.maxm) then
+!     return
+!   end if  
+   
+   if(ne >= maxm) then
+     write(ioWrite,'(2x,a,/10x,a,i6/10x,a,i6/)')         &
      '**ERROR** Insufficient storage in blank common',   &
      'Required  =', ne,                                  &
      'Available =', maxm
+     
+     if(ioRead.lt.0) then
+       write(*,'(2x,a,/10x,a,i6/10x,a,i6/)')               &
+       '**ERROR** Insufficient storage in blank common',   &
+       'Required  =', ne,                                  &
+       'Available =', maxm
+     end if  
+     stop
    end if  
-   stop
+   
+   return
 end

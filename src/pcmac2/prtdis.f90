@@ -22,8 +22,7 @@ double precision    x(ndm,*),b(ndf,*),ttim,prop
    character cd*6,di*6
    integer   i, n, kount
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
    data cd/' coord'/,di/' displ'/
 
@@ -34,7 +33,7 @@ double precision    x(ndm,*),b(ndf,*),ttim,prop
        call prthed(ioWrite)
        write(ioWrite,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
        if(ioRead.lt.0) then
-	 write(*,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
+         write(*,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
        end if
        kount = 48
      endif

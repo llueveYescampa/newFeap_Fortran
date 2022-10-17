@@ -27,61 +27,45 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
    integer   iocheck
    integer   i,md,mf,mg,mh,mp,mq,mv,mdp,mdt, n,n1,n2,ndm,nlm
    double precision propld,xtl
-   character lct(*)*4,ctl(2)*4,yyy*80
+   character lct(*)*4,ctl(2)*4! ,yyy*80
 
-   integer        numnp,numel,nummat,nen,neq
-   common /cdata/ numnp,numel,nummat,nen,neq
+   include 'cdata.h'
 
-   logical        fl    ,pfr
-   common /fdata/ fl(11),pfr
+   include 'fdata.h'
 
-   integer        nhi,nhf,ihbuff,irec,jrec,nrec
-   logical                                      hfl,hout
-   common /hdatb/ nhi,nhf,ihbuff,irec,jrec,nrec,hfl,hout
+   include 'hdatb.h'
+   
+   include 'iofile.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofild.h'
 
-   integer         iodr,iodw,ipd,ipr,ipi
-   common /iofild/ iodr,iodw,ipd,ipr,ipi
+   include 'ldata.h'
 
-   integer        l,lv,lvs   ,lve   ,jct
-   common /ldata/ l,lv,lvs(9),lve(9),jct(100)
+   include 'ndata.h'
 
-   integer        nv,nw,nl
-   common /ndata/ nv,nw,nl
+   include 'prlod.h'
+  
+   include 'psize.h'
+   
+   include 'rdata.h'
+  
+   include 'tbeta.h'
+   
+   include 'tdata.h'
 
-   double precision prop,a
-   integer                       iexp    ,ik    ,npld
-   common /prlod/   prop,a(6,10),iexp(10),ik(10),npld
+   include 'ydata.h'
 
-   integer        maxm,ne
-   common /psize/ maxm,ne
+   include 'temfl1.h'
 
-   double precision engy,rnmax,tol,myShift
-   common /rdata/   engy,rnmax,tol,myShift
+   double precision uu(4000)
+   !common /udata/   uu(4000)
 
-   double precision beta,gamm,theta
-   integer                         nop,nt
-   common /tbeta/  beta,gamm,theta,nop,nt
+   include 'maxa.h'
 
-   double precision ttim,dt,c1,c2,c3,c4,c5,c6
-   common /tdata/   ttim,dt,c1,c2,c3,c4,c5,c6
-
-   character*4     tfile*12
-   common /temfl1/ tfile(6)
-
-   double precision uu
-   common /udata/   uu(4000)
-   integer         maxa
-include 'maxa.h'
-
-   double precision dm
-   integer                   im
-   common           dm(maxa),im(maxa)
+   include 'ddata.h'
 
 !  transfer to correct process
-
+   mf = 0
    select case (j)
    case ( 1)
 !    set solution tolerance
@@ -98,12 +82,12 @@ include 'maxa.h'
 !    set loop start indicators
      lv = lv + 1
      lvs(lv) = l
-     lve(lv) = ct(2,l)
+     lve(lv) = int(ct(2,l))
      ct(1,lve(lv)) = 1.
      return
    case ( 4)
 !    loop terminator control
-     n = ct(2,l)
+     n = int(ct(2,l))
      ct(1,l) = ct(1,l) + 1.0
      if(ct(1,l).gt.ct(1,n)) then
        lv = lv - 1
@@ -114,7 +98,7 @@ include 'maxa.h'
      return
    case ( 5)
 !    input proportional load table
-     npld = ct(1,l)
+     npld = int(ct(1,l))
      prop = propld (ttim,npld)
      return
    case ( 6)
@@ -200,8 +184,8 @@ include 'maxa.h'
      return
    case (10)
 !    subspace eigencomputations
-     mf = ct(1,l)
-     n2 = ct(2,l)
+     mf = int(ct(1,l))
+     n2 = int(ct(2,l))
      mf = min(neq,max(1,mf))
      mq = min(mf+mf,mf+8,neq)
      if(n2.gt.0) then
@@ -268,7 +252,7 @@ include 'maxa.h'
    case (11)
 !    print eigenvectors
      if(mf.gt.0) then
-       n1   = ct(1,l)
+       n1   = int(ct(1,l))
        n1   = max(1,min(mq,n1))
        n2   = mv + neq*(n1-1) -1
 

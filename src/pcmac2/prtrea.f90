@@ -21,8 +21,7 @@ double precision    r(ndf,1)
 
    double precision    rr(6),rsum(6),asum(6),psum(6)
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
    call pconsd(rsum,ndf,0.0d0)
    call pconsd(psum,ndf,0.0d0)

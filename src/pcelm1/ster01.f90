@@ -38,15 +38,9 @@ double precision    d(*),xl(ndm,*),ul(ndf,*),tl(*),shp(3,4), &
    double precision  sigp(4),dsig(4)
 
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
-
-   double precision          dm
-   integer            n,ma,mct,iel,nel
-   common /eldata/ dm,n,ma,mct,iel,nel
-
-   double precision          eerror,elproj,ecproj,efem,enerr,ebar
-   common /errind/ eerror,elproj,ecproj,efem,enerr,ebar
+   include 'iofile.h'
+   include 'eldata.h'
+   include 'errind.h'
 
 !  Stress error computations
 

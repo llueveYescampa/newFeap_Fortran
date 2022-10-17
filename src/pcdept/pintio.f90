@@ -15,8 +15,7 @@ implicit  none
 !                 N.B. Internal I/O can be made to extract data
 
     character x*80
-    integer         ioRead,ioWrite
-    common /iofile/ ioRead,ioWrite
+    include 'iofile.h'
     if(ioRead.gt.0) then 
        read(ioRead,'(a)',err=100,end=100) x
     else if(ioRead.lt.0) then 
@@ -26,7 +25,7 @@ implicit  none
     call acheck(x,y,n0,80)
     return
 
-100 call pperror('PINTIO',x)
+100 call pperror('pintio',x)
 
 end
 

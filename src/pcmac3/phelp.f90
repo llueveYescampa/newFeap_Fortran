@@ -12,8 +12,7 @@ character wd(nwd)*4,wrd*5
 !     isw       - Switch: =1 for solution commands; otherwise mesh.
 
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
    if(ioRead.gt.0) then
      return

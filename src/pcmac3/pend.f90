@@ -8,8 +8,7 @@ character subnam*6
 !     subnam    - Name of subroutine where EOF encountered
 
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
    if(ioRead.gt.0) then
      write(ioWrite,'(a,a6,a)') &

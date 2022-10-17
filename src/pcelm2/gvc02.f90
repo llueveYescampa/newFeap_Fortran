@@ -20,8 +20,8 @@ double precision  shp(3,4),shp3(4),xsj,wg,xl(ndm,4),type
    integer i
    double precision  rr   
 
-   double precision          g     ,ad
-   common /elcom2/ g(2,4),ad(4,4)
+   include 'elcom2.h'
+
 
    if(type.ne.0.0d0) then
      rr = 0.0d0

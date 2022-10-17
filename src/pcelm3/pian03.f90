@@ -12,8 +12,7 @@ double precision  d(*), ul(ndf,*),s(nst,*),p(*)
    double precision    rr(5),x1(4),x2(4),y1(4),y2(4)
    double precision    ax(4),bx(4),cx(4),ay(4),by(4),cy(4)
 
-   double precision xs,xt,xh,ys,yt,yh,xj0,xj1,xj2,a1   ,a2   ,beta
-   common /elcom3/  xs,xt,xh,ys,yt,yh,xj0,xj1,xj2,a1(3),a2(3),beta(5)
+   include 'elcom3.h'
 
 !  1.) set up stress interpolants for the 4-5 term
 

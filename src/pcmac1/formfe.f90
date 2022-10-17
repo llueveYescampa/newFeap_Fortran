@@ -20,26 +20,17 @@ logical              af,bf,cf,df
 !  Outputs:
 !     b(*)      - Element vector
 
+   include 'maxa.h'      
 
+   include 'mdata.h'
 
-   integer        nn,n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13
-   common /mdata/ nn,n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13
+   include 'mdat2.h'
 
-   integer        n11a,n11b,n11c,ia
-   common /mdat2/ n11a,n11b,n11c,ia(2,11)
+   include 'sdata.h'
+   
+   include 'xdata.h'
 
-   integer        ndf,ndm,nen1,nst
-   common /sdata/ ndf,ndm,nen1,nst
-
-   integer        isw,nn1,nn2,nn3
-   logical                        afl,bfl,cfl,dfl
-   common /xdata/ isw,nn1,nn2,nn3,afl,bfl,cfl,dfl
-   integer         maxa
-include 'maxa.h'      
-
-   double precision dm
-   integer                  m
-   common          dm(maxa),m(maxa)
+   include 'ddata.h'
 
 !  form appropriate f.e. array
 
@@ -51,6 +42,6 @@ include 'maxa.h'
    nn1 = ne1
    nn2 = ne2
    nn3 = ne3
-   call pform(dm(nn),dm(n0),dm(n1),m(n2),dm(n3),dm(n4),m(n5),dm(n6), &
-                m(n7),dm(n8),m(n9),dm(n11),m(n11c),u,b,ndf,ndm,nen1,nst)
+   call pform(dm(nn),dm(n0),dm(n1),im(n2),dm(n3),dm(n4),im(n5),dm(n6), &
+                im(n7),dm(n8),im(n9),dm(n11),im(n11c),u,b,ndf,ndm,nen1,nst)
 end

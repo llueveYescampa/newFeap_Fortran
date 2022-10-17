@@ -37,55 +37,34 @@ double precision ul(ndf,*),xl(ndm,*),tl(*),p(*),s(nst,*),d(18,*),x(ndm,*),t(*),&
    double precision dun,un
 
 
-   integer        numnp,numel,nummat,nen,neq
-   common /cdata/ numnp,numel,nummat,nen,neq
+   include 'cdata.h'
+   include 'eldata.h'
 
-   double precision dq
-   integer             n,ma,mct,iel,nel
-   common /eldata/  dq,n,ma,mct,iel,nel
+   include 'fdata.h'
 
-   logical        fl    ,pfr
-   common /fdata/ fl(11),pfr
+   include 'iofile.h'
+   include 'mdat2.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'ndata.h'
 
-   integer        n11a,n11b,n11c,ia
-   common /mdat2/ n11a,n11b,n11c,ia(2,11)
+   include 'hdata.h'
 
-   integer        nv,nw,nl
-   common /ndata/ nv,nw,nl
+   include 'hdatb.h'
 
-   integer        nh1,nh2
-   common /hdata/ nh1,nh2
+   include 'prlod.h'
 
-   integer        nhi,nhf,ihbuff,irec,jrec,nrec
-   logical                                      hfl,hout
-   common /hdatb/ nhi,nhf,ihbuff,irec,jrec,nrec,hfl,hout
+   include 'tbeta.h'
 
-   double precision prop,ap
-   integer                       iexp    ,ik    ,npld
-   common /prlod/  prop,ap(6,10),iexp(10),ik(10),npld
+   include 'temfl1.h'
 
-   double precision beta,gamm,theta
-   integer                          nop,nt
-   common /tbeta/   beta,gamm,theta,nop,nt
+   include 'temfl2.h'
 
-   character*12    tfile
-   common /temfl1/ tfile(6)
+   include 'xdata.h'
 
-   integer         itrec   ,nw1,nw2
-   common /temfl2/ itrec(4),nw1,nw2
 
-   integer        isw,nn1,nn2,nn3
-   logical                        afl,bfl,cfl,dfl
-   common /xdata/ isw,nn1,nn2,nn3,afl,bfl,cfl,dfl
-
-   integer         maxa
-include 'maxa.h'      
-   double precision dm
-   integer                   im
-   common           dm(maxa),im(maxa)
+   include 'maxa.h'      
+   
+   include 'ddata.h'
 
 !  Set up local arrays before calling element library
 
@@ -177,7 +156,7 @@ include 'maxa.h'
      
 !      Form element array
      
-       dq  = prop
+       mydm  = prop
        if(ie(7,ma).ne.iel) mct = 0
        iel = ie(7,ma)
        isx = isw

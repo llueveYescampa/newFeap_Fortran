@@ -42,31 +42,24 @@
 program         pcfeap
 implicit        none
 
-   integer         numnp,numel,nummat,nen,neq
-   common /cdata/  numnp,numel,nummat,nen,neq
+   include 'cdata.h'
 
-   integer         iodr,iodw,ipd,ipr,ipi
-   common /iofild/ iodr,iodw,ipd,ipr,ipi
+   include 'iofild.h'
 
-   integer         maxm,ne
-   common /psize/  maxm,ne
+   include 'psize.h'
 
-   character       tfile*12
-   common /temfl1/ tfile(6)
+   include 'temfl1.h'
 
-   character      versn*12
-   common /vdata/ versn(3)
+   include 'vdata.h'
+
 
 !  Parameters control program capacity:
 !                 mmax  = mesh size
 !                 maxa  = equation size (in several routines)
 
-   integer        mmax, maxa
-include 'maxa.h'      
+   integer        mmax
+   include 'maxa.h'      
    parameter     (mmax = 3*maxa)
-
-   integer        m
-   common         m(mmax)
 
 !  Set version data
 

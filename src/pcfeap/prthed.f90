@@ -7,8 +7,7 @@ integer  iow
 !  Inputs:
 !     iow      - Logical unit number for outputs
 
-   character     head*4
-   common/bdata/ head(20)
+   include 'bdata.h'
 
    write(iow,'(/1x,20a4//1x)') head
 end

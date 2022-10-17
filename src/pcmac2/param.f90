@@ -15,12 +15,9 @@ double precision    ct(3)
 
    logical   pcomp
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
-   double precision beta,gamm,theta
-   integer                         nop,nt
-   common /tbeta/  beta,gamm,theta,nop,nt
+   include 'tbeta.h'
 
 !  Set integration parameters
 

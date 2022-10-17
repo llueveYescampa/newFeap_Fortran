@@ -17,12 +17,9 @@ integer                                            npld
 
    integer i
 
-   logical        fl    ,pfr
-   common /fdata/ fl(11),pfr
+   include 'fdata.h'
 
-   double precision beta,gamm,theta
-   integer                          nop,nt
-   common /tbeta/   beta,gamm,theta,nop,nt
+   include 'tbeta.h'
 
 !  set initial values of parameters
 
@@ -36,9 +33,24 @@ integer                                            npld
    dt    = 0.0
    prop  = 1.0
    ttim  = 0.0
-   do i = 1,7
-     fl(i+4) = .false.
+   
+   i = 1
+   do 
      fl(i)   = .true.
-   end do
-      
+     i = i + 1 
+     if (i > 7) exit
+   enddo
+
+   do 
+     fl(i)   = .false.
+     i = i + 1 
+     if (i > 11) exit
+   enddo
+
+   
+!   do i = 1,7
+!     fl(i+4) = .false.
+!     fl(i)   = .true.
+!   end do
+
 end

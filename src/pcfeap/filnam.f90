@@ -12,18 +12,12 @@ implicit  none
    integer iocheck
    logical test
 
-   integer         jfill,jplot
-   logical                     lfil
-   common /instl2/ jfill,jplot,lfil
+   integer jfill
+   logical lfil
 
-   integer         iodr,iodw,ipd,ipr,ipi
-   common /iofild/ iodr,iodw,ipd,ipr,ipi
-
-   character       tfile*12
-   common /temfl1/ tfile(6)
-
-   character      versn*12
-   common /vdata/ versn(3)
+   include 'iofild.h'
+   include 'temfl1.h'
+   include 'vdata.h'
 
    data wd/'new   ','exists'/
 

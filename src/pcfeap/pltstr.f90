@@ -8,8 +8,7 @@ double precision   dt(numnp),st(numnp,*)
    integer  ii,j
    double precision   sig(6)
 
-   double precision eerror,elproj,ecproj,efem,enerr,ebar
-   common /errind/  eerror,elproj,ecproj,efem,enerr,ebar
+   include 'errind.h'
 
    elproj = 0.0
    do ii = 1,numnp

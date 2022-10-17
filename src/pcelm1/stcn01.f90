@@ -33,8 +33,7 @@ double precision d(*),xl(ndm,*),ul(ndf,*),tl(*),shp(3,4),dt(numnp), &
    integer  i, l,ll
    double precision   gr,xsj,xsji, xx,yy
 
-   double precision eerror,elproj,ecproj,efem,enerr,ebar
-   common /errind/  eerror,elproj,ecproj,efem,enerr,ebar
+   include 'errind.h'
    
    gr = (1.+d(17))/d(16)
    do l = 1,lint

@@ -5,11 +5,9 @@ implicit  none
 
    double precision    elrind,ecrind
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
-   double precision eerror,elproj,ecproj,efem,enerr,ebar
-   common /errind/  eerror,elproj,ecproj,efem,enerr,ebar
+   include 'errind.h'
 
 !  Output error indicator values
 

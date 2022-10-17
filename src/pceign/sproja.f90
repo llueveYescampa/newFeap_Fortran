@@ -19,20 +19,15 @@ double precision   v(neq,*),z(neq,*),g(*)
 
    double precision   dot,engy
    
-   integer         maxa
-include 'maxa.h'      
-   double precision aa
-   common /adata/   aa(maxa)
+   include 'maxa.h'      
+   
+   include 'adata.h'
 
-   integer         maxf
-   common /frdata/ maxf
+   include 'frdata.h'
 
-   integer         iodr,iodw,ipd,ipr,ipi
-   common /iofild/ iodr,iodw,ipd,ipr,ipi
+   include 'iofild.h'
 
-   double precision dimx,dimn
-   integer                    nvb,npl
-   common /nfrta/   dimx,dimn,nvb,npl
+   include 'nfrta.h'
 
 !  Forward reduce eigenvector estimates
 

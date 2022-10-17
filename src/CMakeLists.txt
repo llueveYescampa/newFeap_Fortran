@@ -4,7 +4,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 #Create a variable called linalg_SOURCES containing all .cpp files:
 
 add_subdirectory(pcfeap)
-add_subdirectory(pasolv)
+add_subdirectory(parsol)
 add_subdirectory(pcdept)
 add_subdirectory(pceign)
 add_subdirectory(pcelm1)
@@ -17,15 +17,15 @@ add_subdirectory(pcelm7)
 add_subdirectory(pcmac1)
 add_subdirectory(pcmac2)
 add_subdirectory(pcmac3)
-add_subdirectory(pcmsh1)
-add_subdirectory(pcplt1)
+add_subdirectory(pcmesh)
+add_subdirectory(pcplot)
 add_subdirectory(pctekt)
-#add_subdirectory(pfsolv)
+#add_subdirectory(pfrsol)
 #add_subdirectory(pcfor5)
 
 set(newFeap_Src 
     ${pcfeap_Src}
-    ${pasolv_Src}
+    ${parsol_Src}
     ${pcdept_Src}
     ${pceign_Src}
     ${pcelm1_Src}
@@ -45,5 +45,3 @@ set(newFeap_Src
     #${pcfor5_Src}
     PARENT_SCOPE
     )
-
-

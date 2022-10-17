@@ -1,7 +1,7 @@
 subroutine strn02(shp,xl,ul,type,xr0,xz0,ndm,ndf,eps)
 implicit none
 integer   ndm,ndf
-double precision shp(3,1),xl(ndm,1),ul(ndf,1),type,xr0,xz0,eps(4)
+double precision shp(3,*),xl(ndm,*),ul(ndf,*),type,xr0,xz0,eps(4)
 
 !  Purpose: Compute strain for point
 

@@ -1,6 +1,6 @@
 subroutine matl02(d,it,ib)
 implicit none
-double precision  d(15)
+double precision  d(18)
 integer it,ib
 
 !  Purpose:  Input material set parameters for elements
@@ -21,14 +21,11 @@ integer it,ib
 
 !  Parameter specification for FEAP materials
 
-   integer         nh1,nh2
-   common /hdata/  nh1,nh2
+   include 'hdata.h'
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
-   character       yyy*80
-   common /ydata/  yyy
+   include 'ydata.h'
 
 
    data wa/' P l a n e   S t r a i n',' A x i s y m m e t r i c'/
@@ -53,7 +50,7 @@ integer it,ib
        if (iocheck .eq. 0) then
          d(1)    = ee/(1. - 2.*xnu)/3.0d0
          d(2)    = ee/(1.+xnu)/2.
-         if(d(11).ne.0.0d0) then
+         if(d(11) .ne. 0.0d0) then
            write(ioWrite,2000) wa(it+1),ee,xnu,d(4),d(11),d(12),d(13)
            if(ioRead.lt.0) then 
              write(*,2000) wa(it+1),ee,xnu,d(4),d(11),d(12),d(13)
@@ -66,12 +63,12 @@ integer it,ib
          end if
          exit
        else
-         call pperror('PCELM2',yyy)
+         call pperror('matl02',yyy)
          cycle
        end if  
        exit 
      else
-       call pperror('PCELM2',yyy)
+       call pperror('matl02',yyy)
        cycle
      end if
    end do

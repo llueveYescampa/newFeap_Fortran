@@ -9,8 +9,7 @@ character subnam*6, yy*80
 !    yy        - String of data read
 
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
    
    if(ioRead.gt.0) then
      write(ioWrite,'(a,a6,a,/1x,a80)') &

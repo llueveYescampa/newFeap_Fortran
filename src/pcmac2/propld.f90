@@ -13,17 +13,16 @@ double precision    t
 !     propld - Proportional loading for time 't' (when j = 0)
 
 
-   character yyy*80
+   !character yyy*80
    integer   i,l,m, nprop
    integer iocheck
    double precision    tmin,tmax,propld
 
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'iofile.h'
 
-   double precision prop,a
-   integer                      iexp    ,ik    ,npld
-   common /prlod/  prop,a(6,10),iexp(10),ik(10),npld
+   include 'ydata.h'
+
+   include 'prlod.h'
 
    if(j.gt.0) then
 !    Input table of proportional loads

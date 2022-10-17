@@ -22,35 +22,23 @@ double precision fn(nneq,2),u(*),dr(*),du(*),t(*),s
    integer j, n, nneq2
    double precision  ctem,db,dot
 
+   include 'cdata.h'
 
-   integer        numnp,numel,nummat,nen,neq
-   common /cdata/ numnp,numel,nummat,nen,neq
-
-   logical        fl    ,pfr
-   common /fdata/ fl(11),pfr
-
-   integer        nn,n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13
-   common /mdata/ nn,n0,n1,n2,n3,n4,n5,n6,n7,n8,n9,n10,n11,n12,n13
-
-   integer        nv,nw,nl
-   common /ndata/ nv,nw,nl
-
-   double precision prop,a
-   integer                       iexp    ,ik    ,npld
-   common /prlod/   prop,a(6,10),iexp(10),ik(10),npld
-
-   double precision         beta,gamm,theta
-   integer                        nop,nt
-   common /tbeta/ beta,gamm,theta,nop,nt
-
-   double precision         ttim,dt,c1,c2,c3,c4,c5,c6
-   common /tdata/ ttim,dt,c1,c2,c3,c4,c5,c6
+   include 'fdata.h'
    
-   integer         maxa
-include 'maxa.h'      
-   double precision dm
-   integer                   m
-   common           dm(maxa),m(maxa)
+   include 'mdata.h'
+
+   include 'ndata.h'
+   include 'prlod.h'
+
+
+   include 'tbeta.h'
+
+   include 'tdata.h'
+   
+   include 'maxa.h'      
+   
+   include 'ddata.h'
    
    logical   fa,tr
    data fa /.false./

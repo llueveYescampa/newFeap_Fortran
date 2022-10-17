@@ -26,34 +26,28 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
    double precision e,xnu,alp,t0, xx,yy,zz, dv, xsj, sigr4
 
    double precision eps(4),sigr(6),shp(3,9),sg(16),tg(16),wg(16),ang
-   character wd(3)*12,yyy*80
+   character wd(3)*12 !,yyy*80
 
    integer iocheck1, iocheck2
 
 
-   integer         maxa
-include 'maxa.h'      
+   include 'maxa.h'      
 
-   double precision         aa
-   common /adata/ aa(maxa)
+   include 'adata.h'
 
-   integer        numnp,numel,nummat,nen,neq
-   common /cdata/ numnp,numel,nummat,nen,neq
-
-   double precision          dm
-   integer            n,ma,mct,iel,nel
-   common /eldata/ dm,n,ma,mct,iel,nel
-
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'cdata.h'
+   include 'eldata.h'
+   include 'iofile.h'
+   include 'ydata.h'
 
    data wd/'Plane Stress','Plane Strain','Axisymmetric'/
 
 !  Go to correct array processor
 
-   l    = d(5)
-   k    = d(6)
-   ityp = d(15)
+   l    = int(d(5))
+   k    = int(d(6))
+   ityp = int(d(15))
+   lint = 0
    select case (isw)
    case(1)
 !    Input material properties

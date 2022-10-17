@@ -25,29 +25,27 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
     logical flg
 
     integer i,i1,ii,j,j1,jj, ib,ityp,l,lint
-    double precision rr,zz,xr0,xz0,type,vol,yld,dot
+    double precision rr,zz,xr0,xz0,typo,vol,yld,dot
     double precision eps(4),sig(6),bbar(4,2,4),bbd(4,2),sg(4),tg(4), &
-                    wg(4),shp3(4,4),shp(3,4,4),xsj(4),ang,siga(6)
+                     wg(4),shp3(4,4),shp(3,4,4),xsj(4),ang,siga(6)
     
-    integer   maxa
-include 'maxa.h'      
-    double precision aa
-    common /adata/   aa(maxa)
+    include 'maxa.h'      
+    
+   include 'adata.h'
 
-    integer         numnp,numel,nummat,nen,neq
-    common /cdata/  numnp,numel,nummat,nen,neq
+   include 'cdata.h'
 
-    double precision dm
-    integer             n,ma,mct,iel,nel
-    common /eldata/  dm,n,ma,mct,iel,nel
+   include 'eldata.h'
 
-    double precision g     ,ad
-    common /elcom2/  g(2,4),ad(4,4)
-
-    integer         ioRead,ioWrite
-    common /iofile/ ioRead,ioWrite
+   include 'elcom2.h'
 
 
+    include 'iofile.h'
+
+    do i=1,4
+      xsj(i) = 0.0d+0
+    enddo
+    lint=0
 !   Go to correct array processor
 
     select case (isw)
@@ -68,15 +66,15 @@ include 'maxa.h'
     case(3,4,6,8)
 !     Compute tangent stiffness and residual force vector
       
-      type = d(5)
-      ib   = d(6)
+      typo = d(5)
+      ib   = int(d(6))
       
 !     Compute volumetric integrals
       
       call pconsd(g,8,0.0d0)
       do l = 1,lint
         call shapeFunc(sg(l),tg(l),xl,shp(1,1,l),xsj(l),ndm,4,ix,.false.)
-        call gvc02(shp(1,1,l),shp3(1,l),xsj(l),wg(l),xl,type,ndm)
+        call gvc02(shp(1,1,l),shp3(1,l),xsj(l),wg(l),xl,typo,ndm)
       end do ! l
       vol  = xsj(1) + xsj(2) + xsj(3) + xsj(4)
       do i = 1,4
@@ -93,7 +91,7 @@ include 'maxa.h'
         
 !         Compute stress, strain, and material moduli
         
-          call strn02(shp(1,1,l),xl,ul,type,xr0,xz0,ndm,ndf,eps)
+          call strn02(shp(1,1,l),xl,ul,typo,xr0,xz0,ndm,ndf,eps)
           call modl02(d,ul,eps,siga,1.d0,ndf,ib)
           do i = 1,5
             sig(i) = sig(i) + 0.25d0*siga(i)
@@ -125,7 +123,7 @@ include 'maxa.h'
 !     Stress computations for nodes
       
         call stcn02(ix,d,xl,ul,shp,aa,aa(numnp+1),ndf,ndm,numnp,sg,tg,sig,&
-                   eps,lint,type,ib)
+                   eps,lint,typo,ib)
         return
       end if  
       flg  = isw .eq. 3
@@ -133,7 +131,7 @@ include 'maxa.h'
       
 !       Compute stress, strain, and material moduli
       
-        call strn02(shp(1,1,l),xl,ul,type,xr0,xz0,ndm,ndf,eps)
+        call strn02(shp(1,1,l),xl,ul,typo,xr0,xz0,ndm,ndf,eps)
         call modl02(d,ul,eps,sig,xsj(l),ndf,ib)
         i1 = 0
         do i = 1,4

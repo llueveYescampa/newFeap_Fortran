@@ -1,0 +1,38 @@
+ FEAP * * EXAMPLE 3. TENSION STIP WITH A CIRCULAR HOLE                           
+
+     VERSION :   pcFEAP    -- 2.04 --   05/20/97  
+
+     Number of nodal points       =   160
+     Number of elements           =   133
+     Number of material sets      =     1
+     Dimension of coordinate space=     2
+     Degree of freedoms/node      =     2
+     Nodes per element (maximum)  =     4
+     Extra d.o.f. to element      =     0
+  E l a s t i c / P l a s t i c   M a t e r i a l
+  v o n  M i s e s  Y i e l d -  P l a n e   S t r a i n
+          Youngs Modulus (E)      0.70000E+04
+          Poisson Ratio (nu)      0.20000E+00
+          Mass Density (rho)      0.10000E+00
+          Yield Stress            0.24300E+02
+        Linear hardening moduli
+          Isotropic Hardening     0.00000E+00
+          Kinematic Hardening     0.00000E+00
+
+
+   E q u a t i o n    P r o b l e m   S u m m a r y:
+
+     Number of equations  =    291     Number nodes      =  160
+     Average col. height  =     22     Number elements   =  133
+     No. terms in profile =   6341     Number materials  =    1
+
+ *Macro   1 *prop      V1=  1.00     V2=  0.00     V3=  0.00    
+                                        time= 15: 0:11 
+                              P r o p o r t i o n a l   L o a d   T a b l e
+
+ number    type      tmin          tmax
+  1         0        0.000        0.1000E+07
+      a(1)          a(2)          a(3)          a(4)          exp
+     0.000         1.000         0.000         0.000            0
+
+ *End of macro execution*               time= 15:59: 8 

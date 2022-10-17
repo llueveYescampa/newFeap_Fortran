@@ -27,15 +27,11 @@ logical   fdyn
     double precision ur1,ur2,dot
 
 
-    integer         ioRead,ioWrite
-    common /iofile/ ioRead,ioWrite
+    include 'iofile.h'
 
-    double precision beta,gamm,theta
-    integer                         nop,nt
-    common /tbeta/  beta,gamm,theta,nop,nt
+   include 'tbeta.h'
 
-    double precision ttim,dt,c1,c2,c3,c4,c5,c6
-    common /tdata/   ttim,dt,c1,c2,c3,c4,c5,c6
+   include 'tdata.h'
 
 !   update solution vectors to begin a step
 

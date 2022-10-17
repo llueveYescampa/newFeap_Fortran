@@ -1,0 +1,110 @@
+ feap * * 2-d truss problem                                                      
+
+     VERSION :   pcFEAP    -- 2.04 --   05/20/97  
+
+     Number of nodal points       =     2
+     Number of elements           =     1
+     Number of material sets      =     1
+     Dimension of coordinate space=     2
+     Degree of freedoms/node      =     2
+     Nodes per element (maximum)  =     2
+     Extra d.o.f. to element      =     0
+    N o d a l:  coordinates
+
+      node      1 coord      2 coord
+         1       0.0000       0.0000
+         2      10.0000       0.0000
+
+ feap * * 2-d truss problem                                                      
+
+
+    E l e m e n t   C o n n e c t i o n s
+
+   elmt  matl  1-node  2-node
+     1     1       1       2
+
+ feap * * 2-d truss problem                                                      
+
+
+    N o d a l   B. C.
+
+      node  1 b.c.  2 b.c.
+         1       1       1
+         2       0       1
+    N o d a l:  force/displ
+
+      node      1 force      2 force
+         2   12000.0000       0.0000
+
+ feap * * 2-d truss problem                                                      
+
+
+    M a t e r i a l    P r o p e r t i e s
+
+     Material Set  1 for Element Type 4
+
+          degree of freedom assignments    local    global
+                                          number    number
+                                             1         1
+                                             2         2
+     T r u s s    E l e m e n t 4
+
+          Modulus  = 0.30000E+05
+          Area     = 0.30000E+01
+          Density  = 0.10000E+01
+          Yield    = 0.30000E+04
+          Iso. Hard= 0.30000E+03
+          Kin. Hard= 0.30000E+03
+
+
+   E q u a t i o n    P r o b l e m   S u m m a r y:
+
+     Number of equations  =      1     Number nodes      =    2
+     Average col. height  =      1     Number elements   =    1
+     No. terms in profile =      0     Number materials  =    1
+
+
+ feap * * 2-d truss problem                                                      
+
+
+  M a c r o   I n s t r u c t i o n s
+
+  Macro Statement  Variable 1  Variable 2  Variable 3
+       prop        1.0000      0.0000      0.0000    
+       dt         0.50000E-01  0.0000      0.0000    
+       loop time   40.000      0.0000      0.0000    
+       time        0.0000      0.0000      0.0000    
+       loop newt   10.000      0.0000      0.0000    
+       tang        1.0000      0.0000      0.0000    
+       next newt   0.0000      0.0000      0.0000    
+       disp        2.0000      0.0000      0.0000    
+       stre all    0.0000      0.0000      0.0000    
+       reac all    0.0000      0.0000      0.0000    
+       next time   0.0000      0.0000      0.0000    
+       stre all    0.0000      0.0000      0.0000    
+ *Macro   1 *prop      V1=  1.00     V2=  0.00     V3=  0.00    
+                                        time= 13:56:42 
+                              P r o p o r t i o n a l   L o a d   T a b l e
+
+ number    type      tmin          tmax
+  1         0        0.000        0.1000E+07
+      a(1)          a(2)          a(3)          a(4)          exp
+     0.000         1.000         0.000         0.000            0
+
+ *Macro   2 *dt        V1= 0.500E-01 V2=  0.00     V3=  0.00    
+                                        time= 13:56:42 
+ *Macro   3 *loop time V1=  40.0     V2=  12.0     V3=  0.00    
+                                        time= 13:56:42 
+ *Macro   4 *time      V1=  0.00     V2=  0.00     V3=  0.00    
+                                        time= 13:56:42 
+   Computing solution for time 5.00000E-02
+   Proportional load value is  5.00000E-02
+ *Macro   5 *loop newt V1=  10.0     V2=  8.00     V3=  0.00    
+                                        time= 13:56:42 
+ *Macro   6 *tang      V1=  1.00     V2=  0.00     V3=  0.00    
+                                        time= 13:56:42 
+ Condition check: D-max 9.0000E+03; D-min 9.0000E+03; Ratio 1.0000E+00
+ Maximum no. diagonal digits lost:  0
+   | R(i) | =  6.0000000E+02            time= 13:56:42 
+   Energy Convergence Test
+   E(1)= 4.00000000000000E+01, E(i)= 4.00000000000000E+01, Tol.= 1.0000E-12

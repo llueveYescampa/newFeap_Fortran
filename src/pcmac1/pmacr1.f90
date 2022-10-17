@@ -37,75 +37,36 @@ logical   prt
 !     various   - Depends on command number
 
 
-   integer         maxa
-include 'maxa.h'      
+   include 'maxa.h'      
 
    logical   fa,tr,pcomp,sflg,tflg
-   integer   ietyp,ml1,na,nal,n1,n2,n3,n4,iz,i
+   integer   ietyp,ml1,na,nal,n1,n2,n3,n4,i
    integer   nnpo,nnlo,nnmo,ndmo,ndfo,nhio,nhfo,nrco
-   double precision    zero,shft,rnorm,enold,dot
+   double precision  enold,shft,rnorm,dot
 
    character tt*10
 
-   double precision aa
-   common /adata/   aa(maxa)
+   include 'adata.h'
+   include 'cdata.h'
+   include 'ddata.h'
+   include 'errind.h'
+   include 'fdata.h'
+   include 'frdata.h'
+   include 'hdatb.h'
+   include 'iofild.h'
+   include 'iofile.h'
+   include 'ldata.h'
+   include 'mdat2.h'
+   include 'ndata.h'
+   include 'prlod.h'
+   include 'rdata.h'
+   include 'tbeta.h'
+   include 'tdata.h'
+   include 'temfl1.h'
+   include 'temfl2.h'
 
-   integer        numnp,numel,nummat,nen,neq
-   common /cdata/ numnp,numel,nummat,nen,neq
 
-   double precision eerror,elproj,ecproj,efem,enerr,ebar
-   common /errind/  eerror,elproj,ecproj,efem,enerr,ebar
-
-   logical        fl    ,pfr
-   common /fdata/ fl(11),pfr
-
-   integer         maxf
-   common /frdata/ maxf
-
-   integer        nhi,nhf,ihbuff,irec,jrec,nrec
-   logical                                      hfl,hout
-   common /hdatb/ nhi,nhf,ihbuff,irec,jrec,nrec,hfl,hout
-
-   integer         iodr,iodw,ipd,ipr,ipi
-   common /iofild/ iodr,iodw,ipd,ipr,ipi
-
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
-
-   integer        l,lv,lvs   ,lve   ,jct
-   common /ldata/ l,lv,lvs(9),lve(9),jct(100)
-
-   integer        n11a,n11b,n11c,ia
-   common /mdat2/ n11a,n11b,n11c,ia(2,11)
-
-   integer        nv,nw,nl
-   common /ndata/ nv,nw,nl
-
-   double precision prop,a
-   integer                       iexp    ,ik    ,npld
-   common /prlod/   prop,a(6,10),iexp(10),ik(10),npld
-
-   double precision engy,rnmax,tol,myShift
-   common /rdata/   engy,rnmax,tol,myShift
-
-   double precision beta,gamm,theta
-   integer                        nop,nt
-   common /tbeta/   beta,gamm,theta,nop,nt
-
-   double precision ttim,dt,c1,c2,c3,c4,c5,c6
-   common /tdata/   ttim,dt,c1,c2,c3,c4,c5,c6
-
-   character       tfile*12
-   common /temfl1/ tfile(6)
-
-   integer         itrec   ,nw1,nw2
-   common /temfl2/ itrec(4),nw1,nw2
-
-   double precision dm
-   integer                   im
-   common           dm(maxa),im(maxa)
-
-   data zero/0.0/,fa,tr/.false.,.true./,iz/0/
+   data fa,tr/.false.,.true./
 
 !  transfer to correct process
 
@@ -114,9 +75,9 @@ include 'maxa.h'
    select case (j)
    case ( 1)
 !    print stress values
-     n1 = ct(1,l)
-     n2 = ct(2,l)
-     n3 = ct(3,l)
+     n1 = int(ct(1,l))
+     n2 = int(ct(2,l))
+     n3 = int(ct(3,l))
      n3 = max(n3,1)
      n4 = numnp + 1
      if (pcomp(lct(l),'node')) then
@@ -159,10 +120,9 @@ include 'maxa.h'
        endif
        call formfe(b,dr,fa,fa,fa,fa,4,n1,n2,n3)
      end if
-     return
+     !return
    case (2,3,9)
 !    solution step
-     
      shft = c1
      sflg = fl(9)
      if(j.eq.9) then
@@ -171,23 +131,17 @@ include 'maxa.h'
        end if  
        fl(7) = .false.
        tflg  = .false.
-     
-!    form tangent stiffness
-     
-     else
-     
-!     unsymmetric tangent (must use profile solver)
-     
-       if(j.eq.2) then
+     else  ! j is 2 or 3
+       ! form tangent stiffness
+       if(j.eq.3) then
+         ! symmetric tangent
+         fl(6) = .false.
+       else
+         ! unsymmetric tangent (must use profile solver)
          fl(6) = .true.
        end if  
-     
-!     symmetric tangent
-     
-       if(j.eq.3) then
-         fl(6) = .false.
-       end if  
-       if(ct(1,l).ne.zero) then
+
+       if(ct(1,l).ne.0.0d0) then
          fl(8) = tr
          fl(7) = fa
 !         call raxpb(f, f0, prop, nneq, dm(nt+nneq))
@@ -196,7 +150,7 @@ include 'maxa.h'
        end if
        myShift= 0.
        tflg = tr
-       if(.not.fl(9).and.ct(2,l).ne.zero) then
+       if(.not.fl(9).and.ct(2,l).ne.0.0d0) then
          if(fl(2)) then
            sflg = tr
            myShift= ct(2,l)
@@ -233,6 +187,7 @@ include 'maxa.h'
            write(*,'(a,1pe15.7,12x,a,a10)') '   | R(i) | =',rnorm,'time=',tt
          end if  
        end if
+       enold = 0.0d0
        if (rnmax.eq.0.0d0) then
          rnmax = abs(engy)
          if(ct(3,l).le.0.0) then
@@ -248,12 +203,10 @@ include 'maxa.h'
          ct(1,lve(lv)) = ct(1,lvs(lv))
          l = lve(lv) - 1
        else if(pcomp(lct(l),'line')) then
-     
-!    line search
-     
+!        line search
          if(abs(engy).gt.ct(3,l)*enold) then
-          ml1 = 1 + nneq
-          call serchl(dm(nt),id,engy,aa,b,dr,ct(3,l),aa(ml1),nneq)
+           ml1 = 1 + nneq
+           call serchl(dm(nt),id,engy,aa,b,dr,ct(3,l),aa(ml1),nneq)
          end if
        end if
        call update(id,dm(nt),b,dm(nv),dr,nneq,fl(9),2)
@@ -267,24 +220,22 @@ include 'maxa.h'
    case (4)
 !    form out of balance force for time step/iteration
      
-     if(fl(8)) then
-       return
+     if( .not. fl(8)) then
+     ! call raxpb(f, f0, prop, nneq, dm(nt+nneq))
+       call saxpb(f, f0, prop, nneq, dm(nt+nneq))
+       call pload(id,dm(nt),dr,nneq,dm(nl),dm(nw))
+       call formfe(b,dr,fa,tr,fa,fa,6,1,numel,1)
+       if(pcomp(lct(l),'acce').and.ttim.eq.0.0 .and. nop.eq.3) then
+         call inaccl(id,dr,dm(nl),dm(nw),nneq)
+       end if
+       rnorm = sqrt(dot(dr,dr,neq))
+       write(ioWrite,'(a,1pe15.7)') '   | R(i) | = ',rnorm
+       if(ioRead.lt.0) then
+         write(*,'(a,1pe15.7)') '   | R(i) | = ',rnorm
+       end if  
+       fl(8) = tr
      end if
-     
-!     call raxpb(f, f0, prop, nneq, dm(nt+nneq))
-     call saxpb(f, f0, prop, nneq, dm(nt+nneq))
-     call pload(id,dm(nt),dr,nneq,dm(nl),dm(nw))
-     call formfe(b,dr,fa,tr,fa,fa,6,1,numel,1)
-     if(pcomp(lct(l),'acce').and.ttim.eq.0.0 .and. nop.eq.3) then
-       call inaccl(id,dr,dm(nl),dm(nw),nneq)
-     end if
-     rnorm = sqrt(dot(dr,dr,neq))
-     write(ioWrite,'(a,1pe15.7)') '   | R(i) | = ',rnorm
-     if(ioRead.lt.0) then
-       write(*,'(a,1pe15.7)') '   | R(i) | = ',rnorm
-     end if  
-     fl(8) = tr
-     return
+     !return
    case (5)
 !    form a lumped mass approximation
      
@@ -294,16 +245,16 @@ include 'maxa.h'
      call pconsd(dm(nl),neq,0.0d0)
      fl(2) = tr
      call formfe(b,dm(nl),fa,tr,fa,fa,5,1,numel,1)
-     return
+     !return
    case (6,8)
 !    compute reactions and print
      
      if(pcomp(lct(l),'all ')) then
        n2 = numnp
      else
-       n1 = ct(1,l)
-       n2 = ct(2,l)
-       n3 = ct(3,l)
+       n1 = int(ct(1,l))
+       n2 = int(ct(2,l))
+       n3 = int(ct(3,l))
        n1 = max(1,min(numnp,n1))
        n2 = max(n1,min(numnp,n2))
        n3 = max(1,n3)
@@ -319,12 +270,12 @@ include 'maxa.h'
          call prtdis(x,b,ttim,prop,ndm,ndf,n1,n2,n3)
        end if
      end if
-     return
+     !return
    case (7)
 !    check mesh for input errors
      
      call formfe(b,dr,fa,fa,fa,fa,2,1,numel,1)
-     return
+     !return
    case (10)
 !    modify mesh data (cannot change profile of stiffness/mass)
      
@@ -339,7 +290,7 @@ include 'maxa.h'
          write(*,'(a)')' **ERROR** Attempt to change profile during mesh.'
        end if  
      end if  
-     return
+     !return
    case (11)
 !    restart previously run problem
      
@@ -353,7 +304,7 @@ include 'maxa.h'
         if(fl(9)) read(7) (dm(i),i=nv,nv+4*neq)
         if(nrec.gt.0) then
           do j = 1,nrec
-            call phstio(7,j,dm(nhi),nhf-nhi+1,11,tfile(5),iz)
+            call phstio(7,j,dm(nhi),nhf-nhi+1,11,tfile(5),0)
             call phstio(3,j,dm(nhi),nhf-nhi+1,2,tfile(2),itrec(2))
           end do  
         end if
@@ -365,9 +316,9 @@ include 'maxa.h'
           write(  *,'(a)')' **ERROR** File incompatible with current problem.'
         end if  
      end if
-     return
+     !return
    end select
-
+   return
 !  formats
 
 2004  format('   Energy Convergence Test'/'   E(1)=',1pe21.14, &

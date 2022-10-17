@@ -24,28 +24,21 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
    integer   i,is,j
    double precision ssa,tta,ssg,ttg,xx,yy
    double precision sig(4),p1,p2,p3
-   character wd(2)*4,yyy*80
+   character wd(2)*4 ! ,yyy*80
    
    integer iocheck
 
-   integer         maxa
-include 'maxa.h'      
+   include 'maxa.h'      
    
-   double precision ap
-   common /adata/   ap(maxa)
+   include 'adata.h'      
+   include 'cdata.h'
+   include 'ydata.h'
 
-   integer         numnp,numel,nummat,nen,neq
-   common /cdata/  numnp,numel,nummat,nen,neq
+   include 'eldata.h'
 
-   double precision dm
-   integer             n,ma,mct,iel,nel
-   common /eldata/  dm,n,ma,mct,iel,nel
-
-   double precision xs,xt,xh,ys,yt,yh,xj0,xj1,xj2,a1   ,a2   ,beta
-   common /elcom3/  xs,xt,xh,ys,yt,yh,xj0,xj1,xj2,a1(3),a2(3),beta(5)
-
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   include 'elcom3.h'
+   
+   include 'iofile.h'
 
    data wd/'ress','rain'/
 
@@ -95,7 +88,7 @@ include 'maxa.h'
      end do
    case (2)
 !    Check mesh
-     call ckisop(ix,xl,ap,ndm)
+     call ckisop(ix,xl,aa,ndm)
      return
    case (3,4,5,6,8)
 !    Compute Pian-Sumihara arrays for elastic: compute jacobian
@@ -128,7 +121,7 @@ include 'maxa.h'
      if(isw.eq.4) then
 !      Compute the stresses
 
-       is = d(12)
+       is = int(d(12))
 !      Compute the stresses at the center and the specified points
        
        ssg    = -ssa*beta(5)
@@ -159,7 +152,7 @@ include 'maxa.h'
      else if(isw.eq.8) then 
 !      Compute the nodal stress values
      
-       call stcn03(ix,d,ssa,tta,ap,ap(numnp+1),numnp)
+       call stcn03(ix,d,ssa,tta,aa,aa(numnp+1),numnp)
        return
      end if  
      
