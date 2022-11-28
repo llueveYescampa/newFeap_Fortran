@@ -211,7 +211,6 @@ implicit none
   end select
    
 !.... formats
-1000 format(8f10.0)
 2000 format(5x,'T r u s s    E l e m e n t 7'//             &
         10x,'Modulus  =',e12.5/10x,'Area     =',e12.5/      &
         10x,'Density  =',e12.5/10x,'Yield    =',e12.5/      &
@@ -221,7 +220,6 @@ implicit none
         10x,'Density  =',e12.5/)
 2002 format(5x,'T r u s s    E l e m e n t 7'//' elem mate',          &
        4x,'1-coord',4x,'2-coord',4x,'3-coord',5x,'force',7x,'strain')
-2003 format(2i5,3f11.4,2e13.5)
 3000 format(' Input  El/Plas: E, A, rho, Y, H-iso, H-Kin'/           &
             '        Elastic: E, A, rho'/3x,'>',$)
 end
