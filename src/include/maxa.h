@@ -1,2 +1,2 @@
-  integer  maxa
-  parameter     (maxa=20000)
+  integer :: maxa
+  parameter (maxa=20000)

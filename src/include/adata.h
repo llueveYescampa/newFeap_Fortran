@@ -1,3 +1,2 @@
-   double precision aa
-   ! common /adata/   aa(maxa)
-   common /adata/   aa(8000)
+   double precision :: aa
+   common /adata/      aa(8000)

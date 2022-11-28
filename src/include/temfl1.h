@@ -1,2 +1,2 @@
-   character*12    tfile
+   character ::    tfile*12
    common /temfl1/ tfile(6)

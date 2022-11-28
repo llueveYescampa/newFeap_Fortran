@@ -1,2 +1,2 @@
-   integer         ior,iow
+   integer ::      ior,iow
    common /iofile/ ior,iow

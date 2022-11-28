@@ -1,2 +1,2 @@
-   integer         maxf
+   integer ::      maxf
    common /frdata/ maxf

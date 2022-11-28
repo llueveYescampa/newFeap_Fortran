@@ -1,2 +1,2 @@
-   integer        nv,nw,nl
+   integer ::     nv,nw,nl
    common /ndata/ nv,nw,nl
