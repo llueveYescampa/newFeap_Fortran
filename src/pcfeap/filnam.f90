@@ -9,12 +9,8 @@ implicit none
    
    character*12 finp,fout,fres,fsav,pinp,pout,pres,psav,edate
    
-   integer iocheck
-   logical test
-
-   integer         jfill,jplot
-   logical                     lfil
-   common /instl2/ jfill,jplot,lfil
+   integer iocheck, jfill,jplot
+   logical test, lfil
 
    include 'iofild.h'
    include 'temfl1.h'
