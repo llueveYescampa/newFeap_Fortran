@@ -138,7 +138,7 @@ implicit none
    if(dimn.ne.0.0d0) then
      dd = dimx/dimn
    end if  
-   ifig = log10(dfig) + 0.6
+   ifig = int(log10(dfig) + 0.6)
    write(iow,2004) dimx,dimn,dd,ifig
    if(ior.lt.0) then
      write(*,2004) dimx,dimn,dd,ifig

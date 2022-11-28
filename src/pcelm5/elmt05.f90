@@ -101,7 +101,7 @@ implicit none
 
 !      Derivative w,s
 
-       lin = d(5)
+       lin = int(d(5))
        if(lin.eq.0) then
          wks = 0.0d0
        else

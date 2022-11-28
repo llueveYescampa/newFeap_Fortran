@@ -42,9 +42,9 @@ implicit none
 
 !  Go to correct array processor
 
-   l    = d(5)
-   k    = d(6)
-   ityp = d(15)
+   l    = int(d(5))
+   k    = int(d(6))
+   ityp = int(d(15))
    select case (isw)
    case(1)
 !    Input material properties

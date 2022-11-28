@@ -76,8 +76,8 @@ implicit none
      end do
    else if(mod(isw,3).eq.0) then
 !    Compute conductivity matrix and residual
-     nn  = d(7)
-     kat = d(8)
+     nn  = int(d(7))
+     kat = int(d(8))
      do l=1,lint
        call shapeFunc(sg(l),tg(l),xl,shp,xsj,ndm,nel,ix,.false.)
        xsj = xsj*wg(l)

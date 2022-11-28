@@ -116,7 +116,7 @@ implicit none
      if(isw.eq.4) then
 !      Compute the stresses
 
-       is = d(12)
+       is = int(d(12))
 !      Compute the stresses at the center and the specified points
        
        ssg    = -ssa*beta(5)
