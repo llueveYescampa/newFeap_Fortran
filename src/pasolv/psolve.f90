@@ -1,9 +1,10 @@
-subroutine psolve(u,a,b,dr,m,xm,s,ld,ig,idl,nst,nrs,   &
-           afac,solv,dyn,c1,ipd,rnorm,aengy,ifl)
-implicit  none
-integer   m(*),ld(*),ig(*),idl(*),nst,nrs,ipd,ifl
-double precision    u(*),a(*),b(*),dr(*),xm(*),s(nst,*),c1,rnorm,aengy
-logical   afac,solv,dyn
+!subroutine psolve(u,a,b,dr,m,xm,s,ld,ig,idl,nst,nrs,afac,solv,dyn,c1,ipd,rnorm,aengy,ifl)
+subroutine psolve(u,a     ,dr,xm    ,s,ld,ig,nst,nrs,afac,solv ,dyn ,c1  ,ipd,rnorm,aengy)
+           
+implicit none
+  integer          :: ld(*),ig(*),nst,nrs,ipd
+  double precision :: u(*),a(*),dr(*),xm(*),s(nst,*),c1,rnorm,aengy
+  logical          :: afac,solv,dyn
       
 
 !  Purpose:  Active column assembly and solution of equations
@@ -35,7 +36,7 @@ logical   afac,solv,dyn
 !     ifl       - Not used for profile solution
 
 
-   include 'maxa.h'      
+   include 'maxa.h'
 
    logical   afl,fa
    integer   n,ne,nep
@@ -49,7 +50,6 @@ logical   afac,solv,dyn
    include 'iofile.h'
 
    include 'temfl1.h'
-
    include 'temfl2.h'
 
    data   fa /.false./
@@ -60,7 +60,7 @@ logical   afac,solv,dyn
 
    ihfac = 8 ! record length factor (8)
    ihsiz = maxa
-   nep = 0
+
    if(afac) then
      if(fl(6)) then
        nep = neq + ig(neq)
@@ -93,7 +93,7 @@ logical   afac,solv,dyn
        end do  
      end if
 
-     if(ioRead.lt.0) then 
+     if(ior.lt.0) then 
        write(*,'(a/a)') '+  Solution status',' '
      end if  
 
@@ -102,7 +102,7 @@ logical   afac,solv,dyn
      do n = 1,numel
        ne = n
        call formfe(u,dr,.true.,solv,fa,fa,3,ne,ne,1)
-       if(ioRead.lt.0 .and. mod(n,50).eq.0) then
+       if(ior.lt.0 .and. mod(n,50).eq.0) then
          write(*,'(a,i4,a)') '+  ->',n,' Elements completed.'
        end if  
        call dasbly(s,s,ld,ig,nst,afl,afac,fa,dr,a(nep+1),a(neq+1),a)

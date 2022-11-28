@@ -1,7 +1,7 @@
 subroutine pian03(d,ul,s,p,nst,ndf,isw)
-implicit  none
-integer                    nst,ndf,isw
-double precision  d(*), ul(ndf,*),s(nst,*),p(*)
+implicit none
+  integer          :: nst,ndf,isw
+  double precision :: d(*), ul(ndf,*),s(nst,*),p(*)
 
 !  Pian-Sumihara stiffness matrix developed explicitly
 

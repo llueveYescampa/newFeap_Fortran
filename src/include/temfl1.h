@@ -1,2 +1,2 @@
-  character       tfile*12
-  common /temfl1/ tfile(6)
+   character*12    tfile
+   common /temfl1/ tfile(6)

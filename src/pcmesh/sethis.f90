@@ -1,6 +1,6 @@
 subroutine sethis(ie,ix,idl,ipd,nen,nen1,numel)
-implicit  none
-integer   ipd,nen,nen1,numel,ie(9,*),ix(nen1,*),idl(*)
+implicit none
+   integer :: ipd,nen,nen1,numel,ie(9,*),ix(nen1,*),idl(*)
 
 !  Purpose: Set up history addresses in ix array
 
@@ -20,18 +20,14 @@ integer   ipd,nen,nen1,numel,ie(9,*),ix(nen1,*),idl(*)
 
    integer   ihsiz,ihfac,ihmin, n,nu,nh0,nhinc
 
+
    include 'hdatb.h'
-
    include 'psize.h'
-
    include 'temfl1.h'
-
-
    include 'temfl2.h'
-
-   include 'maxa.h'      
-   
+   include 'maxa.h'
    include 'ddata.h'
+
 
    nh0 = (ne+ipd-1)/ipd
    nhi = nh0
@@ -68,7 +64,7 @@ integer   ipd,nen,nen1,numel,ie(9,*),ix(nen1,*),idl(*)
    do nu = 1,numel
      n     = idl(nu)
      nhinc = ie(8,ix(nen1,n))
-     if(hfl .and. nhinc.ne.0) then
+     if(hfl .and. nhinc .ne. 0) then
        itrec(2) = ihbuff
        open(3,file=tfile(2),access='direct', status='new', &
               form='unformatted',recl=itrec(2))
@@ -94,7 +90,7 @@ integer   ipd,nen,nen1,numel,ie(9,*),ix(nen1,*),idl(*)
    if(nrec.gt.numel) then
      write(*,'(a)')' **ERROR** Insufficient storage for history terms'
      call pdefil(tfile,2,2)
-     stop
+     call pstop(-93) ! stop
    else if(nh0.gt.nhi) then
      call phstio(3,nrec,dm(nhi),nhf-nhi+1,2,tfile(2),itrec(2))
    else

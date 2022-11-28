@@ -1,7 +1,7 @@
 subroutine pbcin(iii,idl,id,numnp,ndf,prt)
-implicit  none
-integer   iii,idl(*),ndf,id(ndf,*),numnp
-logical   prt
+implicit none
+  integer :: iii,idl(*),ndf,id(ndf,*),numnp
+  logical :: prt
 
 !  Purpose: Input restraint conditions for each node
 
@@ -16,14 +16,13 @@ logical   prt
 !     id(ndf,*)  - Boundary condition codes
 
 
-   ! character yyy*80
+   character yyy*80
    integer   i, l,lg, n,ng
    integer iocheck
    logical test
 
    include 'iofile.h'
-   include 'ydata.h'
-   
+
 !  Read in restraint conditions for each node
 
    iii = 1
@@ -35,13 +34,13 @@ logical   prt
      l = n
      lg = ng
      do while (.true.)
-       if(ioRead.lt.0) then 
+       if(ior.lt.0) then 
          write(*,'(a/3x,a,$)') ' Input: node, inc, b.c. codes(i),i=1,ndf','>'
        end if  
        call pintio(yyy,10)
        read(yyy,'(8i10)',IOSTAT=iocheck) n,ng,(idl(i),i=1,ndf)
        if (iocheck .ne.0) then
-         call pperror('PBCIN ',yyy)
+         call myPerror('pbcin ',yyy)
          cycle
        else  
          if(n.gt.0.and.n.le.numnp) then
@@ -74,12 +73,12 @@ logical   prt
 !  Output nodes with nonzero codes
 
    if(prt) then
-     call prthed(ioWrite)
-     write(ioWrite,2000) (i,i=1,ndf)
+     call prthed(iow)
+     write(iow,2000) (i,i=1,ndf)
      do n = 1,numnp
        do l = 1,ndf
          if(id(l,n).ne.0) then
-           write(ioWrite,'(i10,8i8)') n,(id(i,n),i=1,ndf)
+           write(iow,'(i10,8i8)') n,(id(i,n),i=1,ndf)
            exit
          end if
        end do  

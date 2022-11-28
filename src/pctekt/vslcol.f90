@@ -1,7 +1,7 @@
 integer*2 function vslcol(icol)   !.... set line type
-  integer icol
 
   integer iln
+  
   iln = 0
   if(icol.eq.4) then
      iln = 3

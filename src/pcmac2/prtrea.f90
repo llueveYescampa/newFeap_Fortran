@@ -1,7 +1,7 @@
 subroutine prtrea(r,ndf,numnp,n1,n2,n3)
-implicit  none
-integer   ndf,numnp, n1,n2,n3
-double precision    r(ndf,1)
+implicit none
+  integer          :: ndf,numnp, n1,n2,n3
+  double precision :: r(ndf,1)
 
 !  Purpose: Print nodal reactions
 
@@ -38,9 +38,9 @@ double precision    r(ndf,1)
    do n = n1,n2,n3
      kount = kount - 1
      if(kount.le.0) then
-       call prthed(ioWrite)
-       write(ioWrite,2000) (k,k=1,ndf)
-       if(ioRead.lt.0) write(*,2000) (k,k=1,ndf)
+       call prthed(iow)
+       write(iow,2000) (k,k=1,ndf)
+       if(ior.lt.0) write(*,2000) (k,k=1,ndf)
        kount = 50
      end if
 
@@ -49,18 +49,18 @@ double precision    r(ndf,1)
        psum(k) = psum(k) + rr(k)
      end do  
 
-     write(ioWrite,'(i10,6e13.4)') n,(rr(k),k=1,ndf)
-     if(ioRead.lt.0) then 
+     write(iow,'(i10,6e13.4)') n,(rr(k),k=1,ndf)
+     if(ior.lt.0) then 
        write(*,'(i10,6e13.4)') n,(rr(k),k=1,ndf)
      end if  
    end do  
 
 !  Print statics check
 
-   write(ioWrite,'(/7x,a,6e13.4)') 'sum', (rsum(k),k=1,ndf)
-   write(ioWrite,'( 3x,a,6e13.4)') 'prt sum',(psum(k),k=1,ndf)
-   write(ioWrite,'( 3x,a,6e13.4)') 'abs sum',(asum(k),k=1,ndf)
-   if(ioRead.lt.0) then
+   write(iow,'(/7x,a,6e13.4)') 'sum', (rsum(k),k=1,ndf)
+   write(iow,'( 3x,a,6e13.4)') 'prt sum',(psum(k),k=1,ndf)
+   write(iow,'( 3x,a,6e13.4)') 'abs sum',(asum(k),k=1,ndf)
+   if(ior.lt.0) then
      write(*,'(/7x,a,6e13.4)') 'sum',(rsum(k),k=1,ndf)
      write(*,'( 3x,a,6e13.4)') 'prt sum', (psum(k),k=1,ndf)
      write(*,'( 3x,a,6e13.4)') 'abs sum', (asum(k),k=1,ndf)

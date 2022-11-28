@@ -1,10 +1,10 @@
 subroutine filnam()
-implicit  none
+implicit none
 
 !  Purpose:  Set filenames for execution
 
    logical   linp,lout,lres,lsav
-   integer   i,iop,irs,isv,ifill
+   integer   iop,irs,isv,ifill ! i,
    character y*1,disknm*1,pdisknm*1,wd(2)*6
    
    character*12 finp,fout,fres,fsav,pinp,pout,pres,psav,edate
@@ -12,8 +12,9 @@ implicit  none
    integer iocheck
    logical test
 
-   integer jfill
-   logical lfil
+   integer         jfill,jplot
+   logical                     lfil
+   common /instl2/ jfill,jplot,lfil
 
    include 'iofild.h'
    include 'temfl1.h'
@@ -158,7 +159,7 @@ implicit  none
      write(*,2005) finp,wd(2),fout,wd(iop),fres,wd(irs),fsav,wd(isv)
      read(*,'(a1)') y
      if(y.eq.'s' .or.  y.eq.'S') then
-       stop
+       call pstop(-162) ! stop
      end if  
      if(y.ne.'y' .and. y.ne.'Y') then
        test=.true.
@@ -189,15 +190,15 @@ implicit  none
      
 !    Set the scratch disk names and locations
      
-     tfile(1) = ' :FRNT.TEM'
-     tfile(2) = ' :HIST.TEM'
-     tfile(3) = ' :MESH.TEM'
-     tfile(4) = ' :STRE.TEM'
+     tfile(1) = 'frnt.tem'
+     tfile(2) = 'hist.tem'
+     tfile(3) = 'mesh.tem'
+     tfile(4) = 'stre.tem'
      tfile(5) = fres
      tfile(6) = fsav
-     do i = 1,4
-       call pdisk(disknm,tfile(i))
-     end do  
+     !do i = 1,4
+     !  call pdisk(disknm,tfile(i))
+     !end do  
      exit
    end do
    return

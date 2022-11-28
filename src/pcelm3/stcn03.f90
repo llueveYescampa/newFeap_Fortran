@@ -1,7 +1,7 @@
 subroutine stcn03(ix,d,ssa,tta,dt,st,nnp)
 implicit none
-integer    ix(*),              nnp
-double precision d(*),ssa,tta,dt(nnp),st(nnp,*)
+  integer          :: ix(1), nnp
+  double precision :: d(*),ssa,tta,dt(nnp),st(nnp,*)
 
    integer   jj,ll
    double precision     sig1,sig2,sig3, xsj,ssg,ttg

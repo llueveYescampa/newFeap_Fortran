@@ -1,8 +1,8 @@
 subroutine pmacr (ld,s,ie,d,id,x,ix,f,t,jd,f0,b,dr,ndf,ndm,nen1,nst,prt)
-implicit  none
-integer   ld(*),ie(*),id(*),ix(*),jd(*),ndf,ndm,nen1,nst
-double precision  s(*),d(*),x(*),f(*),t(*),f0(*),b(*),dr(*)
-logical   prt
+implicit none
+  integer          :: ld(*),ie(*),id(*),ix(*),jd(*),ndf,ndm,nen1,nst
+  double precision :: s(*),d(*),x(*),f(*),t(*),f0(*),b(*),dr(*)
+  logical          :: prt
 
 
 !  Purpose: Command language instruction driver
@@ -35,37 +35,23 @@ logical   prt
    integer   i, j, k, ll, nm1,nm2,nlp,nneq
    double precision  ct(3,100)
    character wd(24)*4,tary*10,lwd*3
-   character*4    lct(100)
+   character*4 :: lct(100)
+   ! common /ldatb/ lct(100)
 
-   include 'maxa.h'      
 
    include 'cdata.h'
-
    include 'ddata.h'
-
    include 'fdata.h'
-
    include 'hdatb.h'
-   
    include 'iofile.h'
-
    include 'ldata.h'
-
    include 'ndata.h'
-
    include 'rdata.h'
-   
    include 'tbeta.h'
-   
    include 'tdata.h'
-
    include 'temfl1.h'
-
    include 'temfl2.h'
-
    include 'prlod.h'
-
-
 
    data wd/'stre','utan','tang','form','mass','reac','chec','disp',&
            'solv','mesh','rest',                                   &
@@ -82,7 +68,7 @@ logical   prt
 
 !  set initial values of parameters
 
-   call pinitc(engy,rnmax,myShift,tol,dt,prop,ttim,npld)
+   call pinitc(engy,rnmax,shift,tol,dt,prop,ttim,npld)
    nw1  = nm1
    nw2  = nm2 + nw1
    nneq = ndf*numnp
@@ -107,8 +93,8 @@ logical   prt
        i = l - 1
        call pctime (tary)
        if(l.ne.1.and.l.ne.ll) then
-        write(ioWrite,2001) i,wd(j),lct(l),(ct(k,l),k=1,3),tary
-        if(ioRead.lt.0) then
+        write(iow,2001) i,wd(j),lct(l),(ct(k,l),k=1,3),tary
+        if(ior.lt.0) then
           write(*,2001) i,wd(j),lct(l),(ct(k,l),k=1,3),tary
         end if  
        end if
@@ -122,20 +108,20 @@ logical   prt
      
 !      plot macro call
      
-       if(j.eq.nw2+1) then
-         call pplotf(x,ix,b,lct(l),ct(1,l),ndf,ndm,nen1)
-       end if
+       !if(j.eq.nw2+1) then
+       !  call pplotf(x,ix,b,lct(l),ct(1,l),ndf,ndm,nen1)
+       !end if
        l = l + 1
      end do
-     if (ioRead.lt.0) then
+     if (ior.lt.0) then
        cycle
      end if
      exit
    end do
 
    call pctime(tary)
-   write(ioWrite,'(a,15x,a,a10)') ' *End of macro execution*','time=',tary
-   if(ioRead.lt.0) then
+   write(iow,'(a,15x,a,a10)') ' *End of macro execution*','time=',tary
+   if(ior.lt.0) then
      write(*,'(a,15x,a,a10)') ' *End of macro execution*','time=',tary
    end if  
    if(.not.fl(4)) then

@@ -1,7 +1,7 @@
 subroutine rsolve(b,dr,a,ipd,ipr,maxf,nv,neq,nev,engy,ifl)
 implicit none
-integer  ipd,ipr,maxf,nv,neq,nev,ifl
-double precision   b(*),dr(neq,*),a(*),engy
+  integer          :: ipd,ipr,maxf,nv,neq,nev,ifl
+  double precision :: b(*),dr(neq,*),a(*),engy
 
 !  Purpose: Resolution for profile solution
 
@@ -23,8 +23,6 @@ double precision   b(*),dr(neq,*),a(*),engy
 
    integer  ne,n12
 
-   include 'maxa.h'      
-   
    include 'ddata.h'
 
    n12 = neq*ipd - ipd - ipr + 1

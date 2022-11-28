@@ -1,14 +1,14 @@
 subroutine modl02(d,ul,eps,sig,xsj,ndf,ib)
 implicit none
-integer  ndf,ib
-double precision     d(*),ul(ndf,*),eps(4),sig(5),xsj
+  integer          :: ndf,ib
+  double precision :: d(*),ul(ndf,*),eps(4),sig(5),xsj
 
 !  Purpose:  Form material tangent and stress state at point
 
 !  Inputs:
 !       d(*)    -  material parameters
 !       eps(4)  -  current strains at point
-!       h(*)    -  history terms at point
+!       dm(*)    -  history terms at point
 !       nh      -  number of history terms
 
 !  Ouputs:
@@ -21,11 +21,7 @@ double precision     d(*),ul(ndf,*),eps(4),sig(5),xsj
    double precision temp
 
    include 'elcom2.h'
-
    include 'hdata.h'
-
-   include 'maxa.h'
-       
    include 'ddata.h'
 
 !  Compute material moduli and stresses

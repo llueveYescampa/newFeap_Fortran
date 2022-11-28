@@ -1,7 +1,7 @@
 subroutine pload(id,fn,b,nn,xm,ac)
-implicit  none
-integer   id(*),nn
-double precision    fn(nn,2),b(*),xm(*),ac(*)
+implicit none
+  integer          :: id(*),nn
+  double precision :: fn(nn,2),b(*),xm(*),ac(*)
 
 !  Purpose: Form load vector in compact form
 
@@ -19,7 +19,6 @@ double precision    fn(nn,2),b(*),xm(*),ac(*)
    integer   j, n
 
    include 'fdata.h'
-
    include 'tbeta.h'
 
    fl(11) = .false.

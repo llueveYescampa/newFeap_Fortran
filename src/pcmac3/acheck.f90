@@ -1,7 +1,7 @@
 subroutine acheck(x,y,n0,nl)
 implicit none
-integer  n0,nl
-character*1 x(nl),y(nl)
+  integer     :: n0,nl
+  character*1 :: x(nl),y(nl)
       
 !  Purpose: Data parser
 

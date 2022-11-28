@@ -1,7 +1,8 @@
 subroutine pmacr2(id,x,f,f0,jd,b,dr,lct,ct,ndf,nneq,j)
-implicit  none
-integer           id(*),    jd(*),         ndf,nneq,j
-double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
+implicit none
+  integer          :: id(*),    jd(*), ndf,nneq,j
+  double precision :: x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
+  character*4      :: lct(*)
 
 !  Purpose: Command language instruction executions
 
@@ -22,69 +23,52 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
 !  Outputs:
 !     various   - Depends on command number
 
-
    logical   pcomp,sfl
    integer   iocheck
-   integer   i,md,mf,mg,mh,mp,mq,mv,mdp,mdt, n,n1,n2,ndm,nlm
+   integer   i,mg,mh,mp,mdp,mdt, n,n1,n2,ndm,nlm
+   integer  :: md = 0, mv = 0, mf = 0, mq = 0
+   
    double precision propld,xtl
-   character lct(*)*4,ctl(2)*4! ,yyy*80
+   character*4 ctl(2)
+   character yyy*80
+   !double precision uu(4000)
+    double precision, dimension(:), allocatable :: uu
 
    include 'cdata.h'
-
    include 'fdata.h'
-
    include 'hdatb.h'
-   
    include 'iofile.h'
-
    include 'iofild.h'
-
    include 'ldata.h'
-
    include 'ndata.h'
-
    include 'prlod.h'
-  
    include 'psize.h'
-   
    include 'rdata.h'
-  
    include 'tbeta.h'
-   
    include 'tdata.h'
-
-   include 'ydata.h'
-
    include 'temfl1.h'
-
-   double precision uu(4000)
-   !common /udata/   uu(4000)
-
-   include 'maxa.h'
-
    include 'ddata.h'
 
+   allocate ( uu(4000) )  ! real dimension og uu should be used here
+
 !  transfer to correct process
-   mf = 0
+
    select case (j)
    case ( 1)
 !    set solution tolerance
      tol = ct(1,l)
-     return
    case ( 2)
 !    set time increment
      dt = ct(1,l)
      if(fl(9)) then
-       call setci(ioRead)
+       call setci(ior)
      end if
-   return
    case ( 3)
 !    set loop start indicators
      lv = lv + 1
      lvs(lv) = l
      lve(lv) = int(ct(2,l))
      ct(1,lve(lv)) = 1.
-     return
    case ( 4)
 !    loop terminator control
      n = int(ct(2,l))
@@ -95,22 +79,20 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
      if(ct(1,l).le.ct(1,n)) then
        l = n
      end if
-     return
    case ( 5)
 !    input proportional load table
      npld = int(ct(1,l))
      prop = propld (ttim,npld)
-     return
    case ( 6)
 !    data command
-     do while (.true.)
-       if(ioRead.lt.0) then
+     do ! while (.true.)
+       if(ior.lt.0) then
          write(*,'(a,a4,a,$)') ' Input ',lct(l),' macro >'
        end if
        call pintio(yyy,10)
        read(yyy,'(a4,6x,a4,6x,f15.0)',IOSTAT=iocheck) (ctl(i),i=1,2),xtl
        if (iocheck .ne. 0) then
-          call pperror('PMACR2',yyy)
+          call myPerror('pmacr2',yyy)
           cycle
        end if
        if(pcomp(lct(l),ctl(1))) then
@@ -120,12 +102,12 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
          if(pcomp(ctl(1),'dt  ')) then
            dt  = xtl
          end if
-         return
+         exit ! retur_n
        else
 !        error diagnostics
-         if(ioRead.gt.0) then
-           write(ioWrite,'(a)')' **ERROR** Macro label mismatch on data command.'
-           stop
+         if(ior.gt.0) then
+           write(iow,'(a)')' **ERROR** Macro label mismatch on data command.'
+           call pstop (-110) ! stop
          end if
          write(*,'(a)')' **ERROR** Macro label mismatch on data command.'
        end if
@@ -139,9 +121,9 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
      if(npld.gt.0) then
        prop = propld(ttim,0)
      end if
-     write(ioWrite,'(a,1pe12.5/,a,1pe12.5)') &
+     write(iow,'(a,1pe12.5/,a,1pe12.5)') &
      '   Computing solution for time',ttim,'   Proportional load value is ',prop
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(  *,'(a,1pe12.5/,a,1pe12.5)') &
      '   Computing solution for time',ttim,'   Proportional load value is ',prop
      end if
@@ -155,33 +137,31 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
      end if
 !    update dynamic vectors for time step
      if(fl(9)) then
-       call setci(ioRead)
+       call setci(ior)
        call update(id,dm(nt),b,dm(nv),dr,nneq,fl(9),1)
      end if
 !    zero displacement increment for next time step
      call pconsd(b(nneq+1),nneq+nneq,0.0d0)
      fl(10) = .true.
-     return
    case ( 8)
 !  input integration parameters and initialize vectors
      call param(lct(l),ct(1,l))
-     if(fl(9)) return
-     call psetm(nv,nneq*4,'d',fl(9))
-     call pconsd(dm(nv),nneq*4,0.0d0)
-     nw = nv + nneq
-!    set initial condition for transient solution
+     if( .not. fl(9)) then ! retur_n
+       call psetm(nv,nneq*4,'d',fl(9))
+       call pconsd(dm(nv),nneq*4,0.0d0)
+       nw = nv + nneq
+!      set initial condition for transient solution
 
-     n1 = nw + nneq - 1
-     do i = 1,nneq
-       dm(n1+i) = b(i)
-     end do
-     fl(9) = .true.
-     return
+       n1 = nw + nneq - 1
+       do i = 1,nneq
+         dm(n1+i) = b(i)
+       end do
+       fl(9) = .true.
+     endif     
    case ( 9)
 !    update the current force vector f0
 !    call raxpb(f, f0, prop, nneq, f0)
      call saxpb(f, f0, prop, nneq, f0)
-     return
    case (10)
 !    subspace eigencomputations
      mf = int(ct(1,l))
@@ -195,60 +175,60 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
        call numass(dm(nl),neq,mq)
      end if
      if(mq.lt.mf) then
-       write(ioWrite,'(a,i4,a)') &
+       write(iow,'(a,i4,a)') &
          ' **WARNING** Subspace set to',mq,' number of mass terms.'
-       if (ioRead.lt.0) then
+       if (ior.lt.0) then
          write(*,'(a,i4,a)') &
            ' **WARNING** Subspace set to',mq,' number of mass terms.'
        end if
      end if
      mf = min(mf,mq)
-     if(mf.le.0) then
-       return
-     end if
-     sfl = pcomp(lct(l),'prin')
-!    establish addresses for eigen solutions
-     md =  1
-     mv = md + mq
-     mg = mv + mq*neq
-     mh = mg + mq*(mq+1)/2
-     mdp= mh + mq*(mq+1)/2
-     mdt= mdp+ mq
-     mp = mdt+ mq
-     nlm= max(mp+mq*mq,neq*mq+neq)
-     if(nlm.gt.maxm/ipd) then
-       if(ioRead.lt.0) then
-         write(*,'(a,/5x,a,i7,a,i7)') &
-         ' **ERROR** Subspace memory too large','Need =',nlm, &
-         ' : Available =',maxm/ipd
-         return
-       else
-         write(ioWrite,'(a,/5x,a,i7,a,i7)') &
-         ' **ERROR** Subspace memory too large','Need =',nlm, &
-         ' : Available =',maxm/ipd
-         stop
+     
+     
+     if( mf > 0) then  ! mf.le.0
+       sfl = pcomp(lct(l),'prin')
+!      establish addresses for eigen solutions
+       md =  1
+       mv = md + mq
+       mg = mv + mq*neq
+       mh = mg + mq*(mq+1)/2
+       mdp= mh + mq*(mq+1)/2
+       mdt= mdp+ mq
+       mp = mdt+ mq
+       nlm= max(mp+mq*mq,neq*mq+neq)
+       if(nlm.gt.maxm/ipd) then
+         if(ior.lt.0) then
+           write(*,'(a,/5x,a,i7,a,i7)') &
+           ' **ERROR** Subspace memory too large','Need =',nlm, &
+           ' : Available =',maxm/ipd
+           return
+         else
+           write(iow,'(a,/5x,a,i7,a,i7)') &
+           ' **ERROR** Subspace memory too large','Need =',nlm, &
+           ' : Available =',maxm/ipd
+           call pstop (-209) ! stop
+         end if
        end if
-     end if
-     nlm = ne/ipd + 1
-     open(7,file=tfile(3),form='unformatted',status='new')
-     write(7) (dm(i),i=1,nlm)
-     close (7)
-     nlm = nl - 1
-     n1  = neq*ipd - ipd - ipr
-     do i = 1,neq
-       dm(i)    = dm(i+nlm)
-       im(n1+i) = jd(i)
-     end do
-     nlm = neq + (neq + ipd -1)/ipd + 1
-     call subsp(dm(1),uu(mv),uu(mg),uu(mh),uu(md),uu(mdp), &
-        uu(mdt),uu(mp),dm(nlm),mf,mq,neq,myShift,tol,sfl,25)
-!    restore the solution to continue macro executions
-     nlm = ne/ipd + 1
-     open(7,file=tfile(3),form='unformatted',status='old')
-     rewind 7
-     read(7) (dm(i),i=1,nlm)
-     close(7,status='delete')
-     return
+       nlm = ne/ipd + 1
+       open(7,file=tfile(3),form='unformatted',status='new')
+       write(7) (dm(i),i=1,nlm)
+       close (7)
+       nlm = nl - 1
+       n1  = neq*ipd - ipd - ipr
+       do i = 1,neq
+         dm(i)    = dm(i+nlm)
+         im(n1+i) = jd(i)
+       end do
+       nlm = neq + (neq + ipd -1)/ipd + 1
+       call subsp(dm(1),uu(mv),uu(mg),uu(mh),uu(md),uu(mdp), &
+          uu(mdt),uu(mp),dm(nlm),mf,mq,neq,shift,tol,sfl,25)
+!      restore the solution to continue macro executions
+       nlm = ne/ipd + 1
+       open(7,file=tfile(3),form='unformatted',status='old')
+       rewind 7
+       read(7) (dm(i),i=1,nlm)
+       close(7,status='delete')
+     end if     
    case (11)
 !    print eigenvectors
      if(mf.gt.0) then
@@ -265,15 +245,13 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
            dm(i) = uu(n2+n)
          end if
        end do
-
        call prtdis(x,dm,ttim,uu(md+n1-1),ndm,ndf,1,numnp,1)
      else
-       write(ioWrite,'(a)')' **ERROR** Need eigensolution.'
-       if(ioRead.lt.0) then
+       write(iow,'(a)')' **ERROR** Need eigensolution.'
+       if(ior.lt.0) then
          write(*,'(a)')' **ERROR** Need eigensolution.'
        end if
      end if
-     return
    case (12)
 !  set identity matrix for mass
      if(fl(5)) then
@@ -281,11 +259,8 @@ double precision x(*),f(*),f0(*),b(*),dr(*),ct(3,*)
      end if
      fl(2) = .true.
      call pconsd(dm(nl),neq,1.d0)
-     return
    end select
-
 !  formats
-
-
+   deallocate (uu)  
 end
 

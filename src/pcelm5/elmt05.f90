@@ -1,7 +1,7 @@
 subroutine elmt05(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
 implicit none
-integer                   ix(*),    ndf,ndm,nst,isw
-double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
+  integer          :: ix(*),    ndf,ndm,nst,isw
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
 
 !  Purpose: Geometrical nonlinear axisymmetric shell: (c) w.wagner
 
@@ -29,14 +29,9 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
    double precision  bm(5,3),sig(5),vl(3,2),dot
 
    include 'bdata.h'
-
    include 'cdata.h'
-
    include 'eldata.h'
-
    include 'iofile.h'
-
-   ! include 'ydata.h'
 
 !  Input material properties
 
@@ -57,8 +52,8 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
 
      if(isw.eq.2) then
        if(sl.le.0.0d0) then
-         write(ioWrite,3001) n
-         if(ioRead.lt.0) write(*,3001) n
+         write(iow,3001) n
+         if(ior.lt.0) write(*,3001) n
        end if
 
 !    Form lumped mass matrix; length, volume*density
@@ -106,7 +101,7 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
 
 !      Derivative w,s
 
-       lin = int(d(5))
+       lin = d(5)
        if(lin.eq.0) then
          wks = 0.0d0
        else
@@ -195,14 +190,14 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
        else if(isw.eq.4) then
          mct = mct - 1
          if(mct.le.0) then
-            write(ioWrite,2001) head
-            if(ioRead.lt.0) write(*,2001) head
+            write(iow,2001) head
+            if(ior.lt.0) write(*,2001) head
             mct = 50
          end if
          r = 0.5*(xl(1,1) + xl(1,2))
          z = 0.5*(xl(2,1) + xl(2,2))
-         write(ioWrite,'(i5,i4,0p2f8.3,5(1x,1p1e10.3))') n,ma,r,z,sig
-         if(ioRead.lt.0) then 
+         write(iow,'(i5,i4,0p2f8.3,5(1x,1p1e10.3))') n,ma,r,z,sig
+         if(ior.lt.0) then 
            write(*,'(i5,i4,0p2f8.3,5(1x,1p1e10.3))') n,ma,r,z,sig
          end if  
        end if

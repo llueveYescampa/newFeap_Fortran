@@ -1,7 +1,7 @@
 subroutine pdefil(tfile,n1,n2)
-implicit   none
-integer n1,n2
-character  tfile(n2)*12
+implicit none
+  integer      :: n1,n2
+  character*12 :: tfile(n2)
 
 !  Purpose: Destroy temporary files used to solve problems
 
@@ -11,8 +11,9 @@ character  tfile(n2)*12
 !    n2        - Last  number of array to delete
 
 
-   logical    lfil
-   integer    n
+   logical :: lfil
+   integer :: n
+   
    do n = n1,n2
      inquire(file=tfile(n),exist=lfil)
      if(lfil) then

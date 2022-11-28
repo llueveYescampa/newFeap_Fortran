@@ -1,7 +1,7 @@
 subroutine matl02(d,it,ib)
 implicit none
-double precision  d(18)
-integer it,ib
+  double precision :: d(15)
+  integer          :: it,ib
 
 !  Purpose:  Input material set parameters for elements
 
@@ -18,21 +18,18 @@ integer it,ib
    integer iocheck
    double precision        ee,xnu
    character*24  wa(2)
-
+   character :: yyy*80
 !  Parameter specification for FEAP materials
 
    include 'hdata.h'
-
    include 'iofile.h'
-
-   include 'ydata.h'
 
 
    data wa/' P l a n e   S t r a i n',' A x i s y m m e t r i c'/
    
 !  Input material parameters
    do while (.true.)
-     if(ioRead.lt.0) then 
+     if(ior.lt.0) then 
        write(*,3000)
      end if
      call pintio(yyy,10)
@@ -42,7 +39,7 @@ integer it,ib
        ib  = 0
        nh  = 9
        nh1 = 36
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,3001)
        end if  
        call pintio(yyy,10)
@@ -50,25 +47,25 @@ integer it,ib
        if (iocheck .eq. 0) then
          d(1)    = ee/(1. - 2.*xnu)/3.0d0
          d(2)    = ee/(1.+xnu)/2.
-         if(d(11) .ne. 0.0d0) then
-           write(ioWrite,2000) wa(it+1),ee,xnu,d(4),d(11),d(12),d(13)
-           if(ioRead.lt.0) then 
+         if(d(11).ne.0.0d0) then
+           write(iow,2000) wa(it+1),ee,xnu,d(4),d(11),d(12),d(13)
+           if(ior.lt.0) then 
              write(*,2000) wa(it+1),ee,xnu,d(4),d(11),d(12),d(13)
            end if
          else
-           write(ioWrite,2001) wa(it+1),ee,xnu,d(4)
-           if(ioRead.lt.0) then
+           write(iow,2001) wa(it+1),ee,xnu,d(4)
+           if(ior.lt.0) then
              write(*,2001) wa(it+1),ee,xnu,d(4)
            end if  
          end if
          exit
        else
-         call pperror('matl02',yyy)
+         call myPerror('matl02',yyy)
          cycle
        end if  
        exit 
      else
-       call pperror('matl02',yyy)
+       call myPerror('matl02',yyy)
        cycle
      end if
    end do

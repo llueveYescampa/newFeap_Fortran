@@ -1,2 +1,2 @@
-  double precision engy,rnmax,tol,myShift
-  common /rdata/   engy,rnmax,tol,myShift
+   double precision engy,rnmax,tol,shift
+   common /rdata/   engy,rnmax,tol,shift

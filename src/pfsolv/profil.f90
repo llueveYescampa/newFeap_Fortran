@@ -1,6 +1,6 @@
 subroutine profil (jd,idl,id,ix,ndf,nen1)
-implicit  none
-integer   jd(*),idl(*),id(*),ndf,nen1,ix(nen1,*)
+implicit none
+  integer ::  jd(*),idl(*),id(*),ndf,nen1,ix(nen1,*)
 
 !  Purpose: Compute front profile of global arrays
 
@@ -55,8 +55,8 @@ integer   jd(*),idl(*),id(*),ndf,nen1,ix(nen1,*)
 
    if(maxf.gt.150) then
      write(*,'(a,i8)') ' *ERROR* Front requires too much storage =',maxf
-     if(ioRead.lt.0) then
-       write(ioWrite,'(a,i8)') ' *ERROR* Front requires too much storage =',maxf
+     if(ior.lt.0) then
+       write(iow,'(a,i8)') ' *ERROR* Front requires too much storage =',maxf
      end if  
    end if
 

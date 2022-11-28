@@ -1,6 +1,6 @@
 subroutine bmat05(bm,shp,sn,cs,recr,wks)
-implicit  none
-double precision  bm(5,3),shp,sn,cs,recr,wks
+implicit none
+  double precision :: bm(5,3),shp,sn,cs,recr,wks
 
 !  Nonlinear B-matrix for beams and axisymmetric shells
 

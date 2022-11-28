@@ -1,7 +1,7 @@
-double precision function gama(fn,id,u,dr,du,t,s,nqe,nneq)
-implicit  none
-integer                            id(*),         nqe,nneq
-double precision fn(nneq,2),u(*),dr(*),du(*),t(*),s
+double precision function myGamma(fn,id,u,dr,du,t,s,nqe,nneq)
+implicit none
+  integer          :: id(*), nqe,nneq
+  double precision :: fn(nneq,2),u(*),dr(*),du(*),t(*),s
 
 !  Purpose:  Compute energy for line search step
 
@@ -16,28 +16,20 @@ double precision fn(nneq,2),u(*),dr(*),du(*),t(*),s
 !     nneq      - Total dof in problem
 
 !  Outputs:
-!     gamma     - Value of energy for step
+!     myGamma     - Value of energy for step
 
 
    integer j, n, nneq2
    double precision  ctem,db,dot
 
+
    include 'cdata.h'
-
    include 'fdata.h'
-   
    include 'mdata.h'
-
    include 'ndata.h'
    include 'prlod.h'
-
-
    include 'tbeta.h'
-
    include 'tdata.h'
-   
-   include 'maxa.h'      
-   
    include 'ddata.h'
    
    logical   fa,tr
@@ -84,6 +76,6 @@ double precision fn(nneq,2),u(*),dr(*),du(*),t(*),s
 
 !  compute the value of gamma
 
-   gama = dot (du,dr,nqe)
+   myGamma = dot (du,dr,nqe)
 
 end

@@ -1,7 +1,7 @@
 subroutine addvec(a,b,nn)
 implicit none
-integer  nn
-double precision   a(*),b(*)
+  integer          ::  nn
+  double precision :: a(*),b(*)
 
 !  Purpose: Add two vectors
 
@@ -13,7 +13,7 @@ double precision   a(*),b(*)
 !  Outputs:
 !     a(*)     - Sum of vector 1 and 2
 
-   integer  n
+   integer :: n
 
    do n = 1,nn
      a(n) = a(n) + b(n)

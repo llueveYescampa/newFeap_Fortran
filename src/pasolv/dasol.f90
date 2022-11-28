@@ -1,7 +1,7 @@
 subroutine dasol(al,au,ad,b,jp,neq,energy)
 implicit none
-double precision   al(*),au(*),ad(*),b(*),energy
-integer  jp(*),neq
+  double precision  :: al(*),au(*),ad(*),b(*),energy
+  integer           :: jp(*),neq
 
 !  Purpose:
 !     Solution of symmetric equations stored in profile form
@@ -24,7 +24,6 @@ integer  jp(*),neq
    integer  is, j,jh,jr
    double precision   bd,dot
 
-
    include 'iofile.h'
 
 !  Find first nonzero entry in right hand side
@@ -37,8 +36,8 @@ integer  jp(*),neq
    end do  
 
    if (is .gt. neq) then
-     write(ioWrite,'(a)') ' **WARNING** Zero right-hand-side vector'
-     if(ioRead.lt.0) then
+     write(iow,'(a)') ' **WARNING** Zero right-hand-side vector'
+     if(ior.lt.0) then
        write(*,'(a)') ' **WARNING** Zero right-hand-side vector'
      end if  
      return

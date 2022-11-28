@@ -1,6 +1,6 @@
 subroutine pend(subnam)
-implicit  none
-character subnam*6
+implicit none
+  character ::subnam*6
 
 !  Purpose: End of file found
 
@@ -10,14 +10,13 @@ character subnam*6
 
    include 'iofile.h'
 
-   if(ioRead.gt.0) then
-     write(ioWrite,'(a,a6,a)') &
+   if(ior.gt.0) then
+     write(iow,'(a,a6,a)') &
        ' ** ERROR in ', subnam,' ** end of file encountered'
    end if  
-   if(ioRead.lt.0) then
+   if(ior.lt.0) then
      write(  *,'(a,a6,a)') &
        ' ** ERROR in ', subnam,' ** end of file encountered'
    end if  
-   stop
-
+   call pstop(-21) ! stop
 end

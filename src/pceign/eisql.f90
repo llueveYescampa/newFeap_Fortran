@@ -17,7 +17,7 @@ double precision   a(*),d(*),e(*),z(n,n)
 
    integer  i,ii, j,jp1, k, l,l1, m,mml, n2
    double precision   b, c, f, g, h, hh, p, r, s
-   double precision   myScale,machep
+   double precision   scale,machep
    logical test
 
    data machep/0.222044605d-15/
@@ -38,27 +38,27 @@ double precision   a(*),d(*),e(*),z(n,n)
        i     = n2 - ii
        l     = i - 1
        h     = 0.0d0
-       myScale = 0.0d0
+       scale = 0.0d0
        if(l.lt.2) then
          e(i) = z(i,l)
          d(i) = h
          cycle
        end if  
        do k = 1,l
-         myScale = myScale + abs(z(i,k))
+         scale = scale + abs(z(i,k))
        end do  
-       if(myScale.eq.0.0d0) then 
+       if(scale.eq.0.0d0) then 
          e(i) = z(i,l)
          d(i) = h
          cycle
        end if  
        do k = 1,l
-         z(i,k) = z(i,k)/myScale
+         z(i,k) = z(i,k)/scale
          h      = h + z(i,k)*z(i,k)
        end do  
        f      = z(i,l)
        g      = -sign(sqrt(h),f)
-       e(i)   = myScale*g
+       e(i)   = scale*g
        h      = h - f*g
        z(i,l) = f - g
        f      = 0.0d0

@@ -1,5 +1,5 @@
 subroutine shap2(s,t,shp,ix,nel)
-implicit  none
+implicit none
 integer   ix(*), nel
 double precision    s,t,shp(3,*)
       

@@ -1,9 +1,9 @@
 subroutine sblk(nr,ns,xl,ixl,shp,x,ix,dr,ds,ni,ne, & 
                  ndm,nel1,nodinc,ntyp,nm,ma,prt)
-implicit  none
-integer nr,ns,ixl(*),ni,ne,ndm,nel1,nodinc,ntyp,nm,ma,ix(nel1,*)
-double precision  xl(3,*),shp(3,*),x(ndm,*),dr,ds
-logical prt
+implicit none
+  integer          :: nr,ns,ixl(*),ni,ne,ndm,nel1,nodinc,ntyp,nm,ma,ix(nel1,*)
+  double precision :: xl(3,*),shp(3,*),x(ndm,*),dr,ds
+  logical          :: prt
 
 !  Inputs:
 !     nr         - Number increments in 'r' direction
@@ -32,7 +32,6 @@ logical prt
    double precision  r,s,xsj
 
    include 'cdata.h'
-
    include 'iofile.h'
 
    n = ni
@@ -53,14 +52,14 @@ logical prt
        if(prt) then
           mct = mct + 1
           if(mod(mct,50).eq.1) then
-            call prthed(ioWrite)
-            write(ioWrite,2000) (k,k=1,ndm)
-            if(ioRead.lt.0) then
+            call prthed(iow)
+            write(iow,2000) (k,k=1,ndm)
+            if(ior.lt.0) then
               write(*,2000) (k,k=1,ndm)
             end if  
           end if
-          write(ioWrite,'(i10,3f13.4)') n,(x(k,n),k=1,ndm)
-          if(ioRead.lt.0) then
+          write(iow,'(i10,3f13.4)') n,(x(k,n),k=1,ndm)
+          if(ior.lt.0) then
             write(*,'(i10,3f13.4)') n,(x(k,n),k=1,ndm)
           end if  
        end if

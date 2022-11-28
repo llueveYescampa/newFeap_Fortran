@@ -1,7 +1,7 @@
 subroutine elmt03(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
 implicit none
-integer   ix(*),                    ndf,ndm,nst,isw
-double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
+  integer          :: ix(*), ndf,ndm,nst,isw
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
 
 !  Purpose: Plane stress/strain Pian Sumihara Element
 
@@ -24,20 +24,15 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
    integer   i,is,j
    double precision ssa,tta,ssg,ttg,xx,yy
    double precision sig(4),p1,p2,p3
-   character wd(2)*4 ! ,yyy*80
+   character*4  wd(2)
+   character yyy*80
    
    integer iocheck
 
-   include 'maxa.h'      
-   
-   include 'adata.h'      
+   include 'adata.h'
    include 'cdata.h'
-   include 'ydata.h'
-
    include 'eldata.h'
-
    include 'elcom3.h'
-   
    include 'iofile.h'
 
    data wd/'ress','rain'/
@@ -49,7 +44,7 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
    select case (isw)
    case (1)
      do while (.true.)
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,3000)
        end if  
        call pintio(yyy,10)
@@ -76,14 +71,14 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
            d(6) = -d(9)/d(4)
            d(13)=  d(9)
          end if
-         write(ioWrite,2000) wd(is),(d(i),i=8,11)
-         if(ioRead.lt.0) then
+         write(iow,2000) wd(is),(d(i),i=8,11)
+         if(ior.lt.0) then
            write(*,2000) wd(is),(d(i),i=8,11)
          end if  
          d(10) = d(10)*d(11)
          return
        else
-         call pperror('PCEL03',yyy)
+         call myPerror('elmt03',yyy)
        end if
      end do
    case (2)
@@ -121,7 +116,7 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
      if(isw.eq.4) then
 !      Compute the stresses
 
-       is = int(d(12))
+       is = d(12)
 !      Compute the stresses at the center and the specified points
        
        ssg    = -ssa*beta(5)
@@ -135,16 +130,16 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
        yy = (xl(2,1)+xl(2,2)+xl(2,3)+xl(2,4))/4.0
        mct = mct - 1
        if(mct.le.0) then 
-         call prthed(ioWrite)
-         write(ioWrite,2001) wd(is)
-         if(ioRead.lt.0) then
+         call prthed(iow)
+         write(iow,2001) wd(is)
+         if(ior.lt.0) then
            write(*,2001) wd(is)
          end if  
          mct = 25
        end if  
-       write(ioWrite,'(2i9,2f12.4,2e12.4,f8.2/30x,4e12.4)') &
+       write(iow,'(2i9,2f12.4,2e12.4,f8.2/30x,4e12.4)') &
               n,ma,xx,yy,p1,p2,p3,(sig(i),i=1,4)
-       if(ioRead.lt.0) then 
+       if(ior.lt.0) then 
          write(*,'(2i9,2f12.4,2e12.4,f8.2/30x,4e12.4)') &
               n,ma,xx,yy,p1,p2,p3,(sig(i),i=1,4)
        end if  

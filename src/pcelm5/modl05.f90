@@ -1,6 +1,6 @@
 subroutine modl05(sig,vl,dd,d,sn,cs,sl,recr,wks)
-implicit  none
-double precision  sig(5),vl(3,2),dd(5,5),d(*),sn,cs,sl,recr,wks
+implicit none
+  double precision :: sig(5),vl(3,2),dd(5,5),d(*),sn,cs,sl,recr,wks
 
    double precision    v1,eps(5)
    

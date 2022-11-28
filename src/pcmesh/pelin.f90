@@ -1,7 +1,7 @@
 subroutine pelin(idl,ix,nen1,nen,numnp,numel,error,prt)
-implicit  none
-integer   idl(*),nen1,ix(nen1,*),nen,numnp,numel
-logical   error,prt
+implicit none
+  integer ::  idl(*),nen1,ix(nen1,*),nen,numnp,numel
+  logical ::  error,prt
 
 !  Purpose: Element data input
 
@@ -18,22 +18,20 @@ logical   error,prt
 !     error      - Flag, true if error occurs
 
 
-   !character yyy*80
+   character yyy*80
    integer i, j, k, l,lk,lx, n,nx,iocheck
    logical test208
 
    include 'iofile.h'
 
-   include 'ydata.h'
-
 !  Element data input
-   nx =0
+   
    l = 0
    do i = 1,numel,50
      if(prt) then
-       call prthed(ioWrite)
-       write(ioWrite,2001) (k,k=1,nen)
-       if(ioRead.lt.0) then
+       call prthed(iow)
+       write(iow,2001) (k,k=1,nen)
+       if(ior.lt.0) then
          write(  *,2001) (k,k=1,nen)
        end if  
      end if  
@@ -43,13 +41,13 @@ logical   error,prt
        test208=.false.
        if (l .lt. n) then
          do while (.true.)
-           if(ioRead.lt.0) then
+           if(ior.lt.0) then
              write(*,'(a/3x,a,$)')' Input: elm, mat, ix(i),i=1,nen, inc','>'
            end if  
            call pintio(yyy,5)
            read(yyy,'(16i5)',IOSTAT=iocheck) l,lk,(idl(k),k=1,nen),lx
            if (iocheck .ne. 0) then
-              call pperror('PELIN ',yyy)
+              call myPerror('pelin',yyy)
               cycle
            else
              exit
@@ -63,9 +61,9 @@ logical   error,prt
            lx=1
          end if  
          if (l .lt. n) then
-           write(ioWrite,'(a,i5,a,i5)') &
+           write(iow,'(a,i5,a,i5)') &
            ' **ERROR** element',l,' appears after element',n
-           if(ioRead.lt.0) then
+           if(ior.lt.0) then
              write(*,'(a,i5,a,i5)') &
            ' **ERROR** element',l,' appears after element',n
            end if  
@@ -99,12 +97,12 @@ logical   error,prt
          end do  
        end if
        if (test208) then
-         write(ioWrite,'(a,i5,a)') ' **ERROR** element',n,' has illegal nodes'
+         write(iow,'(a,i5,a)') ' **ERROR** element',n,' has illegal nodes'
          error = .true.
        else
          if(prt) then 
-           write(ioWrite,'(2i6,8i8/(13x,8i8))')n,ix(nen1,n),(ix(k,n),k=1,nen)
-           if(ioRead.lt.0) then
+           write(iow,'(2i6,8i8/(13x,8i8))')n,ix(nen1,n),(ix(k,n),k=1,nen)
+           if(ior.lt.0) then
              write(*,'(2i6,8i8/(13x,8i8))')n,ix(nen1,n),(ix(k,n),k=1,nen)
            end if
          end if  

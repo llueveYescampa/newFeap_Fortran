@@ -1,12 +1,12 @@
 subroutine pltstr(dt,st,numnp)
 implicit none
-integer numnp
-double precision   dt(numnp),st(numnp,*)
+  integer          :: numnp
+  double precision :: dt(numnp),st(numnp,*)
 
 !  Stress projections computed by dividing by 'lumped' weightings
 
-   integer  ii,j
-   double precision   sig(6)
+   integer           :: ii,j
+   double precision  :: sig(6)
 
    include 'errind.h'
 

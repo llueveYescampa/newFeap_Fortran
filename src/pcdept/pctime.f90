@@ -1,5 +1,5 @@
 subroutine pctime(etime)
-implicit  none
+implicit none
 
 ! Purpose: Calls time routine for Micro Soft compilers
 !          N.B. Replace !gettim! by appropriate timing routine 

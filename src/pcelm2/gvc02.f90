@@ -1,7 +1,7 @@
-subroutine gvc02(shp,shp3,xsj,wg,xl,type,ndm)
+subroutine gvc02(shp,shp3,xsj,wg,xl,typo,ndm)
 implicit none
-integer  ndm
-double precision  shp(3,4),shp3(4),xsj,wg,xl(ndm,4),type
+  integer          :: ndm
+  double precision :: shp(3,4),shp3(4),xsj,wg,xl(ndm,4),typo
 
 !  Purpose: Compute volumetric integrals for b-bar
 
@@ -22,8 +22,7 @@ double precision  shp(3,4),shp3(4),xsj,wg,xl(ndm,4),type
 
    include 'elcom2.h'
 
-
-   if(type.ne.0.0d0) then
+   if(typo.ne.0.0d0) then
      rr = 0.0d0
      do i = 1,4
        rr = rr + shp(3,i)*xl(1,i)
@@ -33,7 +32,7 @@ double precision  shp(3,4),shp3(4),xsj,wg,xl(ndm,4),type
    xsj = xsj*wg
    do i = 1,4
      shp3(i) = 0.0d0
-     if(type.ne.0.0d0) then
+     if(typo.ne.0.0d0) then
        shp3(i) = shp(3,i)/rr
      end if  
      g(1,i) = g(1,i) + (shp(1,i) + shp3(i))*xsj

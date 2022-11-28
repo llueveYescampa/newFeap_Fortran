@@ -1,7 +1,7 @@
 subroutine modify(b,s,dul,nst)
 implicit none
-integer  nst
-double precision   b(*),s(nst,*),dul(*)
+  integer          :: nst
+  double precision :: b(*),s(nst,*),dul(*)
 
 !  Purpose: Modify for non-zero displacement boundary conditions
 

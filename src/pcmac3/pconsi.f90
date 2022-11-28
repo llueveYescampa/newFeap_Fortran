@@ -1,7 +1,6 @@
 subroutine pconsi(iv,nn,ic)
-implicit  none
-integer   nn,ic
-integer   iv(nn)
+implicit none
+  integer  :: iv(nn), nn,ic
 
 !  Purpose: Set integer array to constant value
 

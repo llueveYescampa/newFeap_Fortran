@@ -1,7 +1,7 @@
 subroutine  elmt07(d,u,x,     s,p,ndf,ndm,nst,isw)
 implicit none
-integer ndf,ndm,nst,isw
-double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
+  integer          :: ndf,ndm,nst,isw
+  double precision :: d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
       
 ! Purpose: Any dimensional truss element routine
 ! Inputs:
@@ -23,23 +23,16 @@ double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
   double precision  dx(4),xx(3),xl,eps
   double precision  t1,t2,t3,sig
   
-  !character*4 yyy*80
+  character yyy*80
   
   integer iocheck
   logical test
 
-
   include 'cdata.h'
-  
   include 'eldata.h'
-  
-  include 'hdata.h'
-
-  include 'ydata.h'
-  
+  include 'hdata.h'  
   include 'iofile.h'
   
-  t3  = 0.0  
   xl  = 0.0
   eps = 0.0
   do i = 1,ndm
@@ -56,7 +49,7 @@ double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
 !   input material properties
     test = .true.
     do while (test)
-      if(ioRead.lt.0) then 
+      if(ior.lt.0) then 
         write(*,3000) 
       end if  
       call pintio(yyy,10)
@@ -69,13 +62,13 @@ double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
         d(11) = d(3)*d(2)
         call pconsd(xx,3,0.0d0)
         if(d(4).gt.0.0d0) then
-          write(ioWrite,2000) (d(i),i=1,6)
-          if(ioRead.lt.0) then 
+          write(iow,2000) (d(i),i=1,6)
+          if(ior.lt.0) then 
             write(*,2000) (d(i),i=1,6)
           end if  
         else
-          write(ioWrite,2001) (d(i),i=1,3)
-          if(ioRead.lt.0) then 
+          write(iow,2001) (d(i),i=1,3)
+          if(ior.lt.0) then 
             write(*,2001) (d(i),i=1,3)
           end if  
         end if
@@ -83,7 +76,7 @@ double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
         test = .false.
         return
       else 
-          call pperror('PCELM7',yyy)
+          call myPerror('elmt07',yyy)
       end if
     end do
   case (2,7,8)
@@ -196,16 +189,16 @@ double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
   case (4)
       mct = mct - 1
       if(mct.le.0) then
-        call prthed(ioWrite)
-        write(ioWrite,2002) 
-        if(ioRead.lt.0) then 
+        call prthed(iow)
+        write(iow,2002) 
+        if(ior.lt.0) then 
           write(*,2002)
         end if  
         mct = 50
       end if
       sig = eps*d(7)
-      write(ioWrite,'(2i5,3f11.4,2e13.5)') n,ma,xx,sig,eps
-      if(ioRead.lt.0) then 
+      write(iow,'(2i5,3f11.4,2e13.5)') n,ma,xx,sig,eps
+      if(ior.lt.0) then 
         write(*,'(2i5,3f11.4,2e13.5)') n,ma,xx,sig,eps
       end if  
 !   compute element lumped mass matrix
@@ -218,6 +211,7 @@ double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
   end select
    
 !.... formats
+1000 format(8f10.0)
 2000 format(5x,'T r u s s    E l e m e n t 7'//             &
         10x,'Modulus  =',e12.5/10x,'Area     =',e12.5/      &
         10x,'Density  =',e12.5/10x,'Yield    =',e12.5/      &
@@ -227,6 +221,7 @@ double precision  d(*),u(ndf,*),x(ndm,*),s(nst,*),p(*)
         10x,'Density  =',e12.5/)
 2002 format(5x,'T r u s s    E l e m e n t 7'//' elem mate',          &
        4x,'1-coord',4x,'2-coord',4x,'3-coord',5x,'force',7x,'strain')
+2003 format(2i5,3f11.4,2e13.5)
 3000 format(' Input  El/Plas: E, A, rho, Y, H-iso, H-Kin'/           &
             '        Elastic: E, A, rho'/3x,'>',$)
 end

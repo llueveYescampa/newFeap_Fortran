@@ -1,7 +1,7 @@
 function propld(t,j)
-implicit  none
-integer   j
-double precision    t
+implicit none
+  integer          :: j
+  double precision :: t
 
 !  Purpose: Proportional load table (j load records, maximum 10)
 
@@ -13,21 +13,18 @@ double precision    t
 !     propld - Proportional loading for time 't' (when j = 0)
 
 
-   !character yyy*80
+   character yyy*80
    integer   i,l,m, nprop
    integer iocheck
    double precision    tmin,tmax,propld
 
    include 'iofile.h'
-
-   include 'ydata.h'
-
    include 'prlod.h'
 
    if(j.gt.0) then
 !    Input table of proportional loads
-     write(ioWrite,'(30x,a)')'P r o p o r t i o n a l   L o a d   T a b l e'
-     if(ioRead.lt.0) then
+     write(iow,'(30x,a)')'P r o p o r t i o n a l   L o a d   T a b l e'
+     if(ior.lt.0) then
        write( *,'(30x,a)')'P r o p o r t i o n a l   L o a d   T a b l e'
        write( *,'(a,/,a,$)') &
              ' Input: type, exponent, tmin, tmax, a(i),i=1,4',' >'
@@ -42,14 +39,14 @@ double precision    t
              a(2,i) = 1.e+6
              a(4,i) = 1.
            end if
-           write(ioWrite,2001) i,ik(i),(a(m,i),m=1,6),iexp(i)
-           if(ioRead.lt.0) then 
+           write(iow,2001) i,ik(i),(a(m,i),m=1,6),iexp(i)
+           if(ior.lt.0) then 
              write(*,2001) i,ik(i),(a(m,i),m=1,6),iexp(i)
            end if
            exit
          else
 !          Error message
-           call pperror('PROPLD',yyy)
+           call myPerror('propld',yyy)
            cycle
          end if
        end do   

@@ -1,9 +1,9 @@
-subroutine subsp(b,v,g,h,d,dp,dtol,p,z,nf,nev,neq,myShift,tol,prt,its)
+subroutine subsp(b,v,g,h,d,dp,dtol,p,z,nf,nev,neq,shift,tol,prt,its)
 implicit none
-logical  prt
-integer  nf,nev,neq,its
-double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
-                 z(neq,*),myShift,tol
+  logical          :: prt
+  integer          :: nf,nev,neq,its
+  double precision :: b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
+                      z(neq,*),shift,tol
                  
 !  Purpose: Subspace iteration to extract lowest nf eigenpairs
 
@@ -18,7 +18,7 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
 !     nf       - Number of eigenvalues to converge
 !     nev      - Size of subspace problem
 !     neq      - Size of finite element equations
-!     myShift  - Value of myShift 
+!     shift    - Value of shift 
 !     tol      - Solution tolerance on eigenvalues
 !     prt      - Flag, output each iteration result
 !     its      - Maximum number of subspace iterations to perform
@@ -33,9 +33,8 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
    double precision   dm,tolmx,told
 
    include 'iofild.h'
-
    include 'iofile.h'
-   
+
 !  Compute initial iteration vectors
 
    call pconsd(v,nev*neq,0.0d0)
@@ -44,10 +43,10 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
 !  Count number of nonzero masses
 
    do n = 1,neq
-     if(b(n).ne.0.0d0) then
+     if(b(n) .ne. 0.0d0) then
        nmas = nmas + 1
      end if
-   end do  
+   end do
 
    nmas = nmas/nev
    i = 0
@@ -62,7 +61,7 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
        end if  
        j = min(j,nev)
      end if
-   end do  
+   end do     
    do i = 1,nev
      dp(i)   = 0.0d0
      dtol(i) = 1.0d0
@@ -74,13 +73,13 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
    told  = tol
    conv  = .false.
    itlim = its
-   itt = 0
    if(nev.eq.nf) then
      itlim = 1
    end if  
    
-   do it = 1,itlim
-     if (conv) exit
+!   do it = 1,itlim
+   it = 1
+   do while(it .le. itlim .and. (.not. conv))
      itt = it
 
 !    Project 'b' matrix to form 'h' and compute 'z' vectors
@@ -109,20 +108,20 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
      end do  
 
      if(prt) then
-       write(ioWrite,'(/5x,a,i4/(4d20.8))') &
+       write(iow,'(/5x,a,i4/(4d20.8))') &
           'Current reciprocal shifted eigenvalues, iteration',it,(d(n),n=1,nev)
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,'(/5x,a,i4/(4d20.8))') &
           'Current reciprocal shifted eigenvalues, iteration',it,(d(n),n=1,nev)
        end if  
        if(itlim.gt.1) then 
-         write(ioWrite,'( 5x,a/(4d20.8))') 'Current residuals', (dtol(n),n=1,nev)
+         write(iow,'( 5x,a/(4d20.8))') 'Current residuals', (dtol(n),n=1,nev)
        end if  
-       if(ioRead.lt.0 .and. itlim .gt. 1) then
+       if(ior.lt.0 .and. itlim .gt. 1) then
          write(*,'( 5x,a/(4d20.8))') 'Current residuals', (dtol(n),n=1,nev)
        end if
      else
-       if(ioRead.lt.0) then 
+       if(ior.lt.0) then 
          write(*,'(a,i3,a,1p1e11.4)') '+  Iteration',it,' Max tol =',tolmx
        end if  
      end if
@@ -160,23 +159,25 @@ double precision b(*),v(neq,*),g(*),h(*),d(*),dp(*),dtol(*),p(nev,*),&
          end do  
        end do  
      end do  
+     
+     it=it+1
    end do  
 
 !  Scale vectors to have maximum element of 1.0
 
    do n = 1,nev
-     d(n)  = 1.0/d(n) + myShift
+     d(n)  = 1.0/d(n) + shift
      dp(n) = sqrt(abs(d(n)))
      call scalev(v(1,n),neq)
    end do  
 
-   write(ioWrite,'(/5x,a,i4/(4d20.8))') &
+   write(iow,'(/5x,a,i4/(4d20.8))') &
        'Solution  for  eigenvalues, iteration',itt,(d(n),n=1,nev)
-   write(ioWrite,'( 5x,a/(4d20.8))') 'Square root of eigenvalues', (dp(n),n=1,nev)
+   write(iow,'( 5x,a/(4d20.8))') 'Square root of eigenvalues', (dp(n),n=1,nev)
    if(itt.gt.1) then 
-     write(ioWrite,'( 5x,a/(4d20.8))') 'Current residuals', (dtol(n),n=1,nev)
+     write(iow,'( 5x,a/(4d20.8))') 'Current residuals', (dtol(n),n=1,nev)
    end if  
-   if(ioRead.lt.0) then
+   if(ior.lt.0) then
      write(*,'(/5x,a,i4/(4d20.8))') &
        'Solution  for  eigenvalues, iteration',itt,(d(n),n=1,nev)
      write(*,'( 5x,a/(4d20.8))')  'Square root of eigenvalues', (dp(n),n=1,nev)

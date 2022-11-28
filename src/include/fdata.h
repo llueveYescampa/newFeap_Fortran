@@ -1,2 +1,2 @@
-  logical        fl    ,pfr
-  common /fdata/ fl(11),pfr
+   logical        fl
+   common /fdata/ fl(11)

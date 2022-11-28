@@ -1,5 +1,5 @@
 subroutine pcdate(edate)
-implicit  none
+implicit none
 
 !     Purpose:  Put date on output file
 

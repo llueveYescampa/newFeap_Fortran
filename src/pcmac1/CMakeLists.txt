@@ -6,7 +6,7 @@ get_filename_component(CurrDir ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 set(pcmac1_Src 
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/formfe.f90
-    ${myPROJECT_SOURCE_DIR}/${CurrDir}/gama.f90
+    ${myPROJECT_SOURCE_DIR}/${CurrDir}/myGamma.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/inaccl.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/pcinitc.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/phstio.f90

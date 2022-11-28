@@ -1,7 +1,7 @@
 subroutine pgauss(l,lint,r,z,w)
-implicit  none
-integer   l,lint
-double precision    r(*),z(*),w(*)
+implicit none
+  integer          :: l,lint
+  double precision :: r(*),z(*),w(*)
       
 
 !  Purpose: Gauss points and weights for two dimensions

@@ -1,7 +1,7 @@
 subroutine pangl(ix,nen,angl,angg,nrot)
-implicit  none
-integer   nen,ix(nen),nrot
-double precision    angl(nen),angg(*)
+implicit none
+  integer :: nen,ix(nen),nrot
+  double precision :: angl(nen),angg(*)
 
 !  Purpose: Set up table of rotation angles
 

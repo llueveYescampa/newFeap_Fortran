@@ -1,7 +1,7 @@
 subroutine ptrans(ia,angl,ul,p,s,nel,nen,ndf,nst,isw)
-implicit  none
-integer   ia(2),nel,nen,ndf,nst,isw
-double precision    angl(*),ul(ndf,nen,*),p(ndf,*),s(nst,nst)
+implicit none
+  integer :: ia(2),nel,nen,ndf,nst,isw
+  double precision :: angl(*),ul(ndf,nen,*),p(ndf,*),s(nst,nst)
 
 !  Purpose: Subroutine to make two-dimesional rotations
 

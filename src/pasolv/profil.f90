@@ -1,7 +1,7 @@
 subroutine profil (jd,idl,id,ix,ndf,nen1)
 implicit none
-integer  ndf,nen1
-integer  jd(*),idl(*),id(numnp*ndf),ix(nen1,*)
+  integer :: ndf,nen1
+  integer :: jd(*),idl(*),id(*),ix(nen1,*)
 
 !  Purpose: Compute profile of global arrays
 
@@ -93,8 +93,8 @@ integer  jd(*),idl(*),id(numnp*ndf),ix(nen1,*)
    if(neq.gt.0) then
      mm = (nad+neq)/neq
    end if  
-   write(ioWrite,2001) neq,numnp,mm,numel,nad,nummat
-   if(ioRead.lt.0) then
+   write(iow,2001) neq,numnp,mm,numel,nad,nummat
+   if(ior.lt.0) then
      write(*,2001) neq,numnp,mm,numel,nad,nummat
    end if  
 

@@ -1,7 +1,7 @@
 subroutine phelp(wd,nwd,wrd,isw)
-implicit  none
-integer   nwd,isw
-character wd(nwd)*4,wrd*5
+implicit none
+  integer   :: nwd,isw
+  character :: wd(nwd)*4,wrd*5
 
 !  Purpose: Help file for macro command list
 
@@ -14,7 +14,7 @@ character wd(nwd)*4,wrd*5
 
    include 'iofile.h'
 
-   if(ioRead.gt.0) then
+   if(ior.gt.0) then
      return
    end if  
    if(isw.eq.1) then 

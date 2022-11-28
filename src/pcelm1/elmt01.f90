@@ -1,7 +1,7 @@
 subroutine elmt01(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
-implicit  none
-integer   ix(*),                    ndf,ndm,nst,isw
-double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
+implicit none
+  integer          :: ix(*), ndf,ndm,nst,isw
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
 
 !  Purpose: Plane linear elastic displacement model element routine
 
@@ -26,40 +26,37 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
    double precision e,xnu,alp,t0, xx,yy,zz, dv, xsj, sigr4
 
    double precision eps(4),sigr(6),shp(3,9),sg(16),tg(16),wg(16),ang
-   character wd(3)*12 !,yyy*80
+   character*12 wd(3)
+   character yyy*80
+   
 
    integer iocheck1, iocheck2
 
 
-   include 'maxa.h'      
-
-   include 'adata.h'
-
+   include 'adata.h'   
    include 'cdata.h'
    include 'eldata.h'
    include 'iofile.h'
-   include 'ydata.h'
 
    data wd/'Plane Stress','Plane Strain','Axisymmetric'/
 
 !  Go to correct array processor
 
-   l    = int(d(5))
-   k    = int(d(6))
-   ityp = int(d(15))
-   lint = 0
+   l    = d(5)
+   k    = d(6)
+   ityp = d(15)
    select case (isw)
    case(1)
 !    Input material properties
      do while (.true.)
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,5000)
        end if
        call pintio(yyy,10)
        read(yyy,'(3f10.0,3i10)',IOSTAT=iocheck1) e,xnu,d(4),l,k,ityp
        if (iocheck1 .eq. 0) then
          do while (.true.)
-           if(ioRead.lt.0) then 
+           if(ior.lt.0) then 
              write(*,5001)
            end if  
            call pintio(yyy,10)
@@ -86,9 +83,9 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
              d(9) = t0
              d(10)= e*alp/(1.-j*xnu)
              lint = 0
-             write(ioWrite,2000) wd(ityp),d(16),d(17),d(4),l,k, &
+             write(iow,2000) wd(ityp),d(16),d(17),d(4),l,k, &
                            d(14),d(11),d(12),alp,t0
-             if(ioRead.lt.0) then
+             if(ior.lt.0) then
                write(*,2000) wd(ityp),d(16),d(17),d(4),l,k, &
                            d(14),d(11),d(12),alp,t0
              end if
@@ -96,12 +93,12 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
              return
            else
 !            Read error messages
-             call pperror('PCELM1',yyy)
+             call myPerror('elmt01',yyy)
            end if
          end do
        else
 !        Read error messages
-         call pperror('PCELM1',yyy)
+         call myPerror('elmt01',yyy)
        end if
      end do
    case(2)
@@ -151,13 +148,13 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
      
          mct = mct - 2
          if(mct.le.0) then
-           call prthed(ioWrite)
-           write(ioWrite,2001)
-           if(ioRead.lt.0) write(*,2001)
+           call prthed(iow)
+           write(iow,2001)
+           if(ior.lt.0) write(*,2001)
            mct = 50
          end if
-         write(ioWrite,2002) n,xx,sigr,ma,yy,eps,ang
-         if(ioRead.lt.0) write(*,2002) n,xx,sigr,ma,yy,eps,ang
+         write(iow,2002) n,xx,sigr,ma,yy,eps,ang
+         if(ior.lt.0) write(*,2002) n,xx,sigr,ma,yy,eps,ang
        else
      
 !        Loop over rows

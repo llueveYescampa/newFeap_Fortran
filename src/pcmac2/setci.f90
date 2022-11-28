@@ -1,22 +1,21 @@
 subroutine setci(ioRead)
 implicit none
-integer  ioRead
+  integer :: ioRead
 
 !  Purpose: Compute integration constants 'c1' to 'c5' for current 'dt'
 
 !  Inputs:
-!     ioRead   - Data input logical unit number
+!     ioRead      - Data input logical unit number
 
 !  Outputs:
 !     none     - Output through common block
 
    include 'tbeta.h'
-
    include 'tdata.h'
 
    if(dt.le.0.0) then
      write(*,'(a)') ' **ERROR** Input DT as nonzero number.'
-     if(ioRead.gt.0) stop
+     if(ioRead.gt.0) call pstop(-18) ! stop
      return
    end if
 

@@ -1,12 +1,11 @@
 subroutine prterr()
-implicit  none
+implicit none
 
 !  Purpose:  Output error estimation values.
 
    double precision    elrind,ecrind
 
    include 'iofile.h'
-
    include 'errind.h'
 
 !  Output error indicator values
@@ -21,8 +20,8 @@ implicit  none
      eerror = sqrt(eerror/ecproj)
    end if  
      
-   write(ioWrite,2000) efem,elproj,ecproj,elrind,ecrind,eerror
-   if(ioRead.lt.0) then
+   write(iow,2000) efem,elproj,ecproj,elrind,ecrind,eerror
+   if(ior.lt.0) then
      write(*,2000) efem,elproj,ecproj,elrind,ecrind,eerror
    end if
 

@@ -1,24 +1,23 @@
 subroutine matl05(d)
 implicit none
-double precision d(18)
+  double precision :: d(*)
 
    logical         pcomp
    character       typ*5
    integer iocheck
+   character :: yyy*80
    
    include 'iofile.h'
 
-   include 'ydata.h'
-
    do while (.true.)
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(*,3000)
        read(*,'(a5)') typ
      else
-       read(ioRead,'(a5)') typ
+       read(ior,'(a5)') typ
      end if
      call pintio(yyy,10)
-     read(yyy,'(6f10.0)',IOSTAT=iocheck) d(1:6)
+     read(yyy,'(7f10.0)',IOSTAT=iocheck) d(1:6)
      if (iocheck .eq. 0) then 
        if(pcomp(typ,'beam')) then
          d(2)  = 0.0d0
@@ -26,8 +25,8 @@ double precision d(18)
        else
          d(13) = 1.0d0
        end if
-       write(ioWrite,2000) typ,d(1),d(2),d(3),d(4),d(5),d(6)
-       if(ioRead.lt.0) then 
+       write(iow,2000) typ,d(1),d(2),d(3),d(4),d(5),d(6)
+       if(ior.lt.0) then 
          write(*,2000) typ,d(1),d(2),d(3),d(4),d(5),d(6)
        end if  
    
@@ -41,7 +40,7 @@ double precision d(18)
        d(12) = d(3)*d(3)/12.d0
        exit
      else
-       call pperror('matl05',yyy)
+       call myPerror('matl05',yyy)
      end if
    end do
    return

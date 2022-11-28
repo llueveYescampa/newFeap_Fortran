@@ -1,8 +1,8 @@
 subroutine pmacio (jct,lct,ct,wd,nwd,nlp,ll)
-implicit   none
-integer    jct(*),nwd,nlp,ll
-character  lct(*)*4,wd(nwd)*4
-double precision  ct(3,*)
+implicit none
+  integer          :: jct(*),nwd,nlp,ll
+  character*4      :: lct(*),wd(nwd)
+  double precision ::  ct(3,*)
 
 !  Purpose: Command language instruction input subprogram
 
@@ -21,16 +21,15 @@ double precision  ct(3,*)
    logical    pcomp
    integer    i, j, l
    integer iocheck, test
-   character  clab1*4,clab2*4,tary*10 ! ,yyy*80
+   character  clab1*4,clab2*4,tary*10,yyy*80
 
    include 'iofile.h'
-   include 'ydata.h'
 
 !  initiate the read of macro statements
 
-   if(ioRead.gt.0) then
-     call prthed(ioWrite)
-     write(ioWrite,2001)
+   if(ior.gt.0) then
+     call prthed(iow)
+     write(iow,2001)
    end if
 
 !  read macro cards
@@ -40,7 +39,7 @@ double precision  ct(3,*)
    ct(1,1) = 1.0
    do while (.true.)
      do while (.true.)
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
         call pctime(tary)
         write(*,2002) tary,ll
        end if
@@ -48,25 +47,25 @@ double precision  ct(3,*)
        call pintio(yyy,15)
        read(yyy,'(2(a4,11x),3f15.0)',IOSTAT=iocheck)clab1,clab2,(ct(i,ll),i=1,3)
        if (iocheck .ne. 0) then
-         call pperror('pmacio',yyy)
+         call myPerror('pmacio',yyy)
          cycle
        end if
-       if(ioRead.lt.0 .and. pcomp(clab1,'help')) then
+       if(ior.lt.0.and.pcomp(clab1,'help')) then
          call phelp(wd,nwd,'MACRO',1)
          ll = ll - 1
          cycle
        end if
-       if(ioRead.gt.0 .and. pcomp(clab1,'end ')) then
+       if(ior.gt.0.and.pcomp(clab1,'end ')) then
          exit
        end if
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          if(pcomp(clab1,'exit')) then
            ll = -1
          end if
-         if(pcomp(clab1,'q   ') .or. pcomp(clab1,'quit')) then
+         if(pcomp(clab1,'q   ').or.pcomp(clab1,'quit')) then
            ll = -2
          end if
-         if(ll .lt. 0) then
+         if(ll.lt.0) then
            return
          end if
        end if
@@ -78,8 +77,8 @@ double precision  ct(3,*)
        do j = 1,nwd
          if(pcomp(clab1,wd(j))) then
            jct(ll) = j
-           if(ioRead.gt.0) then
-             write(ioWrite,'(7x,a4,1x,a4,1x,3g12.5)') clab1,clab2,(ct(l,ll),l=1,3)
+           if(ior.gt.0) then
+             write(iow,'(7x,a4,1x,a4,1x,3g12.5)') clab1,clab2,(ct(l,ll),l=1,3)
              test=100
              exit !! go to 100  or cycle
            end if
@@ -93,12 +92,12 @@ double precision  ct(3,*)
        else if(test .eq. 150) then
          exit
        else
-         call pperror('pmacio',yyy)
+         call myPerror('pmacio',yyy)
          ll = ll - 1
          cycle
        end if
      
-       exit
+     exit
      end do
      jct(ll)= nlp+1
      
@@ -125,11 +124,11 @@ double precision  ct(3,*)
      
      if(test .eq. 400) then
 !      error messages
-       write(ioWrite,3000)
-       if(ioRead.gt.0) then
-         stop
+       write(iow,3000)
+       if(ior.gt.0) then
+         call pstop(-129) ! stop
        end if
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,3000)
        end if
        cycle
@@ -138,9 +137,9 @@ double precision  ct(3,*)
      test=0
      
      if (j.ne.0) then
-       if (ioRead.gt.0) then
+       if (ior.gt.0) then
          test = 400
-       else if (ioRead.lt.0) then
+       else if (ior.lt.0) then
          ll = ll - 1
        end if
        if (test .eq. 0) then
@@ -150,11 +149,11 @@ double precision  ct(3,*)
      
      if(test .eq. 400) then
 !      error messages
-       write(ioWrite,3000)
-       if(ioRead.gt.0) then
-         stop
+       write(iow,3000)
+       if(ior.gt.0) then
+         call pstop(-154) ! stop
        end if
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,3000)
        end if
        cycle
@@ -192,17 +191,17 @@ double precision  ct(3,*)
      
      if(test .eq. 400) then
 !      error messages
-       write(ioWrite,3000)
-       if(ioRead.gt.0) then
-         stop
+       write(iow,3000)
+       if(ior.gt.0) then
+         call pstop(-196) ! stop
        end if
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,3000)
        end if
        cycle
      end if
 
-     exit
+   exit
    end do
 
    return
@@ -212,8 +211,8 @@ double precision  ct(3,*)
 2001  format('  M a c r o   I n s t r u c t i o n s'//         &
       '  Macro Statement  Variable 1  Variable 2  Variable 3')
      
-2002  format(' Input MACRO: "exit" = stop with restart',        &
-         '; "quit" = quit.'/3x,'Time = ',a10,' Macro',i3,'> ',$)
+2002  format(' Input MACRO: !exit! = stop with restart',        &
+         '; !quit! = quit.'/3x,'Time = ',a10,' Macro',i3,'> ',$)
      
 3000  format(' **ERROR**  Wrong loop/next order, or > 8 loops')
 end

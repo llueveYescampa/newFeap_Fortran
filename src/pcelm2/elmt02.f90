@@ -1,7 +1,7 @@
 subroutine elmt02(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
-implicit  none
-integer   ix(*),ndf,ndm,nst,isw
-double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
+implicit none
+  integer          ::  ix(*),ndf,ndm,nst,isw
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
       
 
 !   Purpose: Plane/Axisymmetric Linear Element -- bbar formulation
@@ -25,27 +25,20 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
     logical flg
 
     integer i,i1,ii,j,j1,jj, ib,ityp,l,lint
-    double precision rr,zz,xr0,xz0,typo,vol,yld,dot
+    double precision rr,zz,xr0,xz0,type,vol,yld,dot
     double precision eps(4),sig(6),bbar(4,2,4),bbd(4,2),sg(4),tg(4), &
-                     wg(4),shp3(4,4),shp(3,4,4),xsj(4),ang,siga(6)
+                    wg(4),shp3(4,4),shp(3,4,4),xsj(4),ang,siga(6)
     
-    include 'maxa.h'      
-    
-   include 'adata.h'
+    include 'adata.h'
+    include 'cdata.h'
 
-   include 'cdata.h'
 
    include 'eldata.h'
-
    include 'elcom2.h'
 
+   include 'iofile.h'
 
-    include 'iofile.h'
 
-    do i=1,4
-      xsj(i) = 0.0d+0
-    enddo
-    lint=0
 !   Go to correct array processor
 
     select case (isw)
@@ -66,15 +59,15 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
     case(3,4,6,8)
 !     Compute tangent stiffness and residual force vector
       
-      typo = d(5)
-      ib   = int(d(6))
+      type = d(5)
+      ib   = d(6)
       
 !     Compute volumetric integrals
       
       call pconsd(g,8,0.0d0)
       do l = 1,lint
         call shapeFunc(sg(l),tg(l),xl,shp(1,1,l),xsj(l),ndm,4,ix,.false.)
-        call gvc02(shp(1,1,l),shp3(1,l),xsj(l),wg(l),xl,typo,ndm)
+        call gvc02(shp(1,1,l),shp3(1,l),xsj(l),wg(l),xl,type,ndm)
       end do ! l
       vol  = xsj(1) + xsj(2) + xsj(3) + xsj(4)
       do i = 1,4
@@ -91,7 +84,7 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
         
 !         Compute stress, strain, and material moduli
         
-          call strn02(shp(1,1,l),xl,ul,typo,xr0,xz0,ndm,ndf,eps)
+          call strn02(shp(1,1,l),xl,ul,type,xr0,xz0,ndm,ndf,eps)
           call modl02(d,ul,eps,siga,1.d0,ndf,ib)
           do i = 1,5
             sig(i) = sig(i) + 0.25d0*siga(i)
@@ -106,15 +99,15 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
         
         mct = mct - 2
         if(mct.le.0) then
-          call prthed(ioWrite)
-          write(ioWrite,2001)
-          if(ioRead.lt.0) then
+          call prthed(iow)
+          write(iow,2001)
+          if(ior.lt.0) then
             write(*,2001)
           end if  
           mct = 50
         end if
-        write(ioWrite,2002) n,ma,sig,rr,zz,yld,ang
-        if(ioRead.lt.0) then
+        write(iow,2002) n,ma,sig,rr,zz,yld,ang
+        if(ior.lt.0) then
           write(*,2002) n,ma,sig,rr,zz,yld,ang
         end if  
         return
@@ -123,7 +116,7 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
 !     Stress computations for nodes
       
         call stcn02(ix,d,xl,ul,shp,aa,aa(numnp+1),ndf,ndm,numnp,sg,tg,sig,&
-                   eps,lint,typo,ib)
+                   eps,lint,type,ib)
         return
       end if  
       flg  = isw .eq. 3
@@ -131,7 +124,7 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
       
 !       Compute stress, strain, and material moduli
       
-        call strn02(shp(1,1,l),xl,ul,typo,xr0,xz0,ndm,ndf,eps)
+        call strn02(shp(1,1,l),xl,ul,type,xr0,xz0,ndm,ndf,eps)
         call modl02(d,ul,eps,sig,xsj(l),ndf,ib)
         i1 = 0
         do i = 1,4
@@ -185,7 +178,7 @@ double precision    d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
 !   Compute lumped mass matrix
 
       do l = 1,lint
-        call shapeFunc(sg(l),tg(l),xl,shp,xsj,ndm,4,ix,.false.)
+        call shapeFunc(sg(l),tg(l),xl,shp,xsj(1),ndm,4,ix,.false.)
       
 !       Compute radius and multiply into jacobian for axisymmetry
       

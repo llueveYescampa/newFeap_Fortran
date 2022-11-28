@@ -1,8 +1,8 @@
 subroutine pmesh(idl,ie,d,id,x,ix,f,t,ndf,ndm,nen1,iii,prt)
 implicit none
-integer  ndf,ndm,nen1,iii,idl(6),ie(9,*),id(ndf,*),ix(nen1,*)
-double precision   d(18,*),x(ndm,*),f(ndf,*),t(*)
-logical  prt      
+  integer          :: ndf,ndm,nen1,iii,idl(6),ie(9,*),id(ndf,*),ix(nen1,*)
+  double precision :: d(18,*),x(ndm,*),f(ndf,*),t(*)
+  logical          :: prt      
 
 !  Purpose: Data input routine for mesh description
 
@@ -27,19 +27,15 @@ logical  prt
    logical     error,pcomp
    integer     i, list, iocheck
 
-   character*4 wd(13),cc,cds*12,tmp*12,fds*12,an*12
-   ! character yyy*80
-   
-   include 'maxa.h'
+   character*4 wd(13),cc
+   character*12 cds, tmp, fds, an
+   character yyy*80
 
    include 'cdata.h'
    include 'ddata.h'
-   include 'ydata.h'
    include 'eldata.h'
-
    include 'iofile.h'
    include 'mdat2.h'
-
 
 
    data wd/'coor','elem','mate','boun','forc','temp','prin','nopr', &
@@ -48,8 +44,8 @@ logical  prt
    data  an/'  angles    '/
    data cds/' coordinates'/
    data tmp/' temperature'/
-
    data fds/' force/displ'/
+   
    data list/13/
    
 !  Initialize arrays
@@ -67,7 +63,7 @@ logical  prt
    end if
    
    do while (.true.)
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(*,'(a,$)') '     Mesh 1 > '
      end if  
      call pintio(yyy,10)
@@ -77,10 +73,10 @@ logical  prt
        call pend('pmesh ')
      else if(iocheck .ne. 0) then
 !       Error was found
-       call pperror('PMESH ',yyy)
+       call myPerror('pmesh ',yyy)
        cycle
      end if
-     if((ioRead.lt.0) .and. pcomp(cc,'help')) then
+     if((ior.lt.0) .and. pcomp(cc,'help')) then
         call phelp(wd,list,'MESH ',0)
         cycle
      end if
@@ -119,7 +115,7 @@ logical  prt
      case ( 9)
 !      Generate block of nodes and 4-node elements
        if(iii.lt.0) then
-         write(ioWrite,3000)
+         write(iow,3000)
        end if  
        call blkgen(ndm,nen,nen1,x,ix,prt)
      case (10)
@@ -134,7 +130,7 @@ logical  prt
      case (13)
 !    End of mesh
        if(error) then
-         stop
+         call pstop(-133) ! stop
        end if  
        return
      end select

@@ -1,8 +1,8 @@
 subroutine update(id,fn,u,v,du,nneq,fdyn,isw)
-implicit  none
-integer   id(*),nneq,isw
-double precision    fn(nneq,2),u(nneq,*),v(nneq,*),du(*)
-logical   fdyn
+implicit none
+  integer          :: id(*),nneq,isw
+  double precision :: fn(nneq,2),u(nneq,*),v(nneq,*),du(*)
+  logical          :: fdyn
 
 !   Purpose: Update displacements (and velocities and accelerations)
 
@@ -27,8 +27,7 @@ logical   fdyn
     double precision ur1,ur2,dot
 
 
-    include 'iofile.h'
-
+   include 'iofile.h'
    include 'tbeta.h'
 
    include 'tdata.h'
@@ -39,8 +38,8 @@ logical   fdyn
 
       ur1 = sqrt(dot(v(1,1),v(1,1),nneq))
       ur2 = sqrt(dot(v(1,2),v(1,2),nneq))
-      write(ioWrite,2000) ur1,ur2
-      if(ioRead.lt.0) then
+      write(iow,2000) ur1,ur2
+      if(ior.lt.0) then
         write(*,2000) ur1,ur2
       end if  
 

@@ -1,6 +1,6 @@
 subroutine prefrt(il,idl,ix,maxf,ndf,nen,nen1,numel,numnp)
-implicit  none
-integer   maxf,ndf,nen,nen1,numel,numnp,il(*),idl(*),ix(nen1,*)
+implicit none
+  integer :: maxf,ndf,nen,nen1,numel,numnp,il(*),idl(*),ix(nen1,*)
 
 !  Purpose: Prefrontal routine to flag last occurance of nodes
 
@@ -64,7 +64,7 @@ integer   maxf,ndf,nen,nen1,numel,numnp,il(*),idl(*),ix(nen1,*)
        end if
      end do
    end do  
-   if(ioRead.lt.0) then
+   if(ior.lt.0) then
      write(*,'(a,i4,a)')'   -> Maximum Front Estimate =',maxf,' d.o.f.'
    end if  
 

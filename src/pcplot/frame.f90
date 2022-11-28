@@ -1,7 +1,7 @@
 subroutine frame(x,ndm,numnp)
-implicit  none
-integer ndm,numnp
-double precision    x(ndm,*)
+implicit none
+  integer          :: ndm,numnp
+  double precision :: x(ndm,*)
       
 ! Purpose: Compute scaling for plot area
 
@@ -20,7 +20,6 @@ double precision    x(ndm,*)
 
   include 'pdata1.h'
 
-
 ! Determine window coordinates
   if(ndm.eq.1) then
     dx(2) = 0.0
@@ -29,10 +28,6 @@ double precision    x(ndm,*)
   ii = min(ndm,3)
   ij = min(ndm,2)
 
-  do i = 1,3
-    xmin(i) = 0.0d+0
-    xmax(i) = 0.0d+0
-  end do  
 ! Find the minimum and maximum coordinate of input nodes
   iflg = .true.
   do n = 1,numnp
@@ -51,7 +46,7 @@ double precision    x(ndm,*)
       end if
     end if
   end do  
-  myScale  = max(xmax(1)-xmin(1),xmax(2)-xmin(2))
+  scale  = max(xmax(1)-xmin(1),xmax(2)-xmin(2))
 
 ! Plot region determination
   do i = 1,ij
@@ -61,7 +56,7 @@ double precision    x(ndm,*)
     sx(i) = xmx(i) + xmn(i)
   end do  
 
-! RemyScale window
+! Rescale window
   if(dx(1).gt.1.45*dx(2)) then
     xmn(2) = (sx(2) - dx(1))*0.5
     xmx(2) = (sx(2) + dx(1))*0.5
@@ -72,19 +67,19 @@ double precision    x(ndm,*)
     fact   = 0.40
   end if
   do i = 1,ij
-    xmin(i) = max(xmin(i),xmn(i)) - myScale * 0.01
-    xmax(i) = min(xmax(i),xmx(i)) + myScale * 0.01
+    xmin(i) = max(xmin(i),xmn(i)) - scale * 0.01
+    xmax(i) = min(xmax(i),xmx(i)) + scale * 0.01
   end do  
 
 ! Default values
-  myScale  = max(xmax(1)-xmin(1),xmax(2)-xmin(2))
+  scale  = max(xmax(1)-xmin(1),xmax(2)-xmin(2))
 
 ! Reset values for deformed plotting
   do i = 1,ij
     xcen = xmax(i)+xmin(i)
-    xmax(i) = (xcen + 1.1*myScale)*0.5
-    xmin(i) = (xcen - 1.1*myScale)*0.5
+    xmax(i) = (xcen + 1.1*scale)*0.5
+    xmin(i) = (xcen - 1.1*scale)*0.5
   end do  
-  myScale = fact/myScale
+  scale = fact/scale
 
 end

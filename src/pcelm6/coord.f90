@@ -1,7 +1,7 @@
 double precision function coord(xl,shp,ndm,nel)
-implicit    none
-integer     ndm,nel
-double precision  xl(ndm,*),shp(3,*)
+implicit none
+  integer           :: ndm,nel
+  double precision  :: xl(ndm,*),shp(3,*)
       
    integer i
    

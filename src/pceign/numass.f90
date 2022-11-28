@@ -1,7 +1,7 @@
 subroutine numass(b,neq,mq)
 implicit none
-double precision b(*)
-integer  neq,mq
+  double precision :: b(*)
+  integer          ::  neq,mq
 
 !  Purpose: Count number of non-zero entries in mass
 
@@ -12,8 +12,7 @@ integer  neq,mq
 !  Outputs
 !     nq       - Number of nonzero entries in b array
 
-   integer  n,nn
-   
+   integer  n,nn   
    include 'iofile.h'
 
    nn = 0
@@ -24,10 +23,10 @@ integer  neq,mq
    end do  
 
    if(nn.lt.mq) then 
-     write(ioWrite,'(1x,a,i4,a)') &
+     write(iow,'(1x,a,i4,a)') &
      'Subspace reduced to',nn,' by number of nonzero lumped mass terms'
    end if  
-   if(ioRead.lt.0.and.nn.lt.mq) then 
+   if(ior.lt.0.and.nn.lt.mq) then 
      write(*,'(1x,a,i4,a)')   &
      'Subspace reduced to',nn,' by number of nonzero lumped mass terms'
    end if  

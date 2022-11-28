@@ -7,8 +7,6 @@ get_filename_component(CurrDir ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(pctekt_Src 
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/brk4.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/dplot.f90
-    ${myPROJECT_SOURCE_DIR}/${CurrDir}/pstart.f90
-    ${myPROJECT_SOURCE_DIR}/${CurrDir}/pstop.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/vclrwk.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/vclswk.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/vencur.f90

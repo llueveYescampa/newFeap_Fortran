@@ -1,8 +1,8 @@
 subroutine stcn06(ix,d,xl,ul,shp,dt,st,ndf,ndm,nel,numnp,sg,tg,wg,lint)
-implicit  none
-integer   ix(*),ndf,ndm,nel,numnp,lint
-double precision d(*),xl(ndm,*),ul(ndf,*),shp(3,*),dt(numnp), &
-                 st(numnp,*),sg(*),tg(*),wg(*)
+implicit none
+integer          :: ix(*),ndf,ndm,nel,numnp,lint
+double precision :: d(*),xl(ndm,*),ul(ndf,*),shp(3,*),dt(numnp), &
+                    st(numnp,*),sg(*),tg(*),wg(*)
       
 !  Project values to nodes
    

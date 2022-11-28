@@ -13,9 +13,10 @@ double precision  v(nn),cc
 !    v(*)      - Array set to 'cc'
 
   integer   n
-
   do n = 1,nn
     v(n) = cc
   end do  
+
+  !v(1:nn) = cc
 
 end

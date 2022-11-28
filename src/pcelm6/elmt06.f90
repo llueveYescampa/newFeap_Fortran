@@ -1,7 +1,7 @@
 subroutine elmt06(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
-implicit  none
-integer  ix(*), ndf,ndm,nst,isw
-double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
+implicit none
+  integer          :: ix(*), ndf,ndm,nst,isw
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
 
 !  Purpose: Two dimensional laplace equation with a reaction term
   
@@ -26,26 +26,19 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
    double precision    q1,q2,qm,qq,dq,uu, a1,a2,a3, rr,zz, xsj
    double precision    coord ,shp(3,9)
    double precision    sg(9),tg(9),wg(9)
+   character :: yyy*80
    
    integer iocheck
    logical test
   
-   include 'maxa.h'     
-   
    include 'adata.h'
-
    include 'bdata.h'
-
    include 'cdata.h'
-
    include 'eldata.h'
-
    include 'iofile.h'
 
-   include 'ydata.h'
-
    data wlab/'  p l a n e ','axisymmetric'/
-   kat=0
+
 !  Compute the quadrature points
 
    if(isw .gt. 2) then
@@ -58,7 +51,7 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
 !    Input material properties
      test = .true.
      do while (test)
-       if(ioRead.lt.0) then 
+       if(ior.lt.0) then 
          write(*,3000)
        end if  
        call pintio(yyy,10)
@@ -68,8 +61,8 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
            kat=1
          end if  
          nn = max(-1,min(1,nn))
-         write(ioWrite,2000) (d(i),i=1,6),nn,wlab(kat)
-         if(ioRead.lt.0) then 
+         write(iow,2000) (d(i),i=1,6),nn,wlab(kat)
+         if(ior.lt.0) then 
            write(*,2000) (d(i),i=1,6),nn,wlab(kat)
          end if  
          d(7) = nn
@@ -78,13 +71,13 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
          test = .false.
          return
        else  
-         call pperror('PCELM6',yyy)
+         call myPerror('elmt06',yyy)
        end if
      end do
    else if(mod(isw,3).eq.0) then
 !    Compute conductivity matrix and residual
-     nn  = int(d(7))
-     kat = int(d(8))
+     nn  = d(7)
+     kat = d(8)
      do l=1,lint
        call shapeFunc(sg(l),tg(l),xl,shp,xsj,ndm,nel,ix,.false.)
        xsj = xsj*wg(l)
@@ -101,7 +94,7 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
          dq = d(5)*d(6)/uu**2
        else
          write(*,*) ' ** ELMT06 ERROR ** T = 0.0: stop'
-         stop
+         call pstop(-97) ! stop
        end if
        j1 = 1
        do j=1,nel
@@ -132,11 +125,11 @@ double precision  d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
      mct = mct - 1
      if(mct.lt.0) then
        mct = 50
-       write(ioWrite,2001) head
-       if(ioRead.lt.0) write(*,2001) head
+       write(iow,2001) head
+       if(ior.lt.0) write(*,2001) head
      end if
-     write(ioWrite,'(2i5,0p2f11.3,1p4e11.3)') n,ma,rr,zz,q1,q2,qm,uu
-     if(ioRead.lt.0) then 
+     write(iow,'(2i5,0p2f11.3,1p4e11.3)') n,ma,rr,zz,q1,q2,qm,uu
+     if(ior.lt.0) then 
        write(*,'(2i5,0p2f11.3,1p4e11.3)') n,ma,rr,zz,q1,q2,qm,uu
      end if  
    else if(isw .eq. 5) then

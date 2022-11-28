@@ -1,8 +1,8 @@
 subroutine formfe(u,b,af,bf,cf,df,is,ne1,ne2,ne3)
-implicit  none
-integer                           is,ne1,ne2,ne3
-double precision         u(*),b(*)
-logical              af,bf,cf,df
+implicit none
+  integer          :: is,ne1,ne2,ne3
+  double precision :: u(*),b(*)
+  logical          :: af,bf,cf,df
 
 !  Purpose: Form finite element arrays as required
 
@@ -20,17 +20,12 @@ logical              af,bf,cf,df
 !  Outputs:
 !     b(*)      - Element vector
 
-   include 'maxa.h'      
-
+   include 'ddata.h'
    include 'mdata.h'
-
    include 'mdat2.h'
-
    include 'sdata.h'
-   
    include 'xdata.h'
 
-   include 'ddata.h'
 
 !  form appropriate f.e. array
 

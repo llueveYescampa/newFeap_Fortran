@@ -1,8 +1,8 @@
 subroutine polar(x,ndm,prt)
 implicit none
-integer  ndm
-double precision   x(ndm,*)
-logical  prt
+          integer  :: ndm
+  double precision ::  x(ndm,*)
+           logical :: prt
 
 !     Purpose: Convert polar to cartesian coordinates
 
@@ -15,13 +15,12 @@ logical  prt
 !        x(ndm,*)   - Cartesian form of nodal coordinates
 
 
-      !character yyy*80
+      character yyy*80
       integer   i,inc, mct, n,ni,ne
       integer iocheck
       double precision  x0,y0, r,th
 
-      include 'cdata.h'
-      include 'ydata.h'
+      include 'cdata.h'      
       include 'iofile.h'
 
       if(ndm.eq.1) then 
@@ -31,14 +30,14 @@ logical  prt
       mct = 0
       th = atan(1.0d0)/45.0d0
       do while (.true.)
-        if(ioRead.lt.0) then
+        if(ior.lt.0) then
           write(*,'(a/3x,a,$)') &
             ' Input: 1-node, 2-node, inc, x1(cent), x2(cent)','>'
         end if  
         call pintio(yyy,10)
         read(yyy,'(3i10,2f10.0)',IOSTAT=iocheck) ni,ne,inc,x0,y0
         if(iocheck .ne. 0) then
-          call pperror('POLAR ',yyy)
+          call myPerror('polar ',yyy)
           cycle
         else
           if(ni.le.0) then
@@ -46,13 +45,13 @@ logical  prt
           end if  
           if(ni.gt.numnp.or.ne.gt.numnp) then
 !           Error
-            write(ioWrite,'(a,i6,a,i6)') &
+            write(iow,'(a,i6,a,i6)') &
                 ' **ERROR** attempt to convert nodes ni= ',ni,' - ne= ',ne
-            if(ioRead.lt.0) then
+            if(ior.lt.0) then
               write(*,'(a,i6,a,i6)') &
                 ' **ERROR** attempt to convert nodes ni= ',ni,' - ne= ',ne
             end if  
-            stop
+            call pstop(-54) ! stop
           end if  
           inc = sign(max(abs(inc),1),ne-ni)
           if(ne.eq.0) then 
@@ -65,18 +64,18 @@ logical  prt
             x(2,n) = y0 + r*sin(x(2,n)*th)
             if(mct.le.0) then
               if(prt) then
-                call prthed(ioWrite)
-                write(ioWrite,2000) x0,y0,(i,i=1,ndm)
+                call prthed(iow)
+                write(iow,2000) x0,y0,(i,i=1,ndm)
               end if  
-              if(ioRead.lt.0.and.prt) then
+              if(ior.lt.0.and.prt) then
                 write(*,2000) x0,y0,(i,i=1,ndm)
               end if  
               mct = 50
             end if
             if(prt) then 
-              write(ioWrite,'(i10,6f13.4)') n,(x(i,n),i=1,ndm)
+              write(iow,'(i10,6f13.4)') n,(x(i,n),i=1,ndm)
             end if  
-            if(ioRead.lt.0.and.prt) then 
+            if(ior.lt.0.and.prt) then 
               write(*,'(i10,6f13.4)') n,(x(i,n),i=1,ndm)
             end if  
             mct = mct - 1

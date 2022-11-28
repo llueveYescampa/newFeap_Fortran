@@ -1,7 +1,7 @@
 subroutine just(y,k,n0)
-implicit    none
-integer     k,n0
-character*1 y(k)
+implicit none
+  integer     :: k,n0
+  character*1 :: y(k)
 
 !  Purpose: Complete parser alignment of input data
 

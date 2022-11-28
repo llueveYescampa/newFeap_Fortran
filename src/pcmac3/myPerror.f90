@@ -1,6 +1,6 @@
-subroutine pperror(subnam,yy)
-implicit  none
-character subnam*6, yy*80
+subroutine myPerror(subnam,yy)
+implicit none
+  character :: subnam*6, yy*80
 
 ! Purpose: Read error encountered
 
@@ -11,10 +11,10 @@ character subnam*6, yy*80
 
    include 'iofile.h'
    
-   if(ioRead.gt.0) then
-     write(ioWrite,'(a,a6,a,/1x,a80)') &
+   if(ior.gt.0) then
+     write(iow,'(a,a6,a,/1x,a80)') &
        ' **ERROR in ', subnam, '** Reinput last record:', yy  
-     stop
+     call pstop(-17) ! stop
    else
      write(*,'(a,a6,a,/1x)') &
        ' **ERROR in ', subnam, '** Reinput last record:'

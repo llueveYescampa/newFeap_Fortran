@@ -1,9 +1,9 @@
 subroutine stcn01(ix,d,xl,ul,tl,shp,dt,st,ndf,ndm,nel,numnp,sg,tg, &
                   sig,eps,lint,ityp)
 implicit none
-integer  ix(*),                 lint,ityp,ndf,ndm,nel,numnp
-double precision d(*),xl(ndm,*),ul(ndf,*),tl(*),shp(3,4),dt(numnp), &
-                 st(numnp,*),sg(9),tg(9),sig(4),eps(4)
+  integer          :: ix(*),lint,ityp,ndf,ndm,nel,numnp
+  double precision :: d(*),xl(ndm,*),ul(ndf,*),tl(*),shp(3,4),dt(numnp), &
+                      st(numnp,*),sg(9),tg(9),sig(4),eps(4)
       
 !  Purpose: Project stresses onto nodes
 

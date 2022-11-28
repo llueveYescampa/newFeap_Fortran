@@ -1,7 +1,7 @@
 subroutine elpl02(d,eps,epln,alph,ep,sig,ul,ndf,ib)
 implicit none
-integer ndf,ib
-double precision d(*),eps(4),epln(4),alph(4),ep,sig(5),ul(ndf,*)
+  integer          :: ndf,ib
+  double precision :: d(*),eps(4),epln(4),alph(4),ep,sig(5),ul(ndf,*)
 
 !  Purpose: Elasto-plastic model with isotropic / kinematic hardening
 
@@ -27,7 +27,6 @@ double precision d(*),eps(4),epln(4),alph(4),ep,sig(5),ul(ndf,*)
    include 'eldata.h'
 
    include 'elcom2.h'
-
 
 !  Set parameters
 

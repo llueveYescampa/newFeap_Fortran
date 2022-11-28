@@ -43,23 +43,21 @@ program         pcfeap
 implicit        none
 
    include 'cdata.h'
-
    include 'iofild.h'
-
    include 'psize.h'
-
    include 'temfl1.h'
-
    include 'vdata.h'
-
 
 !  Parameters control program capacity:
 !                 mmax  = mesh size
 !                 maxa  = equation size (in several routines)
 
-   integer        mmax
-   include 'maxa.h'      
-   parameter     (mmax = 3*maxa)
+   !integer        mmax
+   include 'maxa.h'
+   !parameter     (mmax = 3*maxa)
+
+   integer        m
+   common         m(3*maxa)
 
 !  Set version data
 
@@ -70,7 +68,7 @@ implicit        none
 !  Reserve memory size; set default input/output units
 !      N.B. maxm is defined in number of INTEGER words.
 
-   maxm = mmax
+   maxm = 3*maxa ! mmax
    ne   = 1
    iodr = 15
    iodw = 16
@@ -92,7 +90,7 @@ implicit        none
 !  integer
 
    ipd  = 2
-   ipr  = 1
+   ipr  = 0
    ipi  = 1
 
 !  Start system if necessary
@@ -109,9 +107,6 @@ implicit        none
 
    close(iodr)
    close(iodw)
-
    call pdefil(tfile,1,4)
-
-   call pstop
-
+   call pstop(0)
 end

@@ -1,7 +1,8 @@
-subroutine psetm(na,nl,typ)
-implicit  none
-integer   na,nl
-character typ*1
+subroutine psetm(na,nl,typ,afl)
+implicit none
+  integer   :: na,nl
+  character :: typ*1
+  logical   :: afl
 
 !  Purpose:  Allocate array storage pointer from blank common
 
@@ -11,14 +12,13 @@ character typ*1
 
 !  Outputs:
 !     na        - Pointer to first word in array
+!     afl       - Flag, error if true
 
    integer   np,ns
    double precision    amx
-  
+
    include 'iofild.h'
-
    include 'iofile.h'
-
    include 'psize.h'
 
 !  Set data management pointers for arrays
@@ -34,40 +34,56 @@ character typ*1
    else if( typ .eq. 'r' ) then
      np = ipr
      ns = ipd/ipr
-!   else if( typ .eq. 'i' ) then
-   else  ! assuming typ .eq. 'i'
+   else if( typ .eq. 'i' ) then
      np = ipi
      ns = (ipd+ipr)/ipi
    end if
    na = ne
    ne = na + nl*np + mod(ipd - mod(nl*np,ipd),ipd)
    na   = (na + np - 1)/np - ns
+   afl = .false.
    amx = maxm
    amx = ne/amx
    if(amx.gt.0.90) then
      write(*,'(a,i6,a,i6,a,f6.3)') &
      '  **Memory warning** Used =', ne,' Avail =',  maxm, ' % =', amx
-   end if  
-   
-   
+   end if
+     
 !   if(ne.le.maxm) then
 !     return
 !   end if  
    
-   if(ne >= maxm) then
-     write(ioWrite,'(2x,a,/10x,a,i6/10x,a,i6/)')         &
+   if(ne.gt.maxm) then
+     write(iow,'(2x,a,/10x,a,i6/10x,a,i6/)')             &
      '**ERROR** Insufficient storage in blank common',   &
      'Required  =', ne,                                  &
      'Available =', maxm
      
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(*,'(2x,a,/10x,a,i6/10x,a,i6/)')               &
        '**ERROR** Insufficient storage in blank common',   &
        'Required  =', ne,                                  &
        'Available =', maxm
      end if  
-     stop
+     call pstop(-68) ! stop
    end if  
+   !print *, "na: ", na, " allocated space: ", nl, " type: ", typ
    
-   return
 end
+
+
+!   if( typ == 'd' ) then
+!     na = neDouble
+!     
+!     neDouble = neDouble + nl
+!     neInt = 2*neDouble - 3
+!   else  ! assuming typ .eq. 'i'
+!     na = neInt
+!     neInt = neInt + nl
+!     if (mod(neInt,2) == 1) then
+!       neDouble = (neInt+3)/2
+!     else
+!       neDouble = (neInt+4)/2
+!     endif
+!   endif
+

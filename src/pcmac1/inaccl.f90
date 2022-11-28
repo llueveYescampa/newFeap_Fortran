@@ -1,5 +1,5 @@
 subroutine inaccl(id,dr,xm,a,nneq)
-implicit  none
+implicit none
 integer    nneq,id(nneq)
 double precision    dr(*),xm(*),a(nneq)
 

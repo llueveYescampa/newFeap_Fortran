@@ -1,9 +1,9 @@
 subroutine psolve(u,a,b,dr,m,xm,s,ld,ig,idl,nst,nrs,afac,solv, &
                         dyn,c1,ipd,rnorm,aengy,ifl)
-implicit  none
-logical   afac,solv,dyn
-integer   m(*),ld(*),ig(*),idl(*),nst,nrs,ipd,ifl
-double precision u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
+implicit none
+  logical          :: afac,solv,dyn
+  integer          :: m(*),ld(*),ig(*),idl(*),nst,nrs,ipd,ifl
+  double precision :: u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
 
 !  Purpose:  Frontal assembly and solution of equations
 !            N.B. interface for psolve same as for profile solutions
@@ -34,11 +34,10 @@ double precision u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
 !     ifl       - File name number for frontal equation storage on disk
 
 
-   include 'maxa.h'      
-
+   include 'maxa.h'
 
    logical   fa
-   integer   i,ie,ii, jj, k, n,ne,np,nv,nal,nfrt,ihsiz
+   integer   i,ie,ii, jj, k, n,ne,np,nal,nfrt,ihsiz
    double precision      r,rxm
 
 
@@ -50,7 +49,6 @@ double precision u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
    include 'temfl1.h'
    include 'temfl2.h'
    include 'temfl3.h'
-
 
    data fa/.false./
 
@@ -64,7 +62,10 @@ double precision u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
      
      if(fl(4)) then
        nal= 1 + (maxf*(maxf+3))/2
-       if((nal+maxf)*ipd.gt.ihsiz) stop 'front too large'
+       if((nal+maxf)*ipd.gt.ihsiz) then
+         print *, 'front too large'
+         call pstop(-67) ! stop 
+       endif  
        ibuf = (min(ihsiz - nal,(maxf+2)*neq))*ipd
        itrec(1) = ibuf*ihfac + ihfac
 !      open (4,file=tfile(1),status='new',access='direct',form='unformatted',recl=itrec(1))
@@ -92,7 +93,7 @@ double precision u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
      
 !    Frontal elimination program
      
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(*,'(a/a)') '   Solution status',' '
      end if  
      
@@ -105,7 +106,7 @@ double precision u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
 !      Compute element arrays
      
        call formfe(u,dr,.true.,solv,fa,fa,3,ne,ne,1)
-       if(ioRead.lt.0 .and. mod(n,20).eq.0) then
+       if(ior.lt.0 .and. mod(n,20).eq.0) then
          write(*,'(a,i4,a,i4)') &
          '+  ->', n, ' elements completed.  Current front width is', nfrt
        end if  
@@ -155,10 +156,10 @@ double precision u(*),a(*),b(*),dr(*),xm(*),s(*),c1,aengy,rnorm
      if(dimn.ne.0.0d0) then
        rxm = dimx/dimn
      end if  
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(*,2002) dimx,dimn,rxm
      end if  
-     write(ioWrite,2002) dimx,dimn,rxm
+     write(iow,2002) dimx,dimn,rxm
      
 !    Clear buffer one last time
      

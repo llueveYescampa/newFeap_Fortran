@@ -1,7 +1,7 @@
 subroutine param(ctl,ct)
-implicit  none
-character ctl*4
-double precision    ct(3)
+implicit none
+character        :: ctl*4
+double precision :: ct(3)
 
 !  Purpose: Set appropriate time integration parameters
 
@@ -16,7 +16,6 @@ double precision    ct(3)
    logical   pcomp
 
    include 'iofile.h'
-
    include 'tbeta.h'
 
 !  Set integration parameters
@@ -29,8 +28,8 @@ double precision    ct(3)
    if(pcomp(ctl,'ss11')) then
      nop = 1
      if(beta.le.0.0) beta = 0.50
-     write(ioWrite,2001) beta
-     if(ioRead.lt.0) write(*,2001) beta
+     write(iow,2001) beta
+     if(ior.lt.0) write(*,2001) beta
      theta = beta
 
 !  SS22 algorithm
@@ -39,9 +38,9 @@ double precision    ct(3)
      nop = 2
      if(beta.le.0.0) beta = 0.50
      if(gamm.le.0.0) gamm = 0.50
-     write(ioWrite,2002) beta,gamm
+     write(iow,2002) beta,gamm
      theta = gamm
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(*,2002) beta,gamm
      end if  
 
@@ -51,16 +50,14 @@ double precision    ct(3)
      nop = 3
      if(beta.le.0.0) beta = 0.25
      if(gamm.le.0.0) gamm = 0.50
-     write(ioWrite,2003) beta,gamm
-     if(ioRead.lt.0) write(*,2003) beta,gamm
+     write(iow,2003) beta,gamm
+     if(ior.lt.0) write(*,2003) beta,gamm
      theta = beta
    end if
 
 2001  format(' SS-11 Method Parameter: theta = ',f9.4)
-
-2002  format(' SS-22 Method Parameters'/               &
-             ' theta-1 = ',f9.4,' ;  theta-2 = ',f9.4)
-2003  format(' Newmark Method Parameters'/             &
-             ' beta = ',f9.4,' ;  gamma = ',f9.4)
+2002  format(' SS-22 Method Parameters'/' theta-1 = ',f9.4,' ;  theta-2 = ',f9.4)             
+2003  format(' Newmark Method Parameters'/' beta = ',f9.4,' ;  gamma = ',f9.4)
+             
 
 end

@@ -1,8 +1,8 @@
 subroutine pfrtd(a,b,r,ig,lg,solv,eq,nfrt,k)
 implicit none
-integer  ig(*),lg(*),nfrt,k
-double precision   a(*),b(*),r,eq(*)
-logical  solv
+  integer          :: ig(*),lg(*),nfrt,k
+  double precision :: a(*),b(*),r,eq(*)
+  logical          :: solv
 
 !  Purpose: Triangular decomposition for frontal program
 

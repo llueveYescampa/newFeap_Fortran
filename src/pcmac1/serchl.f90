@@ -1,14 +1,14 @@
 subroutine serchl(fn,id,g0,rsd,u,d,stol,t,nneq)
-implicit  none
-integer id(*),nneq
-double precision fn(nneq,2),g0,rsd(*),u(*),d(*),stol,t(*)
+implicit none
+  integer          :: id(*),nneq
+  double precision :: fn(nneq,2),g0,rsd(*),u(*),d(*),stol,t(*)
       
 
 !  linear line search for nonlinear problems
 
    integer j, linmax
    double precision s,step,g,ga,gb,sa,sb
-   double precision gama
+   double precision myGamma
    
    include 'cdata.h'
 
@@ -20,13 +20,13 @@ double precision fn(nneq,2),g0,rsd(*),u(*),d(*),stol,t(*)
    sb     = 0.0
    sa     = 1.0
    s      = 1.0
-   g      = gama(fn,id,u,rsd,d,t,s,neq,nneq)
+   g      = myGamma(fn,id,u,rsd,d,t,s,neq,nneq)
 
 !  find bracket on zero
 
    if(g*g0.gt.0.0d0) then
-     write(ioWrite,'(4x,a)') 'No line search, end points both positive.'
-     if(ioRead.lt.0) then
+     write(iow,'(4x,a)') 'No line search, end points both positive.'
+     if(ior.lt.0) then
        write(*,'(4x,a)') 'No line search, end points both positive.'
      end if  
    else
@@ -38,7 +38,7 @@ double precision fn(nneq,2),g0,rsd(*),u(*),d(*),stol,t(*)
      do while (.true.)
        j    = j + 1
        step = sa - ga*(sa-sb)/(ga-gb)
-       g    = gama(fn,id,u,rsd,d,t,step,neq,nneq)
+       g    = myGamma(fn,id,u,rsd,d,t,step,neq,nneq)
        gb   = 0.5d0*gb
        if (g*ga.lt.0.0d0) then
          sb = sa
@@ -46,9 +46,9 @@ double precision fn(nneq,2),g0,rsd(*),u(*),d(*),stol,t(*)
        end if
        sa = step
        ga = g
-       write(ioWrite,'(4x,a,i2,a,e12.5,a,e12.5)') &
+       write(iow,'(4x,a,i2,a,e12.5,a,e12.5)') &
              'Iter =',j,' Step Size =',step,' Energy =',g
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,'(4x,a,i2,a,e12.5,a,e12.5)') &
              'Iter =',j,' Step Size =',step,' Energy =',g
        end if  

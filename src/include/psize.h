@@ -1,2 +1,2 @@
-  integer         maxm,ne
-  common /psize/  maxm,ne
+   integer         maxm,ne
+   common /psize/  maxm,ne

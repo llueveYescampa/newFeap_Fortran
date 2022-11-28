@@ -1,7 +1,7 @@
 subroutine prtdis(x,b,ttim,prop,ndm,ndf,n1,n2,n3)
-implicit  none
-integer   ndm,ndf,n1,n2,n3
-double precision    x(ndm,*),b(ndf,*),ttim,prop
+implicit none
+  integer          :: ndm,ndf,n1,n2,n3
+  double precision :: x(ndm,*),b(ndf,*),ttim,prop
 
 !  Purpose: Output nodal displacement values
 
@@ -30,21 +30,21 @@ double precision    x(ndm,*),b(ndf,*),ttim,prop
    do n = n1,n2,n3
      kount = kount - 1
      if(kount.le.0) then
-       call prthed(ioWrite)
-       write(ioWrite,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
-       if(ioRead.lt.0) then
-         write(*,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
+       call prthed(iow)
+       write(iow,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
+       if(ior.lt.0) then
+	 write(*,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
        end if
        kount = 48
      endif
      if(x(1,n).ne. -999.) then
-       write(ioWrite,'(i6,1p9e13.6)') n,(x(i,n),i=1,ndm),(b(i,n),i=1,ndf)
-       if(ioRead.lt.0) then
+       write(iow,'(i6,1p9e13.6)') n,(x(i,n),i=1,ndm),(b(i,n),i=1,ndf)
+       if(ior.lt.0) then
          write(*,'(i6,1p9e13.6)') n,(x(i,n),i=1,ndm),(b(i,n),i=1,ndf)
        end if
      else
-       write(ioWrite,'(i6,a)') n,' not input.'
-       if(ioRead.lt.0) then
+       write(iow,'(i6,a)') n,' not input.'
+       if(ior.lt.0) then
          write(*,'(i6,a)') n,' not input.'
        end if  
      end if

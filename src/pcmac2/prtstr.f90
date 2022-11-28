@@ -1,7 +1,7 @@
-subroutine prtstr(dt,ds,numnp,n1,n2,n3)
-implicit  none
-integer numnp,n1,n2,n3
-double precision dt(numnp),ds(numnp,7)
+subroutine prtstr(dt,st,numnp,n1,n2,n3)
+implicit none
+  integer          :: numnp,n1,n2,n3
+  double precision :: dt(numnp),st(numnp,7)
 
 !  Purpose: Output projected nodal stress values
 
@@ -16,21 +16,20 @@ double precision dt(numnp),ds(numnp,7)
    integer   i, kount, n
 
    include 'iofile.h'
-   
    kount = 0
    do n = n1,n2,n3
      kount = kount - 1
      if(kount.le.0) then
-       call prthed(ioWrite)
-       write(ioWrite,2000)
-       if(ioRead.lt.0) then 
+       call prthed(iow)
+       write(iow,2000)
+       if(ior.lt.0) then 
          write(*,2000)
        end if  
        kount = 17
      end if
-     write(ioWrite,'(i5,4e13.5/5x,4e13.5/1x)') n,(ds(n,i),i=1,7),dt(n)
-     if(ioRead.lt.0) then 
-       write(*,'(i5,4e13.5/5x,4e13.5/1x)') n,(ds(n,i),i=1,7),dt(n)
+     write(iow,'(i5,4e13.5/5x,4e13.5/1x)') n,(st(n,i),i=1,7),dt(n)
+     if(ior.lt.0) then 
+       write(*,'(i5,4e13.5/5x,4e13.5/1x)') n,(st(n,i),i=1,7),dt(n)
      end if  
    end do  
 

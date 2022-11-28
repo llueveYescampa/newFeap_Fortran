@@ -1,6 +1,6 @@
 subroutine pbuff(m,ibuf,ilast,nv,is,ifl)
 implicit none
-integer  ibuf,ilast,nv,is,ifl,m(ibuf)
+  integer :: ibuf,ilast,nv,is,ifl,m(ibuf)
 
 !  Purpose: Input/output routine for frontal program
 
@@ -18,10 +18,8 @@ integer  ibuf,ilast,nv,is,ifl,m(ibuf)
    character*12 fname
 
    include 'nfrta.h'
-
    include 'temfl1.h'
    include 'temfl2.h'
-
 
    if(is.eq.2) then
      nv = nv + 1

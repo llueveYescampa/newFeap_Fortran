@@ -20,22 +20,23 @@ double precision x(ndm,*),b(*),ct(2)
 !     none       - Graphics to plot area
 
    logical   pcomp,oflg
-   ! integer*2 status,vslcol,coli
+   integer*2 status,vslcol,coli
    integer   i,ic,n1
    double precision    c
 
-   include 'maxa.h'      
+   double precision dm
+   real rm
+   integer im
+   common dm(1), rm(1), im(1)
 
-   include 'adata.h'
+   double precision dr
+   integer                il
+   common /adata/   dr(1),il(63998)
 
    include 'cdata.h'
-   double precision dr(1)
-   integer                il(1)
-   equivalence(aa(1), dr(1))
-   equivalence(aa(1), il(1))
 
-   double precision, dimension (:), allocatable :: dm
-   allocate ( dm(maxa) )
+   integer*2       ixy
+   common /pdata2/ ixy(4)
 
 !  Open kernel system and plot mesh or outline of parts
    call pdevop()
@@ -51,8 +52,8 @@ double precision x(ndm,*),b(*),ct(2)
    c  = 0.0
    n1 = 2*ndm*numnp
    do i = ic,1,-1
-     ! coli   = 8 - 2*i
-     ! status = vslcol(coli)
+     coli   = 8 - 2*i
+     status = vslcol(coli)
      if(pcomp(lci,'eigv')) then
        call pdefm(x,dm,c,ndm,ndf,numnp, dr)
      else
@@ -63,5 +64,4 @@ double precision x(ndm,*),b(*),ct(2)
    end do  
 !  Close plot
    call pdevcl()
-   deallocate (dm) 
 end

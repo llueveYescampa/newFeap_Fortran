@@ -1,8 +1,8 @@
 subroutine blkgen(ndm,nel,nel1,x,ix,prt)
-implicit  none
-integer   ndm,nel,nel1,ix(nel1,*)
-double precision    x(ndm,*)
-logical   prt
+implicit none
+  integer          :: ndm,nel,nel1,ix(nel1,*)
+  double precision :: x(ndm,*)
+  logical          :: prt
       
 !  Purpose: Generate a block of nodes/elements
 
@@ -17,26 +17,22 @@ logical   prt
 !     ix(nen1,*) - Element nodal connection lists
 
 
-   !character yyy*80
+   character yyy*80
    integer iocheck
    integer i,j,k,l,ma,n,ne,nf,ng,ni,nm,nn,nr,ns,ntyp,nodinc,ixl(9)
    double precision r, s, t,shp(3,9),dr,ds,xl(3,9)
 
-
    include 'cdata.h'
-
-   include 'ydata.h'
-
    include 'iofile.h'
 
    do while (.true.)
-     if(ioRead.lt.0) then
+     if(ior.lt.0) then
        write(*,'(a,/3x,a,$)')' Input: nn,nr,ns,ni,ne,ma,nodinc,ntyp','>'
      end if  
      call pintio(yyy,5)
      read(yyy,'(8i5)',IOSTAT=iocheck) nn,nr,ns,ni,ne,ma,nodinc,ntyp
      if (iocheck .ne. 0) then
-       call pperror('BLKGEN',yyy)
+       call myPerror('blkgen',yyy)
        cycle 
      end if
      exit
@@ -47,13 +43,13 @@ logical   prt
    ni = max(ni,1)
    ma = max(ma,1)
    if(prt) then
-     call prthed(ioWrite)
-     write(ioWrite,2000) nr,ns,ni,ne,ma,nodinc,ntyp
+     call prthed(iow)
+     write(iow,2000) nr,ns,ni,ne,ma,nodinc,ntyp
      if(ne.eq.0) then
-       write(ioWrite,'(a)') ' **WARNING** No elements are generated '
+       write(iow,'(a)') ' **WARNING** No elements are generated '
      end if  
-     write(ioWrite,2002) (i,i=1,ndm)
-     if(ioRead.lt.0) then
+     write(iow,2002) (i,i=1,ndm)
+     if(ior.lt.0) then
        write(*,2000) nr,ns,ni,ne,ma,nodinc,ntyp
        if(ne.eq.0) then
          write(*,'(a)') ' **WARNING** No elements are generated '
@@ -72,13 +68,13 @@ logical   prt
    
    do n = 1,nn
      do while (.true.)
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,'(a,/3x,a,$)') ' Input: node, x-1, x-2, x-3','>'
        end if  
        call pintio(yyy,10)
        read(yyy,'(i10,3f10.0)',IOSTAT=iocheck) l,r,s,t
        if (iocheck .ne. 0) then
-         call pperror('BLKGEN',yyy)
+         call myPerror('blkgen',yyy)
          cycle
        end if
        exit
@@ -93,11 +89,11 @@ logical   prt
      xl(2,l) = s
      xl(3,l) = t
      if(prt) then
-       write(ioWrite,'(i9,1p3e12.3)') l,(xl(i,l),i=1,ndm)
+       write(iow,'(i9,1p3e12.3)') l,(xl(i,l),i=1,ndm)
      end if  
    end do
    
-   if(prt.and.ioRead.lt.0) then
+   if(prt.and.ior.lt.0) then
      write(*,'(i9,1p3e12.3)') l,(xl(i,l),i=1,ndm)
    end if  
    dr = 2.d0/nr
@@ -110,8 +106,8 @@ logical   prt
       nf = ne + 2*nr*ns - 1
    end if
    if(nf.gt.numel.and.ne.gt.0) then
-     write(ioWrite,2007) nf,numel
-     if(ioRead.lt.0) then
+     write(iow,2007) nf,numel
+     if(ior.lt.0) then
        write(*,2007) nf,numel
      end if  
      return
@@ -123,8 +119,8 @@ logical   prt
    end if  
    ng = nr*ns + ni -1
    if(ng.gt.numnp) then
-     write(ioWrite,2006) ng,numnp
-     if(ioRead.lt.0) then
+     write(iow,2006) ng,numnp
+     if(ior.lt.0) then
        write(*,2006) ng,numnp
      end if  
      return
@@ -145,15 +141,15 @@ logical   prt
 
    if(ne.le.0) return
    do n = ne,nf,50
-     call prthed(ioWrite)
-     write(ioWrite,2003) (i,i=1,nel)
-     if(ioRead.lt.0) then
+     call prthed(iow)
+     write(iow,2003) (i,i=1,nel)
+     if(ior.lt.0) then
        write(*,2003) (i,i=1,nel)
      end if  
      j = min(nf,n+49)
      do i = n,j
-       write(ioWrite,'(2i6,8i8/(13x,8i8))') i,ma,(ix(k,i),k=1,nel)
-       if(ioRead.lt.0) then
+       write(iow,'(2i6,8i8/(13x,8i8))') i,ma,(ix(k,i),k=1,nel)
+       if(ior.lt.0) then
          write(*,'(2i6,8i8/(13x,8i8))') i,ma,(ix(k,i),k=1,nel)
        end if  
      end do  

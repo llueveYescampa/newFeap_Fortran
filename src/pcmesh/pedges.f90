@@ -1,8 +1,8 @@
 subroutine pedges(iii,x,id,ndm,ndf,numnp,prt)
 implicit none
-integer  iii,ndm,ndf,numnp,id(ndf,numnp)
-double precision   x(ndm,numnp)
-logical  prt
+  integer           :: iii,ndm,ndf,numnp,id(ndf,numnp)
+  double precision  :: x(ndm,numnp)
+  logical           :: prt
       
 !     Purpose: Set boundary edge for restraints
 
@@ -18,25 +18,24 @@ logical  prt
 !        id(ndf,*)  - Boundary condition codes
 
 
-      !character yyy*80
+      character yyy*80
       integer   i, j, n,idl(6)
       integer iocheck
       double precision x0,dx
 
-      include 'iofile.h'
-      include 'ydata.h'
+      include 'iofile.h' 
 
 !     Read input of boundary edge for restraints
 
       iii = 1
       do while(.true.) 
-        if(ioRead.lt.0) then
+        if(ior.lt.0) then
           write(*,'(a,/3x,a,$)') ' Input: i-dir, x(i), b.code(j),j=1,ndf','>'
         end if  
         call pintio(yyy,10)
         read(yyy,'(i10,f10.0,6i10)',IOSTAT=iocheck) i,x0,idl
         if (iocheck .ne. 0) then
-          call pperror('PEDGES',yyy)
+          call myPerror('pedges',yyy)
           cycle ! go to 100
         else
           if(i.le.0.or.i.gt.ndm) then 
@@ -58,12 +57,12 @@ logical  prt
       end do
       
       if(prt) then
-        call prthed(ioWrite)
-        write(ioWrite,2000) (i,i=1,ndf)
+        call prthed(iow)
+        write(iow,2000) (i,i=1,ndf)
         do n = 1,numnp
           do i = 1,ndf
             if(id(i,n).ne.0) then
-              write(ioWrite,'(i10,8i8)') n,(id(j,n),j=1,ndf)
+              write(iow,'(i10,8i8)') n,(id(j,n),j=1,ndf)
               exit 
             end if
           end do  

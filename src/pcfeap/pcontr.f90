@@ -1,25 +1,23 @@
 subroutine pcontr()
-implicit  none
+implicit none
 
 !  Control program for feap
 
-   logical   prt,pcomp
+   logical   prt,tfl,pcomp
    integer   i,iii, n14,nad
    integer iocheck
-   character titl(20)*4! ,yyy*80 ! why not use ydata.h for the yyy variable?
+   character yyy*80
+   character*4 titl(20)
 
-   include 'maxa.h'     
    include 'bdata.h'
    include 'cdata.h'
-   include 'ddata.h'
    include 'iofile.h'
    include 'iofild.h'
    include 'mdata.h'
    include 'mdat2.h'
    include 'sdata.h'
    include 'vdata.h'
-   include 'ydata.h'
-
+   include 'ddata.h'
 
 !   Set parameters for rotation dof
 
@@ -31,18 +29,18 @@ implicit  none
 !   Set files back to default values
 
     do while(.true.)
-      ioRead = iodr
-      ioWrite = iodw
+      ior = iodr
+      iow = iodw
       
 !     Read a card and compare first 4 columns with macro list
       
-      read(ioRead,'(20a4)',IOSTAT=iocheck) (titl(i),i=1,20)
+      read(ior,'(20a4)',IOSTAT=iocheck) (titl(i),i=1,20)
       if (iocheck .eq. -1) then
 !        EOF was found
          call pend('pcontr')
       else if (iocheck .ne. 0) then
 !        Error was found
-         call pperror('PCONTR',yyy)
+         call myPerror('pcontr',yyy)
          return
       end if   
       if(pcomp(titl(1),'feap')) then
@@ -55,33 +53,33 @@ implicit  none
          read(yyy,'(8i10)',IOSTAT=iocheck) numnp,numel,nummat,ndm,ndf,nen,nad
          if (iocheck.ne.0) then
 !          Error was found
-           call pperror('PCONTR',yyy)
+           call myPerror('pcontr',yyy)
            return
          end if
-        write(ioWrite,2000) head,versn,numnp,numel,nummat,ndm,ndf,nen,nad
+        write(iow,2000) head,versn,numnp,numel,nummat,ndm,ndf,nen,nad
         
 !       Set pointers for allocation of data arrays
         
         nen1 = nen + 4
         nst  = nen*ndf + nad
-        call psetm(nn, numnp*max(ndm,ndf,2),'d')
-        call psetm(nn, 5*nen*ndf,           'd')
-        call psetm(n0, nen*ndm,             'd')
-        call psetm(n1, nen,                 'd')
-        call psetm(n2, nst,                 'i')
-        call psetm(n3, nst,                 'd')
-        call psetm(n4, nst*nst,             'd')
-        call psetm(n5, nummat*9,            'i')
-        call psetm(n6, nummat*18,           'd')
-        call psetm(n7, ndf*numnp,           'i')
-        call psetm(n8, ndm*numnp,           'd')
-        call psetm(n9, nen1*numel,          'i')
-        call psetm(n10,numnp*ndf,           'd')
-        call psetm(n11,numnp,               'd')
-        call psetm(n11a,nen,                'd')
-        call psetm(n11b,numnp,              'd')
-        call psetm(n11c,max(numel,nst),     'i')
-        call psetm(n12,ndf*numnp,           'i')
+        call psetm(nn, numnp*max(ndm,ndf,2),'d',tfl)
+        call psetm(nn, 5*nen*ndf,        'd',tfl)
+        call psetm(n0, nen*ndm,          'd',tfl)
+        call psetm(n1, nen,              'd',tfl)
+        call psetm(n2, nst,              'i',tfl)
+        call psetm(n3, nst,              'd',tfl)
+        call psetm(n4, nst*nst,          'd',tfl)
+        call psetm(n5, nummat*9,         'i',tfl)
+        call psetm(n6, nummat*18,        'd',tfl)
+        call psetm(n7, ndf*numnp,        'i',tfl)
+        call psetm(n8, ndm*numnp,        'd',tfl)
+        call psetm(n9, nen1*numel,       'i',tfl)
+        call psetm(n10,numnp*ndf,        'd',tfl)
+        call psetm(n11,numnp,            'd',tfl)
+        call psetm(n11a,nen,             'd',tfl)
+        call psetm(n11b,numnp,           'd',tfl)
+        call psetm(n11c,max(numel,nst),  'i',tfl)
+        call psetm(n12,ndf*numnp,        'i',tfl)
         
 !       Call mesh input subroutine to read and print all mesh data
         
@@ -93,13 +91,13 @@ implicit  none
       else if(pcomp(titl(1),'inte') .or. pcomp(titl(1),'macr')) then
         if(pcomp(titl(1),'inte')) then
 !         Set files for interactive macro execution
-          ioRead = -iodr
+          ior = -iodr
         end if 
 !       Compute profile
 
         call profil(im(n12),im(n11c),im(n7),im(n9),ndf,nen1)
-        call psetm(n13,numnp*ndf,   'd')
-        call psetm(n14,3*numnp*ndf, 'd')
+        call psetm(n13,numnp*ndf,   'd',tfl)
+        call psetm(n14,3*numnp*ndf, 'd',tfl)
 
 !       Set up stress history addresses
 

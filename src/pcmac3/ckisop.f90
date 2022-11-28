@@ -1,7 +1,7 @@
 subroutine ckisop(ix,xl,shp,ndm)
-implicit  none
-integer   ix(*),ndm
-double precision    xl(ndm,*),shp(3,*)
+implicit none
+  integer          :: ix(*),ndm
+  double precision :: xl(ndm,*),shp(3,*)
       
 !  Purpose: Check isoparametric elements for errors
 
@@ -36,8 +36,8 @@ double precision    xl(ndm,*),shp(3,*)
      end if
    end do  
    if(ineg.gt.0) then
-     write(ioWrite,2000) n,(ic(i),i=1,ineg)
-     if(ioRead.lt.0) then 
+     write(iow,2000) n,(ic(i),i=1,ineg)
+     if(ior.lt.0) then 
        write(*,2000) n,(ic(i),i=1,ineg)
      end if  
    else
@@ -52,8 +52,8 @@ double precision    xl(ndm,*),shp(3,*)
        end if
      end do  
      if(ineg.gt.0) then
-       write(ioWrite,2001) n,(ic(i),i=1,ineg)
-       if(ioRead.lt.0) then 
+       write(iow,2001) n,(ic(i),i=1,ineg)
+       if(ior.lt.0) then 
          write(*,2001) n,(ic(i),i=1,ineg)
        end if  
      end if

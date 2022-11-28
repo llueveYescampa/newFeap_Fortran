@@ -1,7 +1,7 @@
 subroutine sproja(v,z,g,neq,nev)
 implicit none
-integer neq,nev
-double precision   v(neq,*),z(neq,*),g(*)
+  integer          :: neq,nev
+  double precision :: v(neq,*),z(neq,*),g(*)
 
 !  Compute subspace projection of 'aa' to form 'g'
 
@@ -19,14 +19,9 @@ double precision   v(neq,*),z(neq,*),g(*)
 
    double precision   dot,engy
    
-   include 'maxa.h'      
-   
-   include 'adata.h'
-
+   include 'adata.h'   
    include 'frdata.h'
-
    include 'iofild.h'
-
    include 'nfrta.h'
 
 !  Forward reduce eigenvector estimates

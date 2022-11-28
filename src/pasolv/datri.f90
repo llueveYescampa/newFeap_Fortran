@@ -1,8 +1,8 @@
 subroutine datri(al,au,ad,jp,neq,flg)
 implicit none
-integer  jp(*),neq
-double precision   al(*),au(*),ad(*)
-logical  flg
+  integer          :: jp(*),neq
+  double precision :: al(*),au(*),ad(*)
+  logical          :: flg
 
 !  Purpose: Triangular decomposition of a matrix stored in profile form
 
@@ -31,7 +31,6 @@ logical  flg
    data tol/0.5d-07/
 
 !  Set initial values for conditioning check
-!print *, 'al(1): ', al(1), 'au(1): ', au(1), 'ad(1): ', ad(1), 'jp(1): ', jp(1) 
 
    dimx = 0.0d0
    dimn = 0.0d0
@@ -80,24 +79,24 @@ logical  flg
 !      Check for possible errors and print warnings
 
        if(abs(ad(j)).lt.tol*abs(dd)) then
-         write(ioWrite,2000) j
+         write(iow,2000) j
        end if  
        if(dd.lt.0.d0.and.ad(j).gt.0.d0) then
-         write(ioWrite,2001) j
+         write(iow,2001) j
        end if  
        if(dd.gt.0.d0.and.ad(j).lt.0.d0) then
-         write(ioWrite,2001) j
+         write(iow,2001) j
        end if  
        if(ad(j) .eq.  0.d0) then
-         write(ioWrite,'(a,i5)') &
+         write(iow,'(a,i5)') &
               ' **WARNING** Reduced diagonal is zero for equation',j
        end if  
        if(dd.eq.0.d0.and.jh.gt.0) then
          if(abs(ad(j)).lt.tol*daval) then
-           write(ioWrite,2003) j
+           write(iow,2003) j
          end if  
        end if
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          if(abs(ad(j)).lt.tol*abs(dd))  then
            write(*,2000) j
          end if  
@@ -127,7 +126,7 @@ logical  flg
        dfig  = max(dfig,abs(dd/ad(j)))
        ad(j) = 1.d0/ad(j)
      end if
-     if(ioRead.lt.0 .and. mod(j,50).eq.0) then
+     if(ior.lt.0 .and. mod(j,50).eq.0) then
        write(*,'(a,i5,a,i5,a)') '+  ->',j,' Equations of',neq,' reduced'
         
      end if
@@ -139,9 +138,9 @@ logical  flg
    if(dimn.ne.0.0d0) then
      dd = dimx/dimn
    end if  
-   ifig = int(log10(dfig) + 0.6)
-   write(ioWrite,2004) dimx,dimn,dd,ifig
-   if(ioRead.lt.0) then
+   ifig = log10(dfig) + 0.6
+   write(iow,2004) dimx,dimn,dd,ifig
+   if(ior.lt.0) then
      write(*,2004) dimx,dimn,dd,ifig
    end if  
 

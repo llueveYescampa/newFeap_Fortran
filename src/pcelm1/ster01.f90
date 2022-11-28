@@ -1,9 +1,9 @@
 subroutine ster01(ix,d,xl,ul,tl,shp,st,ndf,ndm,numnp,numel, &
                  sg,tg,wg,sig,eps,lint,ityp)
-implicit  none
-integer     ix(*),numnp,numel,         ndf,ndm,lint,ityp
-double precision    d(*),xl(ndm,*),ul(ndf,*),tl(*),shp(3,4), &
-                   st(numnp,*),sg(16),tg(16),wg(16),sig(6),eps(4)
+implicit none
+  integer          :: ix(*),numnp,numel, ndf,ndm,lint,ityp
+  double precision :: d(*),xl(ndm,*),ul(ndf,*),tl(*),shp(3,4), &
+                      st(numnp,*),sg(16),tg(16),wg(16),sig(6),eps(4)
 
 !  Purpose: Compute error estimator values
 
@@ -81,13 +81,13 @@ double precision    d(*),xl(ndm,*),ul(ndf,*),tl(*),shp(3,4), &
      psi    = sqrt(abs(psi))/ebar
      psis   = 20.0*sqrt(abs(psis)/elproj*numel)
      if(mct.eq.0) then
-       write(ioWrite,2000)
-       if(ioRead.lt.0) write(*,2000)
+       write(iow,2000)
+       if(ior.lt.0) write(*,2000)
        mct = 50
      end if
      mct = mct - 1
-     write(ioWrite,'(i8,1p2e12.4)') n,psis,psi
-     if(ioRead.lt.0) then 
+     write(iow,'(i8,1p2e12.4)') n,psis,psi
+     if(ior.lt.0) then 
        write(*,'(i8,1p2e12.4)') n,psis,psi
      end if  
    end if

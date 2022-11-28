@@ -1,7 +1,7 @@
 subroutine rsolve(b,dr,m,ipd,ipr,maxf,nv,neq,nev,aengy,ifl)
-implicit  none
-integer m(*),ipd,ipr,maxf,nv,neq,nev,ifl
-double precision  b(maxf,*),dr(neq,*),aengy
+implicit none
+  integer          :: m(*),ipd,ipr,maxf,nv,neq,nev,ifl
+  double precision :: b(maxf,*),dr(neq,*),aengy
 
 !  Purpose: Resolution for frontal solution
 
@@ -22,9 +22,7 @@ double precision  b(maxf,*),dr(neq,*),aengy
 !     aengy     - Energy of solution
 
 
-
    include 'temfl2.h'
-   
    include 'temfl3.h'
 
    call pfrtfw(b,dr,m,ipd,ibuf,maxf,nv,neq,nev,ifl)

@@ -1,2 +1,2 @@
-   integer         ioRead,ioWrite
-   common /iofile/ ioRead,ioWrite
+   integer         ior,iow
+   common /iofile/ ior,iow

@@ -1,7 +1,7 @@
 subroutine tran05(s,cs,sn,nst,ndf,itype)
-implicit  none
-integer   nst,ndf,itype
-double precision    s(nst,*),cs,sn
+implicit none
+  integer          :: nst,ndf,itype
+  double precision :: s(nst,*),cs,sn
 
 !  Itype: 1  Transform matrix s(nst,nst)
 !         2  Transform vector s(nst,1)

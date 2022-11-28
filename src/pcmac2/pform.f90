@@ -1,8 +1,8 @@
 subroutine pform(ul,xl,tl,ld,p,s,ie,d,id,x,ix,t,idl,u,b,ndf,ndm,nen1,nst)
-implicit  none
-integer ndf,ndm,nen1,nst,ld(ndf,*),ie(9,*), id(ndf,*), ix(nen1,*),idl(*)
-double precision ul(ndf,*),xl(ndm,*),tl(*),p(*),s(nst,*),d(18,*),x(ndm,*),t(*),&
-                 u(ndf,*),b(*)
+implicit none
+  integer          :: ndf,ndm,nen1,nst,ld(ndf,*),ie(9,*), id(ndf,*), ix(nen1,*),idl(*)
+  double precision :: ul(ndf,*),xl(ndm,*),tl(*),p(*),s(nst,*),d(18,*),x(ndm,*),t(*),&
+                      u(ndf,*),b(*)
 
 !  Purpose: Compute element arrays and assemble global arrays
 
@@ -39,31 +39,18 @@ double precision ul(ndf,*),xl(ndm,*),tl(*),p(*),s(nst,*),d(18,*),x(ndm,*),t(*),&
 
    include 'cdata.h'
    include 'eldata.h'
-
    include 'fdata.h'
-
    include 'iofile.h'
    include 'mdat2.h'
-
    include 'ndata.h'
-
    include 'hdata.h'
-
    include 'hdatb.h'
-
    include 'prlod.h'
-
    include 'tbeta.h'
-
    include 'temfl1.h'
-
    include 'temfl2.h'
-
    include 'xdata.h'
 
-
-   include 'maxa.h'      
-   
    include 'ddata.h'
 
 !  Set up local arrays before calling element library
@@ -96,9 +83,9 @@ double precision ul(ndf,*),xl(ndm,*),tl(*),p(*),s(nst,*),d(18,*),x(ndm,*),t(*),&
        nh1 = ix(nen+1,n)
        nh2 = nh1
      
-!      write(ioWrite,*) 'HFL,HOUT:',hfl,hout
-!      write(ioWrite,*) 'IREC,JREC:',irec,ix(nen+2,n)
-!      write(ioWrite,*) 'NHI,NHF:',nhi,nhf,nhf-nhi+1,itrec(2)
+!      write(iow,*) 'HFL,HOUT:',hfl,hout
+!      write(iow,*) 'IREC,JREC:',irec,ix(nen+2,n)
+!      write(iow,*) 'NHI,NHF:',nhi,nhf,nhf-nhi+1,itrec(2)
 !      write(*,*) 'HFL,HOUT:',hfl,hout
      
        if(.not.hfl) then

@@ -1,5 +1,5 @@
 subroutine pdevcl()
-implicit  none
+implicit none
 
 !  Purpose: Close the plotting device
 

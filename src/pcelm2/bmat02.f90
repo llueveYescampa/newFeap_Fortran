@@ -1,7 +1,7 @@
 subroutine bmat02(sh3,shp,g,bbar,ib)
-implicit   none
-double precision     sh3,shp(3),g(*),bbar(4,2)
-integer    ib
+implicit none
+  integer          :: ib
+  double precision :: sh3,shp(3),g(*),bbar(4,2)
 
 !  Purpose: Form B-bar matrix for plane and axisymmetric problems
 

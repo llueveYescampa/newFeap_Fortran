@@ -1,2 +1,2 @@
-  integer         maxf
-  common /frdata/ maxf
+   integer         maxf
+   common /frdata/ maxf

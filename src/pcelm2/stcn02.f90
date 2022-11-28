@@ -1,8 +1,8 @@
-subroutine stcn02(ix,d,xl,ul,shp,dt,st,ndf,ndm,nnp,sg,tg,sig,eps,lint,type,ib)
-implicit  none
-integer   ix(*),ndf,ndm,nnp,lint,ib
-double precision d(*), xl(ndm,*), ul(ndf,*),shp(3,4),dt(nnp), st(nnp,*),sg(*),&
-                 tg(*),sig(*),eps(*),type
+subroutine stcn02(ix,d,xl,ul,shp,dt,st,ndf,ndm,nnp,sg,tg,sig,eps,lint,myType,ib)
+implicit none
+  integer          :: ix(*),ndf,ndm,nnp,lint,ib
+  double precision :: d(*), xl(ndm,*), ul(ndf,*),shp(3,4),dt(nnp), st(nnp,*),sg(*),&
+                      tg(*),sig(*),eps(*),myType
       
 !  Purpose: Project stresses onto nodes
 
@@ -29,19 +29,19 @@ double precision d(*), xl(ndm,*), ul(ndf,*),shp(3,4),dt(nnp), st(nnp,*),sg(*),&
 
 
    integer   i,ii,jj,ll
-   double precision    shpj,rr,zz,xsj(1)
+   double precision    shpj,rr,zz,xsj
 
 
 !  Compute stresses at nodes from history terms
 
    do jj = 1,lint
      call shapeFunc(sg(jj),tg(jj),xl,shp,xsj,ndm,4,ix,.false.)
-     call strn02(shp,xl,ul,type,rr,zz,ndm,ndf,eps)
+     call strn02(shp,xl,ul,myType,rr,zz,ndm,ndf,eps)
      call modl02(d,ul,eps,sig,1.0d0,ndf,ib)
      do ii = 1,4
        ll = abs(ix(ii))
        if(ll.gt.0) then
-         shpj = shp(3,i)*xsj(1)
+         shpj = shp(3,i)*xsj
          dt(ll) = dt(ll) + shpj
          do i = 1,4
            st(ll,i) = st(ll,i) + sig(i)*shpj

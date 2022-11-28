@@ -11,17 +11,17 @@ set(pcmac3_Src
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/elmlib.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/pconsd.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/pconsi.f90
-    ${myPROJECT_SOURCE_DIR}/${CurrDir}/pconsr.f90
+    #${myPROJECT_SOURCE_DIR}/${CurrDir}/pconsr.f90 # not longer used
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/pdisk.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/pend.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/pgauss.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/phelp.f90
-    ${myPROJECT_SOURCE_DIR}/${CurrDir}/pperror.f90
+    ${myPROJECT_SOURCE_DIR}/${CurrDir}/myPerror.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/psetm.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/pstres.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/saxpb.f90
     ${myPROJECT_SOURCE_DIR}/${CurrDir}/shap2.f90
-    ${myPROJECT_SOURCE_DIR}/${CurrDir}/shape.f90
+    ${myPROJECT_SOURCE_DIR}/${CurrDir}/shapeFunc.f90
     PARENT_SCOPE
     )
 

@@ -1,2 +1,2 @@
-  character      versn*12
-  common /vdata/ versn(3)
+   character      versn*12
+   common /vdata/ versn(3)

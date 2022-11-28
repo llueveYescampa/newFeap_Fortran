@@ -1,5 +1,5 @@
 subroutine pline(x,ix,ic,numnp,numel,ndm,nen1,nen,ct,isw)
-implicit  none
+implicit none
 integer numnp,numel,ndm,nen1,nen,ix(nen1,*),ic(numnp,*)
 logical isw
 double precision    x(ndm,*),ct
@@ -32,7 +32,7 @@ double precision    x(ndm,*),ct
    call pconsi(ic,numnp*4,0)
 !  Loop through elements to set up list
    do n = 1,numel
-     jj = int(abs(ct))
+     jj = abs(ct)
      ii = abs(ix(nen1,n))
      if(jj.eq.0 .or. jj.eq.ii) then
        i = 1

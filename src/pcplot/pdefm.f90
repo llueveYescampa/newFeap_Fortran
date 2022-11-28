@@ -1,7 +1,7 @@
 subroutine pdefm(x,b,c,ndm,ndf,numnp, dr)
-implicit  none
-integer ndf,ndm,numnp
-double precision x(ndm,*),b(ndf,*),c,dr(ndm,*)
+implicit none
+  integer          :: ndf,ndm,numnp
+  double precision :: x(ndm,*),b(ndf,*),c,dr(ndm,*)
 
 ! Purpose: Compute deformed position of two-dimensional meshes
 

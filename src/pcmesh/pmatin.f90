@@ -1,8 +1,8 @@
 subroutine pmatin(d,x,ix,idl,ie,nummat,ndm,ndf,prt)
-implicit  none
-integer   ix(*),idl(*),ie(9,*),nummat,ndm,ndf
-double precision d(18,*),x(ndm,*)
-logical   prt
+implicit none
+  integer          ::ix(*),idl(*),ie(9,*),nummat,ndm,ndf
+  double precision :: d(18,*),x(ndm,*)
+  logical          :: prt
 
 !  Purpose: Input material set data
 
@@ -20,40 +20,35 @@ logical   prt
 !     ie(9,*)    - Material set assembly data
 
 
-   include 'maxa.h'      
-
    integer iocheck
    logical test
    integer   i
-   ! character yyy*80
+   character yyy*80
 
 
-   include 'adata.h'
-   include 'ydata.h'
+   include 'adata.h'   
    include 'eldata.h'
-
    include 'hdata.h'
-
    include 'iofile.h'
 
 !  Material data input
 
    if(prt) then
-     call prthed(ioWrite)
-     write(ioWrite,'(a)') '    M a t e r i a l    P r o p e r t i e s'
-     if(ioRead.lt.0) then
+     call prthed(iow)
+     write(iow,'(a)') '    M a t e r i a l    P r o p e r t i e s'
+     if(ior.lt.0) then
        write(*,'(a)') '    M a t e r i a l    P r o p e r t i e s'
      end if  
    end if
    do n = 1,nummat
      do while(.true.)
-       if(ioRead.lt.0) then
+       if(ior.lt.0) then
          write(*,'(a/3x,a,$)') ' Input: matl. no., elmt type','>'
        end if  
        call pintio(yyy,10)
        read(yyy,'(8i10)',IOSTAT=iocheck) ma,iel,(idl(i),i=1,ndf)
        if (iocheck .ne. 0) then
-         call pperror('PMESH ',yyy)
+         call myPerror('pmatin',yyy)
          cycle
        else
          exit
@@ -84,12 +79,12 @@ logical   prt
      mct = 0
      nh1 = 0
      if(prt) then
-       write(ioWrite,2000) ma,iel,(i,ie(i,ma),i=1,ndf)
-       if(ioRead.lt.0) then
+       write(iow,2000) ma,iel,(i,ie(i,ma),i=1,ndf)
+       if(ior.lt.0) then
          write(*,2000) ma,iel,(i,ie(i,ma),i=1,ndf)
        end if  
      end if
-     call elmlib(d(1,ma),aa,x,ix,mydm,aa,aa,ndf,ndm,ndf,iel,1)
+     call elmlib(d(1,ma),aa,x,ix,aa,aa,aa,ndf,ndm,ndf,iel,1)
      if(nh1.eq.0 .and. mct.ne.0) then
        nh1 = mct
      end if  

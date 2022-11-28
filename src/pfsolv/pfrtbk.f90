@@ -1,7 +1,7 @@
 subroutine pfrtbk(b,dr,m,ipd,ibuf,maxf,nv,neq,nev,aengy,ifl)
 implicit none
-integer  m(*),ipd,ibuf,maxf,nv,neq,nev,ifl
-double precision   b(maxf,*),dr(neq,*),aengy
+  integer          :: m(*),ipd,ibuf,maxf,nv,neq,nev,ifl
+  double precision :: b(maxf,*),dr(neq,*),aengy
 
 !  Purpose: Backsubstitution for frontal solution
 

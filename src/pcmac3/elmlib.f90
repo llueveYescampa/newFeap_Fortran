@@ -1,7 +1,7 @@
 subroutine elmlib(d,u,x,ix,t,s,p,i,j,k,iel,isw)
-implicit  none
-integer ix(*),i, j, k, iel, isw
-double precision d(*),u(*),x(*),t(*),s(*),p(*)
+implicit none
+  integer          :: ix(*),i, j, k, iel, isw
+  double precision :: d(*),u(*),x(*),t(*),s(*),p(*)
 
 !  Purpose: Element library driver
 
@@ -43,13 +43,13 @@ double precision d(*),u(*),x(*),t(*),s(*),p(*)
    case (7)
      call elmt07(d,u,x,s,p,i,j,k,isw)
    case default
-     write(ioWrite,'(a,i3,a)') &
+     write(iow,'(a,i3,a)') &
       '  **ERROR** Element type number',iel,' found.' 
-     if(ioRead.lt.0) then 
+     if(ior.lt.0) then 
        write(*,'(a,i3,a)') &
       '  **ERROR** Element type number',iel,' found.' 
      end if  
-     stop
+     call pstop(-52) ! stop
    end select
       
 end

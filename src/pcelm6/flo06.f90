@@ -1,10 +1,11 @@
 subroutine flo06(d,shp,ul,q1,q2,qm,uu,ndf,nel)
 implicit none
-integer ndf,nel
-double precision d,shp(3,*),ul(ndf,*),q1,q2,qm,uu
+  integer          :: ndf,nel
+  double precision :: d,shp(3,*),ul(ndf,*),q1,q2,qm,uu
+
+!  Compute flows at current point
 
    integer i
-!  Compute flows at current point
 
    q1 = 0.0d0
    q2 = 0.0d0

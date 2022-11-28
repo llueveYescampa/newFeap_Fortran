@@ -1,6 +1,0 @@
-subroutine pstop
-
-   stop
-
-end
-

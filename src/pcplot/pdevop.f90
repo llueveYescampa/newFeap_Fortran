@@ -1,5 +1,5 @@
 subroutine pdevop()
-implicit  none
+implicit none
 
 ! Purpose: Open graphics workstation
 

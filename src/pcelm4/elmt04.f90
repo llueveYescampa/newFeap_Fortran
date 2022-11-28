@@ -1,7 +1,7 @@
 subroutine elmt04(d,u,x,ix,t,s,p,ndf,ndm,nst,isw)
 implicit none
-integer ndf,ndm,nst,isw, ix(*)
-double precision  d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
+  integer          :: ndf,ndm,nst,isw, ix(*)
+  double precision :: d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
       
 !     Purpose: Any dimensional truss element routine
 
@@ -24,18 +24,13 @@ double precision  d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
 
       integer         i,i1,ii,j,j1,jj
       double precision  db(3),dx(3),xx(3),xl,eps,sig,ad,sm
-      !character       yyy*80
+      character       yyy*80
       integer iocheck
       logical test
 
-      include 'cdata.h'
-
-      include 'ydata.h'
-
+      include 'cdata.h'      
       include 'eldata.h'
-      
       include 'hdata.h'
-
       include 'iofile.h'
 
       select case (isw)
@@ -43,7 +38,7 @@ double precision  d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
 !       Input material properties
         test = .true.
         do while (test)
-          if(ioRead.lt.0) then 
+          if(ior.lt.0) then 
              write(*,3000) 
           end if   
           call pintio(yyy,10)
@@ -56,17 +51,17 @@ double precision  d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
             d(11) = d(3)*d(2)
             call pconsd(xx,3,0.0d0)
             if(d(4).gt.0.0d0) then
-              write(ioWrite,2000) (d(i),i=1,6)
-              if(ioRead.lt.0) write(*,2000) (d(i),i=1,6)
+              write(iow,2000) (d(i),i=1,6)
+              if(ior.lt.0) write(*,2000) (d(i),i=1,6)
             else
-              write(ioWrite,2001) (d(i),i=1,3)
-              if(ioRead.lt.0) write(*,2001) (d(i),i=1,3)
+              write(iow,2001) (d(i),i=1,3)
+              if(ior.lt.0) write(*,2001) (d(i),i=1,3)
             end if
             nh1 = 3
             test = .false.
             return
           else   
-            call pperror('PCELM4',yyy)
+            call myPerror('elmt03',yyy)
           end if 
         end do  
       case (3,4,5,6)
@@ -122,13 +117,13 @@ double precision  d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
           call modl04(d,eps, sig,ad)
           mct = mct - 1
           if(mct.le.0) then
-            call prthed(ioWrite)
-            write(ioWrite,2002) 
-            if(ioRead.lt.0) write(*,2002)
+            call prthed(iow)
+            write(iow,2002) 
+            if(ior.lt.0) write(*,2002)
             mct = 50
           end if
-          write(ioWrite,2003) n,ma,xx,sig,eps
-          if(ioRead.lt.0) then 
+          write(iow,2003) n,ma,xx,sig,eps
+          if(ior.lt.0) then 
             write(*,2003) n,ma,xx,sig,eps
           end if  
 !         Compute element lumped mass matrix
