@@ -35,8 +35,7 @@ disp,,11
 mesh
 mass
 dt,,0.25
-beta
-form,acce
+beta,ss22
 loop,time,50
 time
 tang,,1
