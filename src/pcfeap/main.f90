@@ -49,15 +49,15 @@ implicit        none
    include 'vdata.h'
 
 !  Parameters control program capacity:
-!                 mmax  = mesh size
-!                 maxa  = equation size (in several routines)
+!                 mmax      = mesh size
+!                 maxArray  = equation size (in several routines)
 
    !integer        mmax
    include 'maxa.h'
-   !parameter     (mmax = 3*maxa)
+   !parameter     (mmax = 3*maxArray)
 
    integer        m
-   common         m(3*maxa)
+   common         m(3*maxArray)
 
 !  Set version data
 
@@ -68,7 +68,7 @@ implicit        none
 !  Reserve memory size; set default input/output units
 !      N.B. maxm is defined in number of INTEGER words.
 
-   maxm = 3*maxa ! mmax
+   maxm = 3*maxArray ! mmax
    ne   = 1
    iodr = 15
    iodw = 16

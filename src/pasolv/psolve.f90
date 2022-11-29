@@ -59,7 +59,7 @@ implicit none
 !  Record length factors (may be too long for some machines)
 
    ihfac = 8 ! record length factor (8)
-   ihsiz = maxa
+   ihsiz = maxArray
 
    if(afac) then
      if(fl(6)) then

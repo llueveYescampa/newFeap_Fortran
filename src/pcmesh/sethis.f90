@@ -35,7 +35,7 @@ implicit none
 !  Record length factors
 
    ihfac  = 8
-   ihsiz  = maxa
+   ihsiz  = maxArray
    ihbuff = ihsiz + 1 - nh0
    hfl    = .true.
    hout   = .false.
