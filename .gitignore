@@ -3,3 +3,6 @@
 build*
 testDirectory
 awkFiles
+O_*
+S_*
+feap.nam
