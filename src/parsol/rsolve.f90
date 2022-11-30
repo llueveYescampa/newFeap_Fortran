@@ -1,6 +1,6 @@
-subroutine rsolve(b,dr,a,ipd,ipr,maxf,nv,neq,nev,engy,ifl)
+subroutine rsolve(b,dr,a,ipd,maxf,nv,neq,nev,engy,ifl)
 implicit none
-  integer          :: ipd,ipr,maxf,nv,neq,nev,ifl
+  integer          :: ipd,maxf,nv,neq,nev,ifl
   double precision :: b(*),dr(neq,*),a(*),engy
 
 !  Purpose: Resolution for profile solution
@@ -25,7 +25,7 @@ implicit none
 
    include 'ddata.h'
 
-   n12 = neq*ipd - ipd - ipr + 1
+   n12 = neq*ipd - ipd + 1 !  - ipr
    do ne = 1,nev
      call dasol(a(neq+1),a(neq+1),a,dr(1,ne),im(n12),neq, engy)
    end do  

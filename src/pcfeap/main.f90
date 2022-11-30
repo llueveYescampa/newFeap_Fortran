@@ -90,7 +90,7 @@ implicit        none
 !  integer
 
    ipd  = 2
-   ipr  = 0
+   ! ipr  = 0
    ipi  = 1
 
 !  Start system if necessary

@@ -214,7 +214,7 @@ implicit none
        write(7) (dm(i),i=1,nlm)
        close (7)
        nlm = nl - 1
-       n1  = neq*ipd - ipd - ipr
+       n1  = neq*ipd - ipd !  - ipr
        do i = 1,neq
          dm(i)    = dm(i+nlm)
          im(n1+i) = jd(i)

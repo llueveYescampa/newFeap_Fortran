@@ -31,12 +31,13 @@ implicit none
    if( typ .eq. 'd' ) then
      np = ipd
      ns = 0
-   else if( typ .eq. 'r' ) then
-     np = ipr
-     ns = ipd/ipr
+!   else if( typ .eq. 'r' ) then
+!     np = ipr
+!     ns = ipd/ipr
    else if( typ .eq. 'i' ) then
      np = ipi
-     ns = (ipd+ipr)/ipi
+!     ns = (ipd+ipr)/ipi
+     ns = (ipd)/ipi
    end if
    na = ne
    ne = na + nl*np + mod(ipd - mod(nl*np,ipd),ipd)

@@ -1,6 +1,6 @@
-subroutine rsolve(b,dr,m,ipd,ipr,maxf,nv,neq,nev,aengy,ifl)
+subroutine rsolve(b,dr,m,ipd,maxf,nv,neq,nev,aengy,ifl)
 implicit none
-  integer          :: m(*),ipd,ipr,maxf,nv,neq,nev,ifl
+  integer          :: m(*),ipd,maxf,nv,neq,nev,ifl
   double precision :: b(maxf,*),dr(neq,*),aengy
 
 !  Purpose: Resolution for frontal solution
