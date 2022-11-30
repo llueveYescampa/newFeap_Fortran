@@ -1,5 +1,5 @@
 !subroutine psolve(u,a,b,dr,m,xm,s,ld,ig,idl,nst,nrs,afac,solv,dyn,c1,ipd,rnorm,aengy,ifl)
-subroutine psolve(u,a     ,dr,xm    ,s,ld,ig,nst,nrs,afac,solv ,dyn ,c1  ,ipd,rnorm,aengy)
+subroutine psolve(u,a   ,dr,xm  ,s,ld,ig    ,nst,nrs,afac,solv,dyn,c1    ,rnorm,aengy)
            
 implicit none
   integer          :: ld(*),ig(*),nst,nrs,ipd

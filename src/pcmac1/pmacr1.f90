@@ -180,7 +180,7 @@ implicit none
      
      na = maxf + 1
      nal= (maxf*(maxf+1))/2 + na
-     call psolve(b,aa(na),dr,dm(nl),s,ld,jd,nst,1  ,tflg,fl(8),sflg,shft,ipd,rnorm,engy)
+     call psolve(b,aa(na),dr,dm(nl),s,ld,jd,nst,1  ,tflg,fl(8),sflg,shft,rnorm,engy)
      call pctime(tt)
      if(fl(8)) then
        fl(8) = .false.
