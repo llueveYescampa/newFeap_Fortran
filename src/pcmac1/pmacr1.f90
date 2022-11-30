@@ -37,11 +37,11 @@ implicit none
 !     various   - Depends on command number
 
 
-   logical   pcomp,sflg,tflg
-   integer   ietyp,ml1,na,nal,n1,n2,n3,n4,i
-   integer   nnpo,nnlo,nnmo,ndmo,ndfo,nhio,nhfo,nrco
-   double precision    shft,rnorm,dot
-   double precision :: enold != 0.0d0
+   logical :: pcomp,sflg,tflg
+   integer :: ietyp,ml1,na,nal,n1,n2,n3,n4,i
+   integer :: nnpo,nnlo,nnmo,ndmo,ndfo,nhio,nhfo,nrco
+   double precision :: shft,rnorm,dot
+   double precision :: enold = 0.0d0
 
    character tt*10
 
@@ -51,10 +51,8 @@ implicit none
    include 'fdata.h'
    include 'frdata.h'
    include 'hdatb.h'
-   include 'iofild.h'
    include 'iofile.h'
    include 'ldata.h'
-   include 'mdat2.h'
    include 'ndata.h'
    include 'prlod.h'
    include 'rdata.h'
