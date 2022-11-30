@@ -2,7 +2,7 @@
 subroutine psolve(u,a   ,dr,xm  ,s,ld,ig    ,nst,nrs,afac,solv,dyn,c1    ,rnorm,aengy)
            
 implicit none
-  integer          :: ld(*),ig(*),nst,nrs,ipd
+  integer          :: ld(*),ig(*),nst,nrs
   double precision :: u(*),a(*),dr(*),xm(*),s(nst,*),c1,rnorm,aengy
   logical          :: afac,solv,dyn
       
@@ -109,7 +109,6 @@ implicit none
      end do  
 
      rnorm = sqrt(dot(dr,dr,neq))
-
      call datri(a(nep+1),a(neq+1),a,ig,neq,afl)
      call phstio(4,1,a,ibuf,2,tfile(1),itrec(1))
 
