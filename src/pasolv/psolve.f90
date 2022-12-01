@@ -38,10 +38,10 @@ implicit none
 
    include 'maxa.h'
 
-   logical   afl,fa
-   integer   n,ne,nep
-   integer   ibuf,ihsiz,ihfac,iz
-   double precision    dot
+   logical          :: afl,fa
+   integer          :: n,ne,nep=0
+   integer          :: ibuf,ihsiz,ihfac,iz
+   double precision :: dot
 
 
    include 'cdata.h'
