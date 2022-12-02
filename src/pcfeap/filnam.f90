@@ -3,13 +3,12 @@ implicit none
 
 !  Purpose:  Set filenames for execution
 
-   logical   linp,lout,lres,lsav
-   integer   iop,irs,isv,ifill ! i,
-   character y*1,disknm*1,pdisknm*1,wd(2)*6
+   logical      :: linp,lout,lres,lsav
+   integer      :: iop,irs,isv,ifill ! i,
+   character    :: y*1,disknm*1,pdisknm*1,wd(2)*6   
+   character*12 :: finp,fout,fres,fsav,pinp,pout,pres,psav,edate
    
-   character*12 finp,fout,fres,fsav,pinp,pout,pres,psav,edate
-   
-   integer iocheck, jfill,jplot
+   integer iocheck, jfill
    logical test, lfil
 
    include 'iofild.h'
