@@ -1,7 +1,7 @@
-subroutine elmt05(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
+subroutine elmt05(d,ul,xl,      s,p,ndf,ndm,nst,isw)
 implicit none
-  integer          :: ix(*),    ndf,ndm,nst,isw
-  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(nst)
+  integer          ::           ndf,ndm,nst,isw
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),      s(nst,*),p(nst)
 
 !  Purpose: Geometrical nonlinear axisymmetric shell: (c) w.wagner
 

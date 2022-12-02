@@ -38,8 +38,8 @@ implicit none
 
 !  Solve equations
 
-   !call rsolve(aa,z,aa(ma),ipd,ipr,maxf,nvb,neq,nev,engy,4)
-   call rsolve(aa,z,aa(ma),ipd,maxf,nvb,neq,nev,engy,4)
+  !call rsolve(aa,z,aa(ma),ipd,ipr,maxf,nvb,neq,nev,engy,4)
+   call rsolve(   z,aa(ma),ipd,             neq,nev,engy  )
 
 !  Compute projection of stiffness
 

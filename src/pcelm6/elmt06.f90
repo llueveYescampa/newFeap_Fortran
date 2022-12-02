@@ -1,7 +1,7 @@
-subroutine elmt06(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
+subroutine elmt06(d,ul,xl,ix,   s,p,ndf,ndm,nst,isw)
 implicit none
   integer          :: ix(*), ndf,ndm,nst,isw
-  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,nst),p(nst)
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),      s(nst,nst),p(nst)
 
 !  Purpose: Two dimensional laplace equation with a reaction term
   

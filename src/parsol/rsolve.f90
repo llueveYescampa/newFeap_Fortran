@@ -1,7 +1,7 @@
-subroutine rsolve(b,dr,a,ipd,maxf,nv,neq,nev,engy,ifl)
+subroutine rsolve(  dr,a,ipd,        neq,nev,engy    )
 implicit none
-  integer          :: ipd,maxf,nv,neq,nev,ifl
-  double precision :: b(*),dr(neq,*),a(*),engy
+  integer          :: ipd,        neq,nev    
+  double precision ::      dr(neq,*),a(*),engy
 
 !  Purpose: Resolution for profile solution
 

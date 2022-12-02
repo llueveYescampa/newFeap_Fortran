@@ -1,7 +1,7 @@
-subroutine elmt03(d,ul,xl,ix,tl,s,p,ndf,ndm,nst,isw)
+subroutine elmt03(d,ul,xl,ix,s,p,ndf,ndm,nst,isw)
 implicit none
   integer          :: ix(*), ndf,ndm,nst,isw
-  double precision :: d(*),ul(ndf,*),xl(ndm,*),tl(*),s(nst,*),p(*)
+  double precision :: d(*),ul(ndf,*),xl(ndm,*),s(nst,*),p(*)
 
 !  Purpose: Plane stress/strain Pian Sumihara Element
 

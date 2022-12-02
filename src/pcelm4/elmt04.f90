@@ -1,7 +1,7 @@
-subroutine elmt04(d,u,x,ix,t,s,p,ndf,ndm,nst,isw)
+subroutine elmt04(d,u,x,     s,p,ndf,ndm,nst,isw)
 implicit none
-  integer          :: ndf,ndm,nst,isw, ix(*)
-  double precision :: d(*),u(ndf,*),x(ndm,*),t(*),s(nst,*),p(*)
+  integer          :: ndf,ndm,nst,isw
+  double precision :: d(*),u(ndf,*),x(ndm,*),     s(nst,*),p(*)
       
 !     Purpose: Any dimensional truss element routine
 
