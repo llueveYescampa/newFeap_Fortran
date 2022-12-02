@@ -33,7 +33,7 @@ implicit none
        call prthed(iow)
        write(iow,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
        if(ior.lt.0) then
-	 write(*,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
+         write(*,2000) ttim,prop,(i,cd,i=1,ndm),(i,di,i=1,ndf)
        end if
        kount = 48
      endif
