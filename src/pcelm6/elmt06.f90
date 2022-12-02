@@ -21,12 +21,11 @@ implicit none
 !     p(*)      - Element vector
   
   
-   character wlab(2)*12
-   integer   i,i1,j,j1,kat,l,lint,nn
-   double precision    q1,q2,qm,qq,dq,uu, a1,a2,a3, rr,zz, xsj
-   double precision    coord ,shp(3,9)
-   double precision    sg(9),tg(9),wg(9)
-   character :: yyy*80
+   character        :: wlab(2)*12, yyy*80
+   integer          :: i,i1,j,j1,kat=0,l,lint,nn
+   double precision :: q1,q2,qm,qq=0.0d0,dq=0.0d0,uu, a1,a2,a3, rr,zz, xsj
+   double precision :: coord ,shp(3,9)
+   double precision :: sg(9),tg(9),wg(9)
    
    integer iocheck
    logical test

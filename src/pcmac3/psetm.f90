@@ -14,8 +14,8 @@ implicit none
 !     na        - Pointer to first word in array
 !     afl       - Flag, error if true
 
-   integer   np,ns
-   double precision    amx
+   integer          :: np=0,ns=0
+   double precision :: amx
 
    include 'iofild.h'
    include 'iofile.h'

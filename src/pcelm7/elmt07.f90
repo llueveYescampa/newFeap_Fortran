@@ -17,13 +17,12 @@ implicit none
 !    s(nst,*)  - Element matrix
 !    p(*)      - Element vector
 
-  integer i,j,k
-  double precision  t(9),up(6), temp(9),temp1(9)
-  double precision  kp(9),axial,sm
-  double precision  dx(4),xx(3),xl,eps
-  double precision  t1,t2,t3,sig
-  
-  character yyy*80
+  integer          :: i,j,k
+  double precision :: t(9),up(6), temp(9),temp1(9)
+  double precision :: kp(9),axial,sm
+  double precision :: dx(4),xx(3),xl,eps
+  double precision :: t1,t2,t3=0.0d0,sig  
+  character        :: yyy*80
   
   integer iocheck
   logical test

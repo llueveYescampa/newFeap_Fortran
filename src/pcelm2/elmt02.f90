@@ -22,25 +22,23 @@ implicit none
 !      p(*)      - Element vector
 
 
-    logical flg
-
-    integer i,i1,ii,j,j1,jj, ib,ityp,l,lint
-    double precision rr,zz,xr0,xz0,tipo,vol,yld,dot
-    double precision eps(4),sig(6),bbar(4,2,4),bbd(4,2),sg(4),tg(4), &
-                    wg(4),shp3(4,4),shp(3,4,4),xsj(4),ang,siga(6)
+    logical          :: flg
+    integer          :: i,i1,ii,j,j1,jj, ib,ityp,l,lint=0
+    double precision :: rr,zz,xr0,xz0,tipo,vol,yld,dot
+    double precision :: eps(4),sig(6),bbar(4,2,4),bbd(4,2),sg(4),tg(4), &
+                        wg(4),shp3(4,4),shp(3,4,4),xsj(4),ang,siga(6)
     
     include 'adata.h'
     include 'cdata.h'
-
-
-   include 'eldata.h'
-   include 'elcom2.h'
-
-   include 'iofile.h'
-
+    include 'eldata.h'
+    include 'elcom2.h'
+    include 'iofile.h'
 
 !   Go to correct array processor
-
+    wg(1) = 0.0d0
+    wg(2) = 0.0d0
+    wg(3) = 0.0d0
+    wg(4) = 0.0d0
     select case (isw)
     case(1)
 !     Input material properties

@@ -20,14 +20,11 @@ implicit none
 !     s(nst,*)  - Element matrix
 !     p(*)      - Element vector
 
-   integer   ityp, j,j1, k,k1, l,lint
-   
-   double precision a11,a21,a31,a41,a12,a32,a42, w11,w12,w22
-   double precision e,xnu,alp,t0, xx,yy,zz, dv, xsj, sigr4
-
-   double precision eps(4),sigr(6),shp(3,9),sg(16),tg(16),wg(16),ang
-   character*12 wd(3)
-   character yyy*80
+   integer          :: ityp, j,j1, k,k1, l,lint=0
+   double precision :: a11,a21,a31,a41,a12,a32,a42, w11,w12,w22
+   double precision :: e,xnu,alp,t0, xx,yy,zz, dv, xsj, sigr4
+   double precision :: eps(4),sigr(6),shp(3,9),sg(16),tg(16),wg(16),ang
+   character        :: wd(3)*12, yyy*80
    
 
    integer iocheck1, iocheck2

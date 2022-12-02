@@ -18,9 +18,9 @@ implicit none
 !     error      - Flag, true if error occurs
 
 
-   character yyy*80
-   integer i, j, k, l,lk,lx, n,nx,iocheck
-   logical test208
+   character :: yyy*80
+   integer   :: i, j, k, l,lk,lx, n,nx=0,iocheck
+   logical   :: test208
 
    include 'iofile.h'
 

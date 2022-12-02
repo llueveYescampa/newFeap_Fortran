@@ -49,7 +49,8 @@ implicit none
    include 'temfl1.h'
    include 'ddata.h'
 
-   allocate ( uu(4000) )  ! real dimension og uu should be used here
+   allocate ( uu(4000) )  ! real dimension of uu should be used here
+   uu(1:4000) = 0.0d0
 
 !  transfer to correct process
 

@@ -28,9 +28,9 @@ implicit none
 !     d(*)     - Eigenvalaues
 
 
-   logical  conv
-   integer  i,it,itt,itlim, j, k, n,nmas
-   double precision   dm,tolmx,told
+   logical          :: conv
+   integer          :: i,it,itt=0,itlim, j, k, n,nmas
+   double precision :: dm,tolmx,told
 
    include 'iofild.h'
    include 'iofile.h'
