@@ -1,7 +1,7 @@
-subroutine strn02(shp,xl,ul,type,xr0,xz0,ndm,ndf,eps)
+subroutine strn02(shp,xl,ul,typ,xr0,xz0,ndm,ndf,eps)
 implicit none
 integer   ndm,ndf
-double precision shp(3,1),xl(ndm,1),ul(ndf,1),type,xr0,xz0,eps(4)
+double precision shp(3,*),xl(ndm,*),ul(ndf,*),typ,xr0,xz0,eps(*)
 
 !  Purpose: Compute strain for point
 
@@ -34,6 +34,6 @@ double precision shp(3,1),xl(ndm,1),ul(ndf,1),type,xr0,xz0,eps(4)
      eps(3) = eps(3) + shp(3,k)*ul(1,k)
      eps(4) = eps(4) + (ul(2,k)*shp(1,k) + ul(1,k)*shp(2,k))/2.
    end do ! k
-   eps(3) = type*eps(3)/xr0
+   eps(3) = typ*eps(3)/xr0
 
 end
