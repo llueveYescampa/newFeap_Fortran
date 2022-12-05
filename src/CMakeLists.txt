@@ -40,7 +40,7 @@ set(newFeap_Src
     ${pcmac1_Src}
     ${pcmac2_Src}
     ${pcmac3_Src}
-    ${pcmsh1_Src}
+    ${pcmesh_Src}
     ${pasolv_Src}
     ${parsol_Src}
     #${pfrsol_Src}
