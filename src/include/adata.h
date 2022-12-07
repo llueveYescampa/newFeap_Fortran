@@ -1,2 +1,2 @@
-   double precision :: aa
-   common /adata/      aa(8000)
+   double precision, dimension (8000) :: aa
+   common /adata/                        aa

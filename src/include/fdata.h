@@ -1,2 +1,2 @@
-   logical ::     fl
-   common /fdata/ fl(11)
+   logical, dimension(11) :: fl
+   common /fdata/ fl

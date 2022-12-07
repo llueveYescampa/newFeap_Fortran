@@ -1,2 +1,2 @@
-   character ::    head*4
-   common /bdata/  head(20)
+   character, dimension(20) :: head*4
+   common /bdata/  head

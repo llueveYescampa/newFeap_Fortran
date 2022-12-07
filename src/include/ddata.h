@@ -1,3 +1,3 @@
-   double precision :: dm
-   integer          ::        im
-   common              dm(1), im(1)
+   double precision, dimension(1) :: dm
+   integer, dimension(1)          :: im
+   common  dm, im
