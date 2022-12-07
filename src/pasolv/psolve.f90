@@ -43,14 +43,12 @@ implicit none
    integer          :: ibuf,ihsiz,ihfac,iz
    double precision :: dot
 
-
    include 'cdata.h'
    include 'fdata.h'
-
    include 'iofile.h'
-
    include 'temfl1.h'
    include 'temfl2.h'
+   save ibuf
 
    data   fa /.false./
 
