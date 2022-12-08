@@ -38,7 +38,7 @@ implicit none
 
 
    logical :: pcomp,sflg,tflg
-   integer :: ietyp,ml1,na,nal,n1,n2,n3,n4,i
+   integer :: ml1,na,nal,n1,n2,n3,n4,i
    integer :: nnpo,nnlo,nnmo,ndmo,ndfo,nhio,nhfo,nrco
    double precision :: shft,rnorm,dot
    double precision :: enold = 0.0d0
@@ -103,7 +103,7 @@ implicit none
        eerror = 0.0
        efem   = 0.0
        ebar   = 0.05*sqrt(enerr/numel)
-       ietyp  = 1
+       
        call formfe(b,dr,.false.,.false.,.false.,.false.,7,1,numel,1)
        call prterr
      else
