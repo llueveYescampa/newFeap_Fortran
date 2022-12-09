@@ -40,7 +40,7 @@ implicit none
 
    logical          :: afl,fa
    integer          :: n,ne,nep=0
-   integer          :: ibuf,ihsiz,ihfac,iz
+   integer          :: ibuf,ihfac
    double precision :: dot
 
    include 'cdata.h'
@@ -57,7 +57,7 @@ implicit none
 !  Record length factors (may be too long for some machines)
 
    ihfac = 8 ! record length factor (8)
-   ihsiz = maxArray
+   !ihsiz = maxArray
 
    if(afac) then
      if(fl(6)) then
@@ -73,9 +73,9 @@ implicit none
          ibuf  = ibuf + ig(neq)
          fl(3) = fa
        end if
-       if(ibuf.gt.ihsiz) stop 'profile too large'
-       iz       = ibuf
-       itrec(1) = iz*ihfac
+       if(ibuf.gt.maxArray) stop 'profile too large'
+       !iz       = ibuf
+       itrec(1) = ibuf*ihfac
 !       open (4,file=tfile(1),status='new',access='direct',form='unformatted',recl=itrec(1))
 !       close(4)
        fl(4) = fa
