@@ -17,7 +17,7 @@ set(CMAKE_BUILD_TYPE Release)
 ## adding the following lines while cleaning the code
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
     MESSAGE( STATUS "Fortran_COMPILER_NAME: "            ${CMAKE_Fortran_COMPILER_ID} )
-    set(CMAKE_Fortran_FLAGS  "  -Wall -Wextra -Wno-unused-parameter -ftree-vectorize -fopt-info-vec-optimized -ffast-math -mavx2 ")
+    set(CMAKE_Fortran_FLAGS  "  -Wall -Wextra -Wno-unused-parameter -ftree-vectorize -fopt-info-vec-optimized -ffast-math -mavx2 -O0 -DNDEBUG")
     #set(CMAKE_Fortran_FLAGS  " -Wall -Wextra -Wno-unused-result -Wno-unused-parameter -ftree-vectorize -fopt-info-vec-optimized -ffast-math ")
 elseif ( CMAKE_Fortran_COMPILER_ID STREQUAL "Intel" )
     MESSAGE( STATUS "Fortran_COMPILER_NAME: "            ${CMAKE_Fortran_COMPILER_ID} )
