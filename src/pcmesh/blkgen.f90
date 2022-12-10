@@ -162,7 +162,7 @@ implicit none
       9x,'Number of r-increments:',i5/9x,'Number of s-increments:',i5/ &
       9x,'First node number     :',i5/9x,'First element number  :',i5/ &
       9x,'Element material type :',i5/9x,'Node line increment   :',i5/ &
-      9x,'Block type (0-9)       :',i5/1x)
+      9x,'Block type (0-9)      :',i5/1x)
      
 2002  format(5x,'node',3(i6,' coord'))
 
