@@ -10,10 +10,8 @@ implicit none
 
    include 'iofile.h'
 
-   if(ior.gt.0) then
-     write(iow,'(a,a6,a)') &
-       ' ** ERROR in ', subnam,' ** end of file encountered'
-   end if  
+   write(iow,'(a,a6,a)') &
+     ' ** ERROR in ', subnam,' ** end of file encountered'
    if(ior.lt.0) then
      write(  *,'(a,a6,a)') &
        ' ** ERROR in ', subnam,' ** end of file encountered'
